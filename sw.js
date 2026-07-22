@@ -1,4 +1,4 @@
-const CACHE = "paiduyna-full-2026-07-23-v8";
+const CACHE = "paiduyna-full-2026-07-23-v9";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -24,6 +24,12 @@ self.addEventListener("activate", event => {
 self.addEventListener("fetch", event => {
   if(event.request.method !== "GET") return;
   const url = new URL(event.request.url);
+
+  if(url.origin === self.location.origin &&
+     (url.pathname.endsWith("/admin.html") || url.pathname.endsWith("/admin.webmanifest"))) {
+    event.respondWith(fetch(event.request, {cache:"no-store"}));
+    return;
+  }
 
   if(url.pathname.endsWith("/data/status.json")) {
     event.respondWith(
