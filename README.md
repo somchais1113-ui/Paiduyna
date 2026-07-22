@@ -4,7 +4,7 @@
 
 เว็บตารางเดินรถและผู้ช่วยวางแผนการเดินทาง รถไฟชานเมืองสายตะวันออก ช่วงกรุงเทพ ถึง ฉะเชิงเทรา
 
-Build: `2026-07-23-full-v9`
+Build: `2026-07-23-full-v11`
 
 Full Version รวมงานจาก Version 1.1, 1.5 และ 2.0 ไว้ในชุดเดียว โดยยังเปิดผ่าน GitHub Pages ได้
 
@@ -86,11 +86,10 @@ python3 -m http.server 8000
 
 เปิด `https://ชื่อเว็บไซต์ของคุณ/admin/` แล้วตั้งค่าครั้งแรก:
 
-1. กรอกเจ้าของ Repository และชื่อ Repository
-2. Branch ใช้ `main`
-3. ตำแหน่งไฟล์ใช้ `data/status.json`
-4. วาง Fine-grained Personal Access Token ที่เลือกเฉพาะ Repository นี้ และมีสิทธิ์ Contents: Read and write
-5. กด `ทดสอบการเชื่อมต่อ`
+1. วาง Fine-grained Personal Access Token ที่เลือกเฉพาะ Repository นี้ และมีสิทธิ์ Contents: Read and write
+2. กด `ค้นหา Repo อัตโนมัติ`
+3. ระบบจะกรอกเจ้าของ Repository, ชื่อ Repository, Branch และตำแหน่งไฟล์ให้
+4. กด `ทดสอบการเชื่อมต่อ`
 
 การใช้งานครั้งต่อไป:
 

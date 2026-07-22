@@ -29,7 +29,7 @@ input,select,textarea{width:100%;border:1.5px solid var(--line);border-radius:9p
 <body>
 <header class="top">
   <img src="brand-logo-v4.svg" alt="PAI.DUY.NA">
-  <span class="local">ONLINE ADMIN</span>
+  <span class="local">ONLINE ADMIN v11</span>
 </header>
 <main class="wrap">
   <section class="panel">
@@ -76,6 +76,7 @@ input,select,textarea{width:100%;border:1.5px solid var(--line);border-radius:9p
           <div class="field span2"><label class="check"><input type="checkbox" id="ghRemember"> จำ Token ไว้ในเบราว์เซอร์เครื่องนี้ (อย่าติ๊กหากเป็นเครื่องที่ใช้ร่วมกับผู้อื่น)</label></div>
         </div>
         <div class="actions">
+          <button class="btn" id="ghFindBtn" type="button">ค้นหา Repo อัตโนมัติ</button>
           <button class="btn" id="ghTestBtn" type="button">ทดสอบการเชื่อมต่อ</button>
           <button class="btn primary" id="ghPublishBtn" type="button">เผยแพร่ทันที</button>
         </div>
@@ -174,6 +175,50 @@ function ghErrorText(code, body){
   if(code === 422) return "ข้อมูลที่ส่งไปไม่ถูกต้อง" + detail;
   return "เกิดข้อผิดพลาด รหัส " + code + detail;
 }
+async function ghFindRepo(){
+  const token = $("ghToken").value.trim();
+  if(!token) return ghShow("err","กรุณาวาง Token ก่อน แล้วกดค้นหา Repo อัตโนมัติ");
+  $("ghFindBtn").disabled = true;
+  ghShow("busy","กำลังค้นหา Repository ที่มีไฟล์ data/status.json");
+  try{
+    const cfg = {token};
+    const list = await ghRequest(cfg,"https://api.github.com/user/repos?per_page=100&sort=updated&affiliation=owner,collaborator,organization_member");
+    if(!list.ok) throw new Error(ghErrorText(list.code,list.body));
+    const repos = Array.isArray(list.body) ? list.body : [];
+    const found = [];
+    for(let i=0;i<repos.length;i+=6){
+      const batch = repos.slice(i,i+6);
+      const results = await Promise.all(batch.map(async repo=>{
+        const branch = repo.default_branch || "main";
+        const url = "https://api.github.com/repos/"+repo.full_name+"/contents/data/status.json?ref="+encodeURIComponent(branch);
+        const r = await ghRequest(cfg,url);
+        return r.ok ? {repo,branch} : null;
+      }));
+      found.push(...results.filter(Boolean));
+    }
+    if(!found.length){
+      throw new Error("ไม่พบ Repo ที่มีไฟล์ data/status.json กรุณาตรวจว่า Token เลือก Repository ที่อัปโหลดเว็บนี้ไว้ และมีสิทธิ์ Contents: Read and write");
+    }
+    const host = location.hostname.toLowerCase();
+    const firstPath = location.pathname.split("/").filter(Boolean)[0] || "";
+    let expected = "";
+    if(host.endsWith(".github.io")){
+      const owner = host.split(".")[0];
+      expected = owner+"/"+(firstPath && firstPath!=="admin" ? firstPath : owner+".github.io");
+    }
+    const match = found.find(v=>v.repo.full_name.toLowerCase()===expected.toLowerCase()) || found[0];
+    $("ghOwner").value = match.repo.owner.login;
+    $("ghRepo").value = match.repo.name;
+    $("ghBranch").value = match.branch;
+    $("ghPath").value = "data/status.json";
+    ghSave();
+    ghShow("ok","พบและตั้งค่าให้แล้ว: <code>"+match.repo.full_name+"</code> Branch <code>"+match.branch+"</code><br>กดเผยแพร่ทันทีได้เลย");
+  }catch(err){
+    ghShow("err",err.message);
+  }finally{
+    $("ghFindBtn").disabled = false;
+  }
+}
 function fromBase64(text){
   const binary = atob((text || "").replace(/\s/g,""));
   const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
@@ -184,7 +229,7 @@ async function ghCurrentFile(cfg){
   const url = "https://api.github.com/repos/"+cfg.owner+"/"+cfg.repo+"/contents/"
             + encodeURI(cfg.path) + "?ref=" + encodeURIComponent(cfg.branch);
   const r = await ghRequest(cfg, url);
-  if(r.code === 404) return {sha:null, data:{}};
+  if(r.code === 404) throw new Error(ghErrorText(r.code, r.body));
   if(!r.ok) throw new Error(ghErrorText(r.code, r.body));
   let data = {};
   try{ data = JSON.parse(fromBase64(r.body.content)); }catch(e){ throw new Error("อ่านไฟล์ข่าวเดิมไม่สำเร็จ จึงหยุดเผยแพร่เพื่อป้องกันข้อมูลเดิมเสียหาย"); }
@@ -238,6 +283,7 @@ async function ghPublish(){
     $("ghPublishBtn").disabled = false;
   }
 }
+$("ghFindBtn").onclick = ghFindRepo;
 $("ghTestBtn").onclick = ghTest;
 $("ghPublishBtn").onclick = ghPublish;
 GH_FIELDS.concat(["ghRemember","ghToken"]).forEach(id => $(id).addEventListener("change", ghSave));
