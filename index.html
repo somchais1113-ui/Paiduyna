@@ -87,6 +87,18 @@ body{
 .clock-time{font-family:var(--font-display);font-weight:700;font-size:clamp(2.45rem,6vw,3.5rem);line-height:.98;font-variant-numeric:tabular-nums;letter-spacing:-1.2px}
 .clock-date{font-size:.92rem;color:#F0D6DB;margin-top:8px;font-weight:500}
 .clock-zone{font-size:.74rem;color:var(--blue-200);margin-top:2px;font-weight:700;letter-spacing:.7px}
+.clock-card{justify-content:space-between}
+.clock-card .live-main{flex:1 1 50%}
+.density-block{flex:1 1 46%;min-width:190px;max-width:320px;align-self:stretch;display:flex;flex-direction:column;justify-content:center}
+.density-title{font-size:.68rem;letter-spacing:.6px;color:var(--blue-200);font-weight:600;text-align:right;margin-bottom:2px}
+.density-chart{display:block;width:100%;height:78px;overflow:visible}
+.density-area{fill:url(#densityFill)}
+.density-line{fill:none;stroke:#E98D9A;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.density-halo{fill:#F5A6B2;opacity:.24;transform-box:fill-box;transform-origin:center;animation:densityHalo 3.2s ease-out infinite}
+.density-point{fill:#fff;stroke:#D56A7A;stroke-width:2.5;filter:drop-shadow(0 0 4px rgba(255,255,255,.75));animation:densityBlink 3.2s ease-in-out infinite}
+.density-labels{fill:#DDBFC4;font:500 9px var(--font-body)}
+@keyframes densityBlink{0%,100%{opacity:1}50%{opacity:.56}}
+@keyframes densityHalo{0%{opacity:.3;transform:scale(.72)}70%,100%{opacity:0;transform:scale(1.65)}}
 .wx-temp{font-family:var(--font-display);font-weight:700;font-size:clamp(1.5rem,4.4vw,2rem);line-height:1}
 .wx-desc{font-size:.8rem;color:var(--blue-200);margin-top:3px}
 .wx-meta{font-size:.72rem;color:var(--blue-200);opacity:.85}
@@ -314,6 +326,14 @@ td.nostop{color:#D6C3C6;font-weight:400}
   .connection-track::before{top:18px;bottom:18px;left:41px;right:auto;width:3px;height:auto}
   .connection-stop{display:grid;grid-template-columns:52px 1fr;gap:12px;text-align:left;align-items:center;padding:0}
   .connection-dot{margin:0}
+  .clock-card{gap:8px}
+  .clock-card .live-main{flex:0 1 47%}
+  .clock-card .clock-time{font-size:clamp(1.95rem,9.5vw,2.45rem);letter-spacing:-1px}
+  .clock-card .clock-date{font-size:.76rem;margin-top:7px}
+  .clock-card .clock-zone{font-size:.68rem}
+  .density-block{flex:1 1 53%;min-width:0}
+  .density-title{font-size:.6rem;letter-spacing:.3px}
+  .density-chart{height:68px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media print{body{background:#fff}.planner,.btn-refresh,.livebar,.sched-tabs{display:none}.card{box-shadow:none;border:1px solid #ccc}}
@@ -342,12 +362,36 @@ td.nostop{color:#D6C3C6;font-weight:400}
     <p class="sub" id="headSub">เลือกวันเดินทาง ต้นทาง และปลายทาง เพื่อดูรอบรถที่เหมาะสม</p>
 
     <div class="livebar">
-      <div class="livecard">
+      <div class="livecard clock-card">
         <div class="live-main">
           <span class="lbl">เวลาปัจจุบัน</span>
           <div class="clock-time" id="clockTime">--:--:--</div>
           <div class="clock-date" id="clockDate">กำลังโหลด</div>
           <div class="clock-zone" id="clockZone">เวลาไทย</div>
+        </div>
+        <div class="density-block" aria-label="ความหนาแน่นโดยประมาณ พีคช่วง 08:00 และสูงที่สุดช่วง 18:30">
+          <div class="density-title">ความหนาแน่นโดยประมาณ</div>
+          <svg class="density-chart" viewBox="0 0 300 92" role="img" aria-labelledby="densityChartTitle densityChartDesc">
+            <title id="densityChartTitle">กราฟความหนาแน่นโดยประมาณ</title>
+            <desc id="densityChartDesc">ผู้โดยสารหนาแน่นช่วง 08:00 และหนาแน่นมากกว่าช่วง 18:30</desc>
+            <defs>
+              <linearGradient id="densityFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#E98D9A" stop-opacity=".16"/>
+                <stop offset="100%" stop-color="#E98D9A" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path class="density-area" d="M8 64 C30 64 40 28 66 27 C92 26 90 60 132 60 C175 60 178 19 218 14 C246 10 257 45 290 58 L290 70 L8 70 Z"/>
+            <path class="density-line" id="densityLine" d="M8 64 C30 64 40 28 66 27 C92 26 90 60 132 60 C175 60 178 19 218 14 C246 10 257 45 290 58"/>
+            <circle class="density-halo" id="densityHalo" cx="218" cy="14" r="10"/>
+            <circle class="density-point" id="densityPoint" cx="218" cy="14" r="5"/>
+            <g class="density-labels" text-anchor="middle">
+              <text x="10" y="88">06</text>
+              <text x="66" y="88">08</text>
+              <text x="132" y="88">12</text>
+              <text x="218" y="88">18:30</text>
+              <text x="288" y="88">20</text>
+            </g>
+          </svg>
         </div>
       </div>
       <div class="livecard">
@@ -913,11 +957,52 @@ const state = {
 /* ============================================================
    8. นาฬิกาเรียลไทม์
    ============================================================ */
+const DENSITY_TIME_MARKS = [
+  {minute:360,x:8},
+  {minute:480,x:66},
+  {minute:720,x:132},
+  {minute:1110,x:218},
+  {minute:1200,x:290}
+];
+function densityXAtMinute(minute){
+  const value = Math.max(DENSITY_TIME_MARKS[0].minute,Math.min(DENSITY_TIME_MARKS[DENSITY_TIME_MARKS.length-1].minute,minute));
+  for(let i=1;i<DENSITY_TIME_MARKS.length;i++){
+    const right = DENSITY_TIME_MARKS[i];
+    if(value <= right.minute){
+      const left = DENSITY_TIME_MARKS[i-1];
+      const ratio = (value-left.minute)/(right.minute-left.minute);
+      return left.x + (right.x-left.x)*ratio;
+    }
+  }
+  return DENSITY_TIME_MARKS[DENSITY_TIME_MARKS.length-1].x;
+}
+function updateDensityPoint(hour,minute){
+  const path = $("densityLine"), point = $("densityPoint"), halo = $("densityHalo");
+  if(!path || !point || !halo || typeof path.getTotalLength !== "function") return;
+  const targetX = densityXAtMinute(Number(hour)*60+Number(minute));
+  const length = path.getTotalLength();
+  let low = 0, high = length;
+  for(let i=0;i<18;i++){
+    const middle = (low+high)/2;
+    if(path.getPointAtLength(middle).x < targetX) low = middle;
+    else high = middle;
+  }
+  const position = path.getPointAtLength((low+high)/2);
+  [point,halo].forEach(el => {
+    el.setAttribute("cx",position.x.toFixed(2));
+    el.setAttribute("cy",position.y.toFixed(2));
+  });
+  const currentTime = p2(hour)+":"+p2(minute);
+  const description = "จุดสีขาวแสดงความหนาแน่นโดยประมาณ ณ เวลา " + currentTime;
+  $("densityChartDesc").textContent = description;
+  point.closest(".density-block").setAttribute("aria-label",description);
+}
 function tickClock(){
   const d = new Date(), p = bangkokParts(d), today = bangkokISO(d);
   $("clockTime").textContent = p2(p.hour)+":"+p2(p.minute)+":"+p2(p.second);
   $("clockDate").textContent = thaiDate(today);
   $("clockZone").textContent = "เวลาไทย";
+  updateDensityPoint(p.hour,p.minute);
   $("nowTimeHint").textContent = $("chkNow").checked ? "กำลัง Sync | ตอนนี้ " + p2(p.hour)+":"+p2(p.minute) : "เลือกเวลาเอง";
   if(p.second === 0){
     if($("chkNow").checked && state.date !== today){
