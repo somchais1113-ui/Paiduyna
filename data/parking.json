@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "26/07/2569",
+  "disclaimer": "แสดงตำแหน่งลานจอด ไม่ใช่สถานะที่ว่างแบบเรียลไทม์ ข้อมูลลานจอดที่ยืนยันแล้วให้ผู้ดูแลเพิ่มในฟิลด์ lots ของแต่ละสถานี",
+  "lotSchema": {
+    "name": "ชื่อลานจอด (บังคับ)",
+    "type": "park_and_ride | public | private",
+    "lat": "ละติจูด (ตัวเลข, ใส่เมื่อทราบพิกัดเพื่อให้ปุ่มนำทางแม่นยำ)",
+    "lng": "ลองจิจูด (ตัวเลข)",
+    "note": "หมายเหตุ เช่น ค่าบริการ เวลาทำการ (ไม่บังคับ)"
+  },
+  "stations": {
+    "krungthep": {
+      "lots": []
+    },
+    "yommarat": {
+      "lots": []
+    },
+    "urupong": {
+      "lots": []
+    },
+    "phayathai": {
+      "lots": []
+    },
+    "makkasan": {
+      "lots": []
+    },
+    "asok": {
+      "lots": []
+    },
+    "khlongtan": {
+      "lots": []
+    },
+    "sukhumvit71": {
+      "lots": []
+    },
+    "huamak": {
+      "lots": []
+    },
+    "banthapchang": {
+      "lots": []
+    },
+    "soiwatlanbun": {
+      "lots": []
+    },
+    "latkrabang": {
+      "lots": []
+    },
+    "phrachomklao": {
+      "lots": []
+    },
+    "huatakhe": {
+      "lots": []
+    },
+    "khlongluang": {
+      "lots": []
+    },
+    "khlongudom": {
+      "lots": []
+    },
+    "preng": {
+      "lots": []
+    },
+    "khwangklan": {
+      "lots": []
+    },
+    "bangphra": {
+      "lots": []
+    },
+    "bangtoei": {
+      "lots": []
+    },
+    "chachoengsao": {
+      "lots": []
+    },
+    "arl_phayathai": {
+      "lots": []
+    },
+    "arl_suvarnabhumi": {
+      "lots": []
+    }
+  }
+}

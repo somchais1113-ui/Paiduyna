@@ -1,11 +1,12 @@
-const CACHE = "paiduyna-full-2026-07-23-v12-density-live-point";
+const CACHE = "paiduyna-full-2026-07-26-v14-map-nav";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
   "./icon.svg",
   "./brand-logo-v4.svg",
-  "./data/status.json"
+  "./data/status.json",
+  "./data/parking.json"
 ];
 
 self.addEventListener("install", event => {
@@ -30,7 +31,7 @@ self.addEventListener("fetch", event => {
     return;
   }
 
-  if(url.pathname.endsWith("/data/status.json")) {
+  if(url.pathname.endsWith("/data/status.json") || url.pathname.endsWith("/data/parking.json")) {
     event.respondWith(
       fetch(event.request)
         .then(response => {

@@ -292,6 +292,63 @@ td.nostop{color:#D6C3C6;font-weight:400}
 .credit{text-align:right;color:var(--ink-mute);font-size:.78rem;margin-top:12px;padding-right:4px;line-height:1.7}
 
 /* ---------- Toast ---------- */
+/* ---------- ลานจอดรถใกล้สถานี ---------- */
+.parking-card .card-head{background:linear-gradient(110deg,var(--navy-800),var(--navy-700))}
+.park-head-l{display:flex;align-items:center;gap:10px;min-width:0}
+.park-head-l h2{margin:0}
+.park-p{flex:none;width:30px;height:30px;border-radius:8px;background:#fff;color:var(--navy-800);display:flex;align-items:center;justify-content:center;font:800 1.05rem var(--font-display);box-shadow:inset 0 0 0 2px var(--navy-800)}
+/* วิธีค้นหา 2 แบบ นำเสนอเป็นการ์ดเลือกได้ พร้อมไอคอนและคำอธิบาย เพื่อสื่อสารความต่างชัดเจน */
+.park-methods{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.park-method{display:flex;align-items:center;gap:12px;text-align:left;padding:14px;border:1.5px solid var(--blue-200);border-radius:12px;background:#fff;cursor:pointer;transition:border-color .16s,box-shadow .16s,transform .06s}
+.park-method:hover{border-color:var(--navy-700);box-shadow:0 5px 16px rgba(84,16,29,.1)}
+.park-method:active{transform:translateY(1px)}
+.park-ic{flex:none;width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:var(--blue-100);color:var(--navy-700)}
+.park-ic svg{width:23px;height:23px}
+.park-method-2 .park-ic{background:#F6E6DF;color:var(--blue-500)}
+.park-method-txt{display:flex;flex-direction:column;min-width:0}
+.park-method-ttl{font:700 .96rem var(--font-display);color:var(--ink)}
+.park-method-sub{font-size:.76rem;color:var(--ink-mute);margin-top:2px;line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.park-method-go{flex:none;margin-left:auto;color:var(--blue-500);font:700 1.35rem var(--font-display);line-height:1}
+.park-disclaimer{display:flex;align-items:center;gap:8px;font-size:.76rem;color:var(--ink-mute);margin:14px 0 0}
+.park-dot{flex:none;width:7px;height:7px;border-radius:50%;background:var(--amber)}
+.parking-list{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.parking-subhead{font:700 .8rem var(--font-display);color:var(--navy-700);display:flex;align-items:center;gap:10px;margin-top:2px}
+.parking-subhead::after{content:"";flex:1;height:1px;background:var(--line)}
+.parking-empty{font-size:.85rem;color:var(--ink-mute);line-height:1.6;background:var(--blue-100);border-radius:10px;padding:13px 15px}
+.parking-item{display:flex;align-items:center;gap:12px;border:1.5px solid var(--blue-200);border-radius:11px;padding:11px 13px}
+.park-badge{flex:none;width:34px;height:34px;border-radius:8px;background:var(--navy-700);color:#fff;display:flex;align-items:center;justify-content:center;font:800 .95rem var(--font-display)}
+.parking-info{min-width:0;flex:1}
+.parking-title{font:700 .92rem var(--font-body);color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.parking-meta{display:flex;align-items:center;gap:8px;font-size:.76rem;color:var(--ink-mute);margin-top:3px;flex-wrap:wrap}
+.park-chip{background:var(--blue-100);color:var(--navy-700);border-radius:999px;padding:2px 9px;font-weight:700;font-size:.72rem}
+.parking-go{flex:none;border:1.5px solid var(--navy-700);background:var(--navy-700);color:#fff;border-radius:8px;padding:8px 13px;font:700 .78rem var(--font-body);text-decoration:none}
+.parking-go:hover{background:var(--navy-900)}
+.park-loading{display:flex;align-items:center;gap:11px;font-size:.85rem;color:var(--ink-mute);background:var(--blue-100);border-radius:10px;padding:13px 15px}
+.park-spin{flex:none;width:18px;height:18px;border:2.4px solid var(--blue-200);border-top-color:var(--navy-700);border-radius:50%;animation:parkspin .7s linear infinite}
+@keyframes parkspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.park-spin{animation:none}}
+@media (max-width:560px){.park-methods{grid-template-columns:1fr}}
+/* ---------- ปุ่มลัดไปแต่ละหัวข้อ ---------- */
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+.quicknav{position:sticky;top:0;z-index:15;background:rgba(247,243,239,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin:0 0 2px;padding:9px 0}
+.quicknav-track{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.quicknav-track::-webkit-scrollbar{display:none}
+.quicknav a{flex:none;display:inline-flex;align-items:center;gap:6px;text-decoration:none;border:1.5px solid var(--blue-200);background:#fff;color:var(--navy-700);border-radius:999px;padding:6px 13px;font:700 .8rem var(--font-body);white-space:nowrap;transition:border-color .15s,background .15s}
+.quicknav a:hover{border-color:var(--navy-700);background:var(--blue-100)}
+.card,.notes-card,.status{scroll-margin-top:64px}
+/* ---------- หมายเหตุแบบพับเก็บ ---------- */
+.notes-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);margin-top:18px;overflow:hidden}
+.notes-card>summary{background:var(--navy-700);color:#fff;padding:11px 16px;font:700 1.05rem var(--font-display);cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.notes-card>summary::-webkit-details-marker{display:none}
+.notes-card>summary::after{content:"แตะเพื่อเปิด";font:600 .76rem var(--font-body);opacity:.85}
+.notes-card[open]>summary::after{content:"แตะเพื่อปิด"}
+/* ---------- แผนที่ Google ในการ์ดลานจอด ---------- */
+.park-map{margin-top:14px;border:1.5px solid var(--blue-200);border-radius:12px;overflow:hidden}
+.park-map-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 13px;background:var(--blue-100)}
+.park-map-cap{font:700 .82rem var(--font-display);color:var(--navy-700);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.park-map-open{flex:none;font:700 .76rem var(--font-body);color:var(--navy-700);text-decoration:underline;text-underline-offset:2px}
+.park-map-frame iframe{display:block;width:100%;height:300px;border:0}
 .toast{position:fixed;left:50%;bottom:18px;z-index:20;transform:translate(-50%,30px);opacity:0;pointer-events:none;background:var(--ink);color:#fff;border-radius:9px;padding:9px 14px;font-size:.8rem;box-shadow:var(--shadow);transition:.2s}
 .toast.show{transform:translate(-50%,0);opacity:1}
 .tables-hidden{display:none}
@@ -433,6 +490,16 @@ td.nostop{color:#D6C3C6;font-weight:400}
     });
   </script>
 
+  <nav class="quicknav" aria-label="ลัดไปยังหัวข้อ">
+    <div class="quicknav-track">
+      <a href="#cardPlanner">วางแผนการเดินทาง</a>
+      <a href="#cardTableUp">ตารางเดินรถ</a>
+      <a href="#cardParking">ลานจอดรถ</a>
+      <a href="#cardConnect">จุดเชื่อมต่อ</a>
+      <a href="#cardNotes">หมายเหตุ</a>
+    </div>
+  </nav>
+
   <section class="status" id="statusBox" aria-live="polite">
     <div class="status-head"><span class="dot"></span><span id="statusTag">อัปเดตสถานะการเดินรถ</span></div>
     <div class="status-msg" id="statusMsg">กำลังเรียกข้อมูลสถานะล่าสุด</div>
@@ -443,7 +510,7 @@ td.nostop{color:#D6C3C6;font-weight:400}
     </div>
   </section>
 
-  <section class="card">
+  <section class="card" id="cardPlanner">
     <div class="card-head">
       <h2>วางแผนการเดินทาง</h2>
       <span class="hint">ตารางจะเปลี่ยนอัตโนมัติตามวันที่เลือก</span>
@@ -538,12 +605,43 @@ td.nostop{color:#D6C3C6;font-weight:400}
     <div class="tbl-scroll"><table id="tblDown"></table></div>
   </section>
 
-  <section class="card">
-    <div class="card-head"><h2>หมายเหตุการใช้บริการ</h2></div>
-    <div class="card-body"><ul class="notes" id="noteList"></ul></div>
+  <section class="card parking-card" id="cardParking">
+    <div class="card-head">
+      <div class="park-head-l"><span class="park-p" aria-hidden="true">P</span><h2>ลานจอดรถใกล้สถานี</h2></div>
+      <span class="hint" id="parkingStationName"></span>
+    </div>
+    <div class="card-body">
+      <div class="park-methods">
+        <button class="park-method park-method-1" id="btnParkStation" type="button">
+          <span class="park-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="M20.5 20.5 17 17"></path></svg></span>
+          <span class="park-method-txt">
+            <span class="park-method-ttl">ใกล้สถานีต้นทาง</span>
+            <span class="park-method-sub" id="parkStationSub">เปิดแผนที่ลานจอดรอบสถานีต้นทาง</span>
+          </span>
+          <span class="park-method-go" aria-hidden="true">&rsaquo;</span>
+        </button>
+        <button class="park-method park-method-2" id="btnParkNearMe" type="button">
+          <span class="park-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path></svg></span>
+          <span class="park-method-txt">
+            <span class="park-method-ttl">ใกล้ตำแหน่งฉัน</span>
+            <span class="park-method-sub">ค้นหาสดจากจุดที่คุณอยู่ตอนนี้</span>
+          </span>
+          <span class="park-method-go" aria-hidden="true">&rsaquo;</span>
+        </button>
+      </div>
+      <p class="park-disclaimer"><span class="park-dot" aria-hidden="true"></span>แสดงตำแหน่งลานจอด ไม่ใช่สถานะที่ว่างแบบเรียลไทม์</p>
+      <div class="park-map" id="parkMap" hidden>
+        <div class="park-map-bar">
+          <span class="park-map-cap" id="parkMapCap">แผนที่ลานจอด</span>
+          <a class="park-map-open" id="parkMapOpen" href="#" target="_blank" rel="noopener">เปิดใน Google Maps</a>
+        </div>
+        <div class="park-map-frame" id="parkMapFrame"></div>
+      </div>
+      <div class="parking-list" id="parkingList"></div>
+    </div>
   </section>
 
-  <section class="card connection-card">
+  <section class="card connection-card" id="cardConnect">
     <div class="card-head">
       <h2>จุดเชื่อมต่อการเดินทาง</h2>
       <span class="hint">ต่อการเดินทางจากแนวรถไฟและ Airport Rail Link</span>
@@ -559,6 +657,11 @@ td.nostop{color:#D6C3C6;font-weight:400}
       </div>
     </div>
   </section>
+
+  <details class="notes-card" id="cardNotes">
+    <summary>หมายเหตุการใช้บริการ</summary>
+    <div class="card-body"><ul class="notes" id="noteList"></ul></div>
+  </details>
 
   <div class="redbar" id="redbar">&#9733; รถไฟที่แสดงบนตาราง วิ่งทุกวัน &#9733;</div>
   <p class="credit">
@@ -1487,6 +1590,7 @@ function refreshAll(){
   sc.notes.forEach(n => { const li = document.createElement("li"); li.textContent = n; $("noteList").append(li); });
 
   renderTrips();
+  renderParkingStation();
 }
 
 /* ============================================================
@@ -1656,6 +1760,210 @@ async function installApp(){
 /* ============================================================
    18. เริ่มการทำงาน
    ============================================================ */
+/* ============================================================
+   17. ลานจอดรถใกล้สถานี (Hybrid: ข้อมูลนิ่ง + ค้นหาสด)
+   - เลเยอร์ข้อมูลนิ่ง: data/parking.json (ลานจอดที่ยืนยันแล้ว) ใช้ Offline ได้ผ่าน SW
+   - เลเยอร์ค้นหาสด: OpenStreetMap Overpass API รอบตำแหน่งผู้ใช้ (ต้องมีอินเทอร์เน็ต)
+   - ปุ่มค้นหาสถานีใช้ชื่อสถานีค้นบน Google Maps จึงทำงานได้แม้ไม่มีพิกัดในไฟล์
+   - หมายเหตุ: แสดง "ตำแหน่ง" ลานจอด ไม่ใช่สถานะที่ว่างแบบเรียลไทม์
+   ============================================================ */
+let PARKING = null;
+const OVERPASS_URL = "https://overpass-api.de/api/interpreter";
+const PARKING_RADIUS_M = 800; // รัศมีค้นหารอบตำแหน่งผู้ใช้ (เมตร)
+
+// ลิงก์ค้นหาลานจอดบน Google Maps จากข้อความ (ใช้ข้อมูลจริงของ Google ไม่ต้องมีพิกัดเอง)
+function gmapsSearch(query){
+  return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(query);
+}
+// ลิงก์นำทางไปยังพิกัดปลายทาง
+function gmapsDir(lat, lng){
+  return "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng;
+}
+// ระยะทางโดยประมาณระหว่างสองพิกัด (เมตร) ด้วยสูตร Haversine
+function haversine(aLat, aLng, bLat, bLng){
+  const R = 6371000, toRad = d => d * Math.PI / 180;
+  const dLat = toRad(bLat - aLat), dLng = toRad(bLng - aLng);
+  const s = Math.sin(dLat/2)**2 + Math.cos(toRad(aLat))*Math.cos(toRad(bLat))*Math.sin(dLng/2)**2;
+  return Math.round(2 * R * Math.asin(Math.sqrt(s)));
+}
+function formatDistance(m){
+  return m >= 1000 ? (m/1000).toFixed(1) + " กม." : m + " ม.";
+}
+
+// สร้าง URL แผนที่ Google แบบฝัง (ไม่ต้องใช้ API Key)
+function gmapsEmbedQuery(query){
+  return "https://maps.google.com/maps?q=" + encodeURIComponent(query) + "&z=16&hl=th&output=embed";
+}
+function gmapsEmbedLatLng(lat, lng, query){
+  return "https://maps.google.com/maps?q=" + encodeURIComponent(query || "ที่จอดรถ")
+       + "&ll=" + lat + "," + lng + "&z=16&hl=th&output=embed";
+}
+// เปิดแผงแผนที่ในการ์ด โหลด iframe เมื่อผู้ใช้เรียกใช้เท่านั้น (ประหยัดและเป็นส่วนตัวกว่า)
+function showParkMap(embedSrc, openUrl, caption){
+  const panel = $("parkMap"), frame = $("parkMapFrame"), cap = $("parkMapCap"), open = $("parkMapOpen");
+  if(!panel || !frame) return;
+  frame.innerHTML = '<iframe src="' + embedSrc + '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="แผนที่ลานจอด"></iframe>';
+  if(cap) cap.textContent = caption || "แผนที่ลานจอด";
+  if(open) open.href = openUrl || embedSrc;
+  panel.hidden = false;
+}
+
+// โหลดข้อมูลลานจอดนิ่ง แล้ว render ตามสถานีต้นทางปัจจุบัน
+async function loadParking(){
+  try{
+    const r = await fetch("data/parking.json", {cache:"no-store"});
+    if(r.ok) PARKING = await r.json();
+  }catch(e){ /* ไม่มีเน็ตหรือไฟล์ ระบบยังค้นหาผ่านชื่อสถานีและตำแหน่งผู้ใช้ได้ */ }
+  renderParkingStation();
+}
+
+function currentOriginId(){
+  const sel = $("selFrom");
+  return sel && sel.value ? sel.value : null;
+}
+
+// สร้างหัวข้อย่อยพร้อมเส้นคั่น
+function parkingSubhead(text){
+  const h = document.createElement("div");
+  h.className = "parking-subhead"; h.textContent = text;
+  return h;
+}
+
+// สร้างแถวรายการลานจอดหนึ่งรายการ (P badge + ชื่อ + chip/หมายเหตุ + ปุ่มนำทาง)
+function parkingItem({title, chip, meta, mapUrl}){
+  const row = document.createElement("div");
+  row.className = "parking-item";
+  const badge = document.createElement("span");
+  badge.className = "park-badge"; badge.textContent = "P"; badge.setAttribute("aria-hidden","true");
+  const info = document.createElement("div");
+  info.className = "parking-info";
+  const t = document.createElement("div");
+  t.className = "parking-title"; t.textContent = title;
+  info.append(t);
+  if(chip || meta){
+    const m = document.createElement("div");
+    m.className = "parking-meta";
+    if(chip){ const c = document.createElement("span"); c.className = "park-chip"; c.textContent = chip; m.append(c); }
+    if(meta){ const s = document.createElement("span"); s.textContent = meta; m.append(s); }
+    info.append(m);
+  }
+  const a = document.createElement("a");
+  a.className = "parking-go"; a.href = mapUrl; a.target = "_blank"; a.rel = "noopener";
+  a.textContent = "นำทาง";
+  row.append(badge, info, a);
+  return row;
+}
+
+// เลเยอร์ข้อมูลนิ่ง: แสดงลานจอดของสถานีต้นทางที่เลือก
+function renderParkingStation(){
+  const list = $("parkingList"), nameEl = $("parkingStationName"), btnStation = $("btnParkStation");
+  if(!list || !nameEl || !btnStation) return;
+
+  const originId = currentOriginId();
+  const stationName = originId ? st(originId).name : "";
+  nameEl.textContent = stationName ? "ต้นทาง " + stationName : "";
+
+  // ปุ่มค้นหาใช้ชื่อสถานีเป็นหลัก ทำงานได้แม้ไฟล์ไม่มีพิกัด (อัปเดตเฉพาะข้อความอธิบาย ไม่ทับทั้งปุ่ม)
+  const query = stationName ? "ที่จอดรถ ใกล้ สถานี" + stationName : "ที่จอดรถ";
+  btnStation.dataset.url = gmapsSearch(query);
+  const sub = $("parkStationSub");
+  if(sub) sub.textContent = stationName ? "เปิดแผนที่ลานจอดรอบสถานี" + stationName : "เปิดแผนที่ลานจอดรอบสถานีต้นทาง";
+
+  list.innerHTML = "";
+  const rec = PARKING && PARKING.stations && originId ? PARKING.stations[originId] : null;
+  const lots = rec && Array.isArray(rec.lots) ? rec.lots : [];
+  if(lots.length){
+    list.append(parkingSubhead("ลานจอดที่ยืนยันแล้ว"));
+    lots.forEach(lot => {
+      const hasGeo = typeof lot.lat === "number" && typeof lot.lng === "number";
+      const chip = lot.type === "park_and_ride" ? "จอดแล้วจร"
+                 : lot.type === "private" ? "ส่วนบุคคล" : "สาธารณะ";
+      list.append(parkingItem({
+        title: lot.name || "ลานจอด",
+        chip, meta: lot.note || "",
+        mapUrl: hasGeo ? gmapsDir(lot.lat, lot.lng) : gmapsSearch((lot.name || "ที่จอดรถ") + " " + stationName)
+      }));
+    });
+  }else{
+    const hint = document.createElement("p");
+    hint.className = "parking-empty";
+    hint.textContent = "เลือกวิธีค้นหาด้านบน เพื่อดูลานจอดรอบสถานีต้นทาง หรือค้นหาสดจากตำแหน่งที่คุณอยู่";
+    list.append(hint);
+  }
+}
+
+// เลเยอร์ค้นหาสด: หาลานจอดรอบตำแหน่งผู้ใช้ผ่าน Overpass API
+function findParkingNearMe(){
+  const list = $("parkingList");
+  if(!("geolocation" in navigator)) return showToast("อุปกรณ์นี้ไม่รองรับการอ่านตำแหน่ง");
+  list.innerHTML = "";
+  const loading = document.createElement("div");
+  loading.className = "park-loading";
+  const spin = document.createElement("span"); spin.className = "park-spin"; spin.setAttribute("aria-hidden","true");
+  const ltxt = document.createElement("span"); ltxt.textContent = "กำลังขอตำแหน่งและค้นหาลานจอดใกล้คุณ";
+  loading.append(spin, ltxt);
+  list.append(loading);
+
+  navigator.geolocation.getCurrentPosition(async pos => {
+    const lat = pos.coords.latitude, lng = pos.coords.longitude;
+    // ดึงทั้งจุด (node) และพื้นที่ (way) ที่เป็น amenity=parking รอบผู้ใช้
+    const q = "[out:json][timeout:20];("
+      + 'node["amenity"="parking"](around:' + PARKING_RADIUS_M + "," + lat + "," + lng + ");"
+      + 'way["amenity"="parking"](around:' + PARKING_RADIUS_M + "," + lat + "," + lng + ");"
+      + ");out center 40;";
+    try{
+      const r = await fetch(OVERPASS_URL + "?data=" + encodeURIComponent(q));
+      if(!r.ok) throw new Error("overpass " + r.status);
+      const data = await r.json();
+      const items = (data.elements || []).map(el => {
+        const plat = el.lat != null ? el.lat : (el.center && el.center.lat);
+        const plng = el.lon != null ? el.lon : (el.center && el.center.lon);
+        if(plat == null || plng == null) return null;
+        const tags = el.tags || {};
+        const isPrivate = tags.access === "private" || tags.access === "no";
+        return {
+          name: tags.name || (tags.parking === "multi-storey" ? "อาคารจอดรถ" : "ลานจอดรถ (ไม่ระบุชื่อ)"),
+          dist: haversine(lat, lng, plat, plng), lat: plat, lng: plng, isPrivate
+        };
+      }).filter(Boolean).sort((a,b) => a.dist - b.dist).slice(0, 15);
+
+      list.innerHTML = "";
+      showParkMap(gmapsEmbedLatLng(lat, lng, "ที่จอดรถ"),
+        gmapsSearch("ที่จอดรถ ใกล้ " + lat.toFixed(5) + "," + lng.toFixed(5)),
+        "ลานจอดใกล้ตำแหน่งคุณ");
+      if(!items.length){
+        appendParkingFallback(list, "ไม่พบลานจอดในรัศมีใกล้เคียง ลองค้นหาบน Google Maps แทน", gmapsSearch("ที่จอดรถ"));
+        return;
+      }
+      list.append(parkingSubhead("ลานจอดใกล้ตำแหน่งคุณ · OpenStreetMap"));
+      items.forEach(it => list.append(parkingItem({
+        title: it.name,
+        chip: formatDistance(it.dist),
+        meta: it.isPrivate ? "อาจเป็นลานส่วนบุคคล" : "",
+        mapUrl: gmapsDir(it.lat, it.lng)
+      })));
+    }catch(e){
+      list.innerHTML = "";
+      appendParkingFallback(list,
+        "ค้นหาสดไม่สำเร็จ (อาจไม่มีอินเทอร์เน็ตหรือระบบค้นหาไม่ว่าง) ลองใหม่หรือค้นหาบนแผนที่",
+        gmapsSearch("ที่จอดรถ ใกล้ " + lat.toFixed(5) + "," + lng.toFixed(5)));
+    }
+  }, error => {
+    renderParkingStation();
+    showToast(error.code === 1 ? "คุณยังไม่ได้อนุญาตให้เข้าถึงตำแหน่ง" : "อ่านตำแหน่งปัจจุบันไม่ได้");
+  }, {enableHighAccuracy:true, timeout:12000, maximumAge:60000});
+}
+
+// แสดงข้อความและปุ่มสำรองเปิด Google Maps เมื่อค้นหาสดไม่ได้ผล
+function appendParkingFallback(list, message, url){
+  const p = document.createElement("p");
+  p.className = "parking-empty"; p.textContent = message;
+  const a = document.createElement("a");
+  a.className = "action-btn"; a.style.marginTop = "10px"; a.style.display = "inline-block";
+  a.href = url; a.target = "_blank"; a.rel = "noopener"; a.textContent = "เปิด Google Maps";
+  list.append(p, a);
+}
+
 function init(){
   validateSchedules();
   // นาฬิกาเริ่มก่อนเสมอ เพื่อให้ยังเดินได้แม้ส่วนอื่นมีปัญหา
@@ -1693,7 +2001,7 @@ function init(){
       const other = sc.stations.find(stationId => stationId !== $(id).value);
       $(id === "selFrom" ? "selTo" : "selFrom").value = other;
     }
-    state.showMore = false; renderTrips(); saveRecent(); $("btnFavorite").textContent = "บันทึกเส้นทางนี้";
+    state.showMore = false; renderTrips(); renderParkingStation(); saveRecent(); $("btnFavorite").textContent = "บันทึกเส้นทางนี้";
   }));
   $("chkAll").addEventListener("change", () => { state.showMore = false; renderTrips(); });
   $("chkNow").addEventListener("change", () => {
@@ -1709,7 +2017,7 @@ function init(){
     const a = $("selFrom").value;
     $("selFrom").value = $("selTo").value;
     $("selTo").value = a;
-    state.showMore = false; renderTrips(); saveRecent();
+    state.showMore = false; renderTrips(); renderParkingStation(); saveRecent();
   });
   $("btnRefresh").addEventListener("click", () => { loadStatus(); loadWeather(); loadAirQuality(); });
   $("btnModeSrt").addEventListener("click", () => selectMode("srt"));
@@ -1720,6 +2028,15 @@ function init(){
   $("btnUseNow").addEventListener("click", useCurrentTime);
   $("btnClearPlanner").addEventListener("click", clearPlannerData);
   $("btnReminder").addEventListener("click", setReminder);
+  $("btnParkStation").addEventListener("click", () => {
+    const originId = currentOriginId();
+    const stationName = originId ? st(originId).name : "";
+    const query = stationName ? "ที่จอดรถ ใกล้ สถานี" + stationName : "ที่จอดรถ";
+    showParkMap(gmapsEmbedQuery(query), gmapsSearch(query),
+      stationName ? "ลานจอดรอบสถานี" + stationName : "ลานจอดรถ");
+    $("parkMap").scrollIntoView({behavior:"smooth", block:"nearest"});
+  });
+  $("btnParkNearMe").addEventListener("click", findParkingNearMe);
   $("btnTables").addEventListener("click", () => {
     const hidden = !$("cardTableUp").classList.contains("tables-hidden");
     ["cardTableUp","cardTableDown"].forEach(id => $(id).classList.toggle("tables-hidden",hidden));
@@ -1739,7 +2056,7 @@ function init(){
     if(navigator.serviceWorker) navigator.serviceWorker.register("sw.js").catch(() => {});
   }catch(e){ /* บางเบราว์เซอร์บล็อก Service Worker เมื่อเปิดจากไฟล์ในเครื่อง */ }
 
-  loadWeather(); loadAirQuality(); loadStatus();
+  loadWeather(); loadAirQuality(); loadStatus(); loadParking();
   setInterval(() => { loadWeather(); loadAirQuality(); loadStatus(); }, 600000);
 }
 
