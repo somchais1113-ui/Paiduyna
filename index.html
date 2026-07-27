@@ -354,7 +354,7 @@ html{scroll-behavior:smooth}
 @keyframes netpulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}70%{box-shadow:0 0 0 8px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
 .brand-status.offline{background:var(--amber);animation:none}
 @media (prefers-reduced-motion:reduce){.brand-status{animation:none}}
-/* ---------- หน้า Dashboard (Landing) v32: ปรับ Compose กราฟความหนาแน่นสำหรับ Tablet และ Desktop ---------- */
+/* ---------- หน้า Dashboard (Landing) v33: ขยายนาฬิกาและการ์ดความเร็วสำหรับ Desktop ---------- */
 .landing{
   position:fixed;inset:0;z-index:60;color:#F7ECEC;
   display:flex;align-items:flex-start;justify-content:center;
@@ -695,9 +695,9 @@ html{scroll-behavior:smooth}
   }
   .landing::before{height:min(430px,54vh)}
   .landing-inner{
-    max-width:1180px;
+    max-width:1240px;
     display:grid;
-    grid-template-columns:minmax(350px,.78fr) minmax(600px,1.22fr);
+    grid-template-columns:minmax(400px,.92fr) minmax(520px,1.08fr);
     grid-template-areas:
       "hero cards"
       "hero wellness"
@@ -708,22 +708,24 @@ html{scroll-behavior:smooth}
   .landing-hero{
     grid-area:hero;
     align-items:stretch;
-    justify-content:center;
+    justify-content:space-between;
     min-width:0;
-    padding:28px 24px;
+    min-height:462px;
+    padding:34px 28px 28px;
     border:1px solid rgba(255,255,255,.10);
     border-radius:24px;
     background:linear-gradient(155deg,rgba(255,255,255,.052),rgba(255,255,255,.018));
     box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 18px 48px rgba(29,2,8,.12);
   }
   .landing-clock{
-    font-size:clamp(4.05rem,5.2vw,4.85rem);
-    margin-top:0;
+    font-size:clamp(4.5rem,5.35vw,6rem);
+    margin:auto 0;
+    align-self:center;
   }
   .landing-meta{
-    grid-template-columns:minmax(138px,.95fr) minmax(0,1.15fr) 48px;
-    gap:14px;
-    margin-top:34px;
+    grid-template-columns:minmax(150px,.98fr) minmax(0,1.12fr) 50px;
+    gap:16px;
+    margin-top:0;
     padding:0;
   }
   .landing-logo{max-width:162px}
@@ -774,8 +776,8 @@ html{scroll-behavior:smooth}
   .ld-run-extra{font-size:.58rem}
   .ld-transit-summary{
     grid-area:transit;
-    grid-template-columns:minmax(0,1.58fr) minmax(220px,.48fr);
-    gap:14px;
+    grid-template-columns:minmax(0,1.42fr) minmax(300px,.58fr);
+    gap:16px;
     margin-top:0;
   }
   .ld-density{padding:16px 18px 14px;border-radius:18px}
@@ -786,24 +788,35 @@ html{scroll-behavior:smooth}
   .ld-density-notes{display:grid;gap:10px;margin-top:10px}
   .ld-density-note{padding:8px 10px;font-size:.58rem}
   .ld-density-note strong{font-size:.7rem}
-  .ld-speed{padding:15px 16px;border-radius:18px}
-  .ld-speed-cap{font-size:.72rem}
-  .ld-speed-hint{font-size:.58rem}
-  .ld-speed-val{font-size:1.8rem}
-  .ld-speed-unit{font-size:.68rem}
+  .ld-speed{
+    position:relative;padding:20px 22px;border-radius:18px;min-height:100%;
+    align-items:stretch;background:linear-gradient(155deg,rgba(255,255,255,.09),rgba(255,255,255,.035));
+  }
+  .ld-speed-dot{position:absolute;top:22px;left:22px;width:9px;height:9px;margin:0}
+  .ld-speed-wrap{display:grid;grid-template-rows:auto auto minmax(112px,1fr);padding-left:20px;height:100%}
+  .ld-speed-cap{font-size:.8rem;line-height:1.25}
+  .ld-speed-hint{font-size:.62rem;margin-top:3px}
+  .ld-speed-reading{
+    margin:0;padding:14px 0 4px;align-self:center;justify-self:center;
+    justify-content:center;gap:8px;width:100%;
+  }
+  .ld-speed-val{font-size:clamp(3.45rem,4.5vw,4.8rem);letter-spacing:-.055em;line-height:.9}
+  .ld-speed-unit{font-size:.82rem;padding-bottom:.28em}
 }
 
 @media (min-width:1280px){
-  .landing-inner{max-width:1240px;grid-template-columns:minmax(380px,.8fr) minmax(680px,1.2fr)}
-  .landing-clock{font-size:4.9rem}
+  .landing-inner{max-width:1320px;grid-template-columns:minmax(470px,.94fr) minmax(690px,1.06fr)}
+  .landing-clock{font-size:clamp(5.35rem,5.4vw,6.25rem)}
+  .landing-hero{min-height:486px;padding:38px 32px 30px}
+  .ld-speed-val{font-size:5rem}
 }
 
 @media (min-width:1024px) and (max-height:800px){
   .landing{align-items:flex-start;padding-top:22px;padding-bottom:22px}
   .landing-inner{gap:13px 18px}
-  .landing-hero{padding:20px 21px}
-  .landing-clock{font-size:4rem}
-  .landing-meta{margin-top:22px}
+  .landing-hero{min-height:390px;padding:24px 22px 20px}
+  .landing-clock{font-size:clamp(4.35rem,5vw,5rem)}
+  .landing-meta{margin-top:0}
   .ld-card{min-height:134px;padding-top:14px;padding-bottom:14px}
   .ld-time{font-size:2.35rem;margin-top:6px}
   .ld-wx{min-height:112px}
@@ -813,6 +826,8 @@ html{scroll-behavior:smooth}
   .ld-density-chart{height:auto}
   .ld-density-notes{margin-top:6px}
   .ld-density-note{padding:6px 8px}
+  .ld-speed-wrap{grid-template-rows:auto auto minmax(86px,1fr)}
+  .ld-speed-val{font-size:3.8rem}
 }
 
 </style>

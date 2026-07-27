@@ -1,4 +1,4 @@
-const CACHE = "paiduyna-full-2026-07-27-v32-density-compose";
+const CACHE = "paiduyna-full-2026-07-27-v33-desktop-clock-speed";
 const APP_SHELL = [
   "./",
   "./index.html",
