@@ -1,4 +1,4 @@
-const CACHE = "paiduyna-full-2026-07-27-v27-clock-lock-strava-logo";
+const CACHE = "paiduyna-full-2026-07-27-v29-weather-text-fix";
 const APP_SHELL = [
   "./",
   "./index.html",

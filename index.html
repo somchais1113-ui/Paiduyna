@@ -354,7 +354,7 @@ html{scroll-behavior:smooth}
 @keyframes netpulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}70%{box-shadow:0 0 0 8px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
 .brand-status.offline{background:var(--amber);animation:none}
 @media (prefers-reduced-motion:reduce){.brand-status{animation:none}}
-/* ---------- หน้า Dashboard (Landing) v27: ล็อกตำแหน่งนาฬิกา ปรับ colon regular และใช้โลโก้ Strava ---------- */
+/* ---------- หน้า Dashboard (Landing) v29: ปรับนาฬิกาไม่ทับกัน วันที่ไม่มีคำว่า พ.ศ. และยกข้อความ Weather ---------- */
 .landing{
   position:fixed;inset:0;z-index:60;color:#F7ECEC;
   display:flex;align-items:flex-start;justify-content:center;
@@ -379,31 +379,34 @@ html{scroll-behavior:smooth}
 @keyframes landIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .landing-hero{width:100%;display:flex;flex-direction:column;align-items:center}
 .landing-clock{
-  font:800 clamp(4.45rem,20.5vw,5.8rem) var(--font-display);
-  line-height:.88;margin-top:8px;width:4.86em;
+  font:800 clamp(3.5rem,16.5vw,5.25rem) var(--font-display);
+  line-height:.9;margin-top:8px;width:100%;max-width:100%;
   font-variant-numeric:tabular-nums;color:#FFF8F4;white-space:nowrap;
   font-feature-settings:"tnum" 1;text-shadow:0 5px 24px rgba(45,4,12,.16);
-  display:inline-flex;align-items:flex-end;justify-content:center;gap:0;
+}
+.landing-clock,.clock-time{
+  display:grid;grid-template-columns:1.12em .2em 1.12em .2em 1.12em .15em .68em;
+  column-gap:.025em;align-items:end;justify-content:center;
 }
 .landing-clock .clock-unit,.clock-time .clock-unit{
-  display:inline-block;flex:0 0 1.12em;width:1.12em;text-align:center;
-  font-weight:800;letter-spacing:-.06em;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;
+  display:block;min-width:0;text-align:center;font-weight:800;letter-spacing:-.045em;
+  font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;
 }
 .landing-clock .clock-sep,.clock-time .clock-sep{
-  display:inline-block;flex:0 0 .25em;width:.25em;text-align:center;
-  font-weight:400;opacity:.94;letter-spacing:0;margin:0;
+  display:block;min-width:0;text-align:center;font-weight:400;opacity:.9;
+  letter-spacing:0;line-height:.92;padding-bottom:.015em;
 }
 .landing-clock .clock-ms,.clock-time .clock-ms{
-  display:inline-block;flex:0 0 .75em;width:.75em;text-align:left;
-  font-weight:400;font-size:.34em;letter-spacing:0;line-height:1;
-  padding-bottom:.13em;margin-left:.03em;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;opacity:.95;
+  display:block;min-width:0;text-align:left;font-weight:400;font-size:.32em;
+  letter-spacing:.015em;line-height:1;padding-bottom:.16em;
+  font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;opacity:.94;
 }
 .landing-meta{
   width:100%;display:grid;grid-template-columns:minmax(124px,.92fr) minmax(0,1.25fr) 50px;
   align-items:center;gap:12px;margin-top:20px;padding:0 3px;
 }
 .landing-logo{display:block;width:100%;max-width:154px;height:auto;opacity:1;justify-self:start}
-.landing-date{font-size:1rem;line-height:1.45;color:#EBCFD4;font-weight:500;min-width:0}
+.landing-date{font-size:.96rem;line-height:1.35;color:#EBCFD4;font-weight:500;min-width:0}
 .ld-enter-quick{
   width:50px;height:50px;border-radius:50%;border:0;background:#FFF9F6;color:#54101D;
   display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 20px rgba(32,2,8,.18);
@@ -433,25 +436,27 @@ html{scroll-behavior:smooth}
   width:100%;display:grid;grid-template-columns:minmax(142px,.76fr) minmax(0,1.24fr);
   gap:10px;margin-top:10px;align-items:stretch;
 }
-.ld-cond{display:grid;grid-template-rows:.94fr 1.06fr;gap:9px;min-width:0}
+.ld-cond{display:grid;grid-template-rows:auto auto;align-content:start;gap:9px;min-width:0}
 .ld-wx{
   --wx-start:#2E9ED0;--wx-end:#1B7FB2;--wx-text:#F7FCFF;
-  position:relative;overflow:hidden;min-height:104px;border:1px solid rgba(255,255,255,.22);
-  border-radius:17px;padding:11px 12px;color:var(--wx-text);
+  position:relative;overflow:hidden;min-height:124px;border:1px solid rgba(255,255,255,.22);
+  border-radius:17px;padding:11px 12px 13px;color:var(--wx-text);
   background:linear-gradient(145deg,var(--wx-start),var(--wx-end));
   box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 7px 18px rgba(0,0,0,.09);
-  transition:background .35s ease,border-color .35s ease;display:flex;flex-direction:column;justify-content:space-between;gap:6px;
+  transition:background .35s ease,border-color .35s ease;display:flex;flex-direction:column;justify-content:flex-start;gap:5px;
 }
 .ld-wx::after{content:"";position:absolute;width:94px;height:94px;border-radius:50%;right:-34px;top:-40px;background:rgba(255,255,255,.11);pointer-events:none}
-.ld-wx-top,.ld-wx-main,.ld-wx-meta{position:relative;z-index:1}
+.ld-wx-top,.ld-wx-desc,.ld-wx-main,.ld-wx-meta{position:relative;z-index:1}
 .ld-wx-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .ld-wx-cap{font:800 .58rem var(--font-body);letter-spacing:.045em;line-height:1.2;text-transform:uppercase;opacity:.92}
 .ld-wx-icon{width:23px;height:23px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.32);background:rgba(255,255,255,.13);font-size:.92rem;line-height:1;flex:none;filter:drop-shadow(0 4px 8px rgba(0,0,0,.12))}
-.ld-wx-main{display:flex;align-items:flex-end;gap:8px;min-width:0;margin-top:2px}
-.ld-wx-temp{font:850 2.18rem var(--font-display);color:#fff;line-height:.92;font-variant-numeric:tabular-nums;letter-spacing:-1px}
-.ld-wx-copy{display:flex;flex-direction:column;min-width:0;padding-bottom:2px}
-.ld-wx-desc{font:800 .82rem var(--font-body);color:var(--wx-text);line-height:1.15;white-space:normal}
-.ld-wx-meta{font:650 .54rem var(--font-body);opacity:.86;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ld-wx-desc{
+  position:relative;z-index:1;font:800 .78rem var(--font-body);color:var(--wx-text);
+  line-height:1.22;white-space:normal;margin-top:0;min-height:1.22em;
+}
+.ld-wx-main{position:relative;z-index:1;display:flex;align-items:flex-end;min-width:0;margin-top:0}
+.ld-wx-temp{font:850 2.12rem var(--font-display);color:#fff;line-height:.92;font-variant-numeric:tabular-nums;letter-spacing:-1px}
+.ld-wx-meta{font:650 .54rem var(--font-body);line-height:1.3;opacity:.94;overflow:visible;text-overflow:clip;white-space:normal;margin-top:0;padding-bottom:1px}
 
 /* การ์ด AQI ภาษาไทย จากโครงข้อมูล PurpleAir */
 .ld-aqi{
@@ -537,7 +542,7 @@ html{scroll-behavior:smooth}
 
 @media (max-width:380px){
   .landing{padding-left:13px;padding-right:13px}
-  .landing-clock{font-size:clamp(3.85rem,20vw,4.75rem)}
+  .landing-clock{font-size:clamp(3.25rem,15.8vw,4.35rem)}
   .landing-meta{grid-template-columns:minmax(104px,.9fr) minmax(0,1.2fr) 51px;gap:9px;margin-top:18px}
   .landing-logo{max-width:132px}
   .landing-date{font-size:.86rem}
@@ -545,9 +550,9 @@ html{scroll-behavior:smooth}
   .ld-wellness{grid-template-columns:minmax(126px,.78fr) minmax(0,1.22fr);gap:8px}
   .ld-cond{gap:8px}
   .ld-wx,.ld-aqi{padding-left:10px;padding-right:10px}
-  .ld-wx-temp{font-size:2rem}
-  .ld-wx-desc{font-size:.76rem}
-  .ld-wx-meta{font-size:.5rem}
+  .ld-wx-temp{font-size:1.96rem}
+  .ld-wx-desc{font-size:.72rem}
+  .ld-wx-meta{font-size:.5rem;line-height:1.28}
   .ld-run{padding-left:10px;padding-right:10px}
 }
 @media (max-width:365px){
@@ -570,15 +575,16 @@ html{scroll-behavior:smooth}
 }
 @media (max-height:950px) and (min-width:340px){
   .landing{padding-top:max(20px,env(safe-area-inset-top));padding-bottom:16px}
-  .landing-clock{font-size:clamp(3.8rem,18vw,4.85rem);margin-top:2px}
+  .landing-clock{font-size:clamp(3.35rem,15.5vw,4.55rem);margin-top:2px}
   .landing-meta{margin-top:14px}
   .landing-cards{margin-top:13px;gap:8px}
   .ld-card{padding-top:11px;padding-bottom:12px}
   .ld-time{font-size:2rem;margin-top:4px}
   .ld-wellness{margin-top:8px;gap:8px}
   .ld-cond{gap:8px}
-  .ld-wx{min-height:88px;padding-top:9px;padding-bottom:9px}
-  .ld-wx-temp{font-size:1.9rem}
+  .ld-wx{min-height:118px;padding-top:9px;padding-bottom:12px}
+  .ld-wx-temp{font-size:1.84rem}
+  .ld-wx-desc{font-size:.7rem}
   .ld-aqi{min-height:96px;padding-top:9px;padding-bottom:9px}
   .ld-run{min-height:190px;padding-top:10px;padding-bottom:10px}
   .ld-density-chart{height:65px}
@@ -668,11 +674,9 @@ html{scroll-behavior:smooth}
             <span class="ld-wx-cap">สภาพอากาศ</span>
             <span class="ld-wx-icon" id="lWxIcon" aria-hidden="true">&#9925;</span>
           </div>
+          <div class="ld-wx-desc" id="lWxDesc">กำลังโหลดอากาศ</div>
           <div class="ld-wx-main">
             <span class="ld-wx-temp" id="lWxTemp">--&deg;</span>
-            <span class="ld-wx-copy">
-              <span class="ld-wx-desc" id="lWxDesc">กำลังโหลดอากาศ</span>
-            </span>
           </div>
           <div class="ld-wx-meta" id="lWxMeta">กรุงเทพมหานคร · กำลังอัปเดต</div>
         </div>
@@ -1319,6 +1323,11 @@ function thaiDate(iso){
   const [y,m,d] = iso.split("-").map(Number);
   const dt = new Date(y, m-1, d);
   return "วัน" + TH_DAYS[dt.getDay()] + "ที่ " + d + " " + TH_MONTHS[m-1] + " พ.ศ. " + (y+543);
+}
+function thaiLandingDate(iso){
+  const [y,m,d] = iso.split("-").map(Number);
+  const dt = new Date(y, m-1, d);
+  return "วัน" + TH_DAYS[dt.getDay()] + "ที่ " + d + " " + TH_MONTHS[m-1] + " " + (y+543);
 }
 
 function relativeAge(iso){
@@ -2547,7 +2556,7 @@ function updateLanding(dateObj, partsObj, todayIso, millis){
   const today = todayIso || bangkokISO(dateObj || new Date());
   const ms = Number.isFinite(millis) ? millis : (dateObj instanceof Date ? dateObj.getMilliseconds() : new Date().getMilliseconds());
   $("lClock").innerHTML = clockMarkup(p.hour, p.minute, p.second, ms);
-  $("lDate").textContent = thaiDate(today);
+  $("lDate").textContent = thaiLandingDate(today);
   try{
     const srt = nextSrtDeparture(nowMin);
     if(srt){
