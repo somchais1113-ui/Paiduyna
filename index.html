@@ -84,7 +84,7 @@ body{
 }
 .live-main{flex:1;min-width:0}
 .livecard .lbl{font-size:.68rem;letter-spacing:1.2px;color:var(--blue-200);font-weight:600;display:block;margin-bottom:2px}
-.clock-time{font-family:var(--font-display);font-weight:700;font-size:clamp(2.45rem,6vw,3.5rem);line-height:.98;font-variant-numeric:tabular-nums;letter-spacing:-1.2px}
+.clock-time{font-family:var(--font-display);font-weight:700;font-size:clamp(2.45rem,6vw,3.5rem);line-height:.98;width:4.86em;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;letter-spacing:0;display:inline-flex;align-items:flex-end;justify-content:center;gap:0;white-space:nowrap}
 .clock-date{font-size:.92rem;color:#F0D6DB;margin-top:8px;font-weight:500}
 .clock-zone{font-size:.74rem;color:var(--blue-200);margin-top:2px;font-weight:700;letter-spacing:.7px}
 .clock-card{justify-content:space-between}
@@ -354,7 +354,7 @@ html{scroll-behavior:smooth}
 @keyframes netpulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}70%{box-shadow:0 0 0 8px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
 .brand-status.offline{background:var(--amber);animation:none}
 @media (prefers-reduced-motion:reduce){.brand-status{animation:none}}
-/* ---------- หน้า Dashboard (Landing) v25: ปรับ Weather การ์ดสีแบบ AQI และย่อลูกศร ---------- */
+/* ---------- หน้า Dashboard (Landing) v27: ล็อกตำแหน่งนาฬิกา ปรับ colon regular และใช้โลโก้ Strava ---------- */
 .landing{
   position:fixed;inset:0;z-index:60;color:#F7ECEC;
   display:flex;align-items:flex-start;justify-content:center;
@@ -380,9 +380,23 @@ html{scroll-behavior:smooth}
 .landing-hero{width:100%;display:flex;flex-direction:column;align-items:center}
 .landing-clock{
   font:800 clamp(4.45rem,20.5vw,5.8rem) var(--font-display);
-  letter-spacing:-5px;line-height:.88;margin-top:8px;
+  line-height:.88;margin-top:8px;width:4.86em;
   font-variant-numeric:tabular-nums;color:#FFF8F4;white-space:nowrap;
-  text-shadow:0 5px 24px rgba(45,4,12,.16);
+  font-feature-settings:"tnum" 1;text-shadow:0 5px 24px rgba(45,4,12,.16);
+  display:inline-flex;align-items:flex-end;justify-content:center;gap:0;
+}
+.landing-clock .clock-unit,.clock-time .clock-unit{
+  display:inline-block;flex:0 0 1.12em;width:1.12em;text-align:center;
+  font-weight:800;letter-spacing:-.06em;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;
+}
+.landing-clock .clock-sep,.clock-time .clock-sep{
+  display:inline-block;flex:0 0 .25em;width:.25em;text-align:center;
+  font-weight:400;opacity:.94;letter-spacing:0;margin:0;
+}
+.landing-clock .clock-ms,.clock-time .clock-ms{
+  display:inline-block;flex:0 0 .75em;width:.75em;text-align:left;
+  font-weight:400;font-size:.34em;letter-spacing:0;line-height:1;
+  padding-bottom:.13em;margin-left:.03em;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;opacity:.95;
 }
 .landing-meta{
   width:100%;display:grid;grid-template-columns:minmax(124px,.92fr) minmax(0,1.25fr) 50px;
@@ -488,7 +502,10 @@ html{scroll-behavior:smooth}
 .ld-run-extra strong{color:#fff;font-weight:700}
 .ld-run-empty{border:1px dashed rgba(255,255,255,.18);border-radius:11px;padding:12px;color:#E8C9CE;font-size:.67rem;line-height:1.45;background:rgba(45,6,13,.25);min-height:106px;display:flex;align-items:center}
 .ld-run-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:7px;font-size:.51rem;color:#CFA3AA}
-.ld-run-link{color:#FC9A68;font-weight:800;text-decoration:underline;text-underline-offset:2px}
+.ld-run-link{display:inline-flex;align-items:center;justify-content:flex-end;min-width:54px;text-decoration:none;line-height:1}
+.ld-run-link-logo{display:block;width:55px;max-width:100%;height:auto;opacity:.94;transition:opacity .16s ease,transform .16s ease}
+.ld-run-link:hover .ld-run-link-logo,.ld-run-link:focus-visible .ld-run-link-logo{opacity:1;transform:translateY(-1px)}
+.ld-run-link:focus-visible{outline:2px solid rgba(255,255,255,.32);outline-offset:3px;border-radius:4px}
 
 /* กราฟความหนาแน่น + ความเร็ว วางเป็นกลุ่มเดียวเพื่อลดความรก */
 .ld-transit-summary{
@@ -520,7 +537,7 @@ html{scroll-behavior:smooth}
 
 @media (max-width:380px){
   .landing{padding-left:13px;padding-right:13px}
-  .landing-clock{font-size:clamp(3.85rem,20vw,4.75rem);letter-spacing:-4px}
+  .landing-clock{font-size:clamp(3.85rem,20vw,4.75rem)}
   .landing-meta{grid-template-columns:minmax(104px,.9fr) minmax(0,1.2fr) 51px;gap:9px;margin-top:18px}
   .landing-logo{max-width:132px}
   .landing-date{font-size:.86rem}
@@ -604,7 +621,7 @@ html{scroll-behavior:smooth}
   .connection-dot{margin:0}
   .clock-card{gap:8px}
   .clock-card .live-main{flex:0 1 47%}
-  .clock-card .clock-time{font-size:clamp(1.95rem,9.5vw,2.45rem);letter-spacing:-1px}
+  .clock-card .clock-time{font-size:clamp(1.95rem,9.5vw,2.45rem)}
   .clock-card .clock-date{font-size:.76rem;margin-top:7px}
   .clock-card .clock-zone{font-size:.68rem}
   .density-block{flex:1 1 53%;min-width:0}
@@ -695,7 +712,7 @@ html{scroll-behavior:smooth}
         </div>
         <div class="ld-run-foot">
           <span id="lRunSource">ข้อมูลจาก Strava</span>
-          <a class="ld-run-link" id="lRunLink" href="#" target="_blank" rel="noopener" hidden>ดูใน Strava</a>
+          <a class="ld-run-link" id="lRunLink" href="#" target="_blank" rel="noopener" aria-label="ดูใน Strava" title="ดูใน Strava" hidden><img class="ld-run-link-logo" src="./strava-logo.png" alt="Strava"></a>
         </div>
       </section>
     </div>
@@ -1234,6 +1251,13 @@ const MODE_SCHEDULES = {
    ============================================================ */
 const $ = id => document.getElementById(id);
 const p2 = n => String(n).padStart(2,"0");
+const clockMarkup = (hour,minute,second,millisecond=0) => {
+  const ms2 = p2(Math.floor((millisecond || 0)/10));
+  return "<span class=\"clock-unit\">" + p2(hour) + "</span>"
+    + "<span class=\"clock-sep\">:</span><span class=\"clock-unit\">" + p2(minute) + "</span>"
+    + "<span class=\"clock-sep\">:</span><span class=\"clock-unit\">" + p2(second) + "</span>"
+    + "<span class=\"clock-sep\">:</span><span class=\"clock-ms\">" + ms2 + "</span>";
+};
 const toMin = t => t ? (+t.slice(0,2))*60 + (+t.slice(3,5)) : null;
 const isoDate = d => d.getFullYear()+"-"+p2(d.getMonth()+1)+"-"+p2(d.getDate());
 const fromStore = (key, fallback=[]) => {
@@ -1405,9 +1429,16 @@ function updateDensityPoint(hour,minute){
 }
 function tickClock(){
   const d = new Date(), p = bangkokParts(d), today = bangkokISO(d);
-  $("clockTime").textContent = p2(p.hour)+":"+p2(p.minute)+":"+p2(p.second);
+  const ms = d.getMilliseconds();
+  $("clockTime").innerHTML = clockMarkup(p.hour,p.minute,p.second,ms);
   $("clockDate").textContent = thaiDate(today);
   $("clockZone").textContent = "เวลาไทย";
+  updateLanding(d, p, today, ms);
+
+  const secondKey = today + " " + p2(p.hour) + ":" + p2(p.minute) + ":" + p2(p.second);
+  if(tickClock._lastSecondKey === secondKey) return;
+  tickClock._lastSecondKey = secondKey;
+
   updateDensityPoint(p.hour,p.minute);
   $("nowTimeHint").textContent = $("chkNow").checked ? "กำลัง Sync | ตอนนี้ " + p2(p.hour)+":"+p2(p.minute) : "เลือกเวลาเอง";
   if(p.second === 0){
@@ -1418,7 +1449,6 @@ function tickClock(){
     }
     renderTrips();
   }
-  updateLanding();
 }
 
 /* ============================================================
@@ -2510,12 +2540,14 @@ async function loadStravaRun(){
 }
 
 // อัปเดตหน้า Landing ทุกวินาที (เรียกจาก tickClock) ทำงานเฉพาะตอนที่ยังแสดงอยู่
-function updateLanding(){
+function updateLanding(dateObj, partsObj, todayIso, millis){
   const land = $("landing");
   if(!land || land.hidden || land.style.display === "none") return;
-  const p = bangkokParts(), nowMin = p.hour*60 + p.minute;
-  $("lClock").textContent = p2(p.hour) + ":" + p2(p.minute) + ":" + p2(p.second);
-  $("lDate").textContent = thaiDate(bangkokISO());
+  const p = partsObj || bangkokParts(dateObj || new Date()), nowMin = p.hour*60 + p.minute;
+  const today = todayIso || bangkokISO(dateObj || new Date());
+  const ms = Number.isFinite(millis) ? millis : (dateObj instanceof Date ? dateObj.getMilliseconds() : new Date().getMilliseconds());
+  $("lClock").innerHTML = clockMarkup(p.hour, p.minute, p.second, ms);
+  $("lDate").textContent = thaiDate(today);
   try{
     const srt = nextSrtDeparture(nowMin);
     if(srt){
@@ -2578,7 +2610,7 @@ function init(){
   loadStravaRun();
   // นาฬิกาเริ่มก่อนเสมอ เพื่อให้ยังเดินได้แม้ส่วนอื่นมีปัญหา
   tickClock();
-  setInterval(tickClock, 1000);
+  setInterval(tickClock, 100);
 
   state.date = bangkokISO();
   $("inpTime").value = bangkokTime();
@@ -2681,7 +2713,7 @@ function boot(){
       b.textContent = "หน้าเว็บทำงานไม่สมบูรณ์ | " + (err && err.message ? err.message : String(err))
                     + " | โปรดแจ้งข้อความนี้แก่ผู้ดูแลระบบ";
     }
-    try{ tickClock(); setInterval(tickClock, 1000); }catch(e){}
+    try{ tickClock(); setInterval(tickClock, 100); }catch(e){}
     try{ loadWeather(); loadAirQuality(); loadStatus(); }catch(e){}
   }
 }
