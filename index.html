@@ -349,6 +349,57 @@ html{scroll-behavior:smooth}
 .park-map-cap{font:700 .82rem var(--font-display);color:var(--navy-700);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .park-map-open{flex:none;font:700 .76rem var(--font-body);color:var(--navy-700);text-decoration:underline;text-underline-offset:2px}
 .park-map-frame iframe{display:block;width:100%;height:300px;border:0}
+/* ---------- สถานะออนไลน์แบบจุดกะพริบ ---------- */
+.brand-status{width:9px;height:9px;border-radius:50%;background:#4ADE80;flex:none;box-shadow:0 0 0 0 rgba(74,222,128,.55);animation:netpulse 2.2s infinite}
+@keyframes netpulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}70%{box-shadow:0 0 0 8px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+.brand-status.offline{background:var(--amber);animation:none}
+@media (prefers-reduced-motion:reduce){.brand-status{animation:none}}
+/* ---------- หน้า Dashboard (Landing) ---------- */
+.landing{position:fixed;inset:0;z-index:60;background:linear-gradient(160deg,var(--burgundy),#3A0A12 72%);color:#F7ECEC;display:flex;align-items:center;justify-content:center;padding:26px 18px;overflow-y:auto}
+.landing[hidden]{display:none}
+.landing.closing{animation:landOut .45s ease forwards}
+@keyframes landOut{to{opacity:0;visibility:hidden}}
+.landing-inner{width:100%;max-width:520px;display:flex;flex-direction:column;align-items:center;animation:landIn .5s ease}
+@keyframes landIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.landing-logo{height:66px;width:auto;max-width:90%;opacity:1}
+.landing-clock{font:800 clamp(2.3rem,12vw,3.4rem) var(--font-display);letter-spacing:-1px;line-height:1;margin-top:16px;font-variant-numeric:tabular-nums}
+.landing-date{font-size:.88rem;color:#E8C9CE;margin-top:6px}
+/* แถบสภาพอากาศ + AQI */
+.ld-cond{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+.ld-wx,.ld-aqi{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:11px}
+.ld-wx-icon{font-size:1.9rem;line-height:1;flex:none}
+.ld-wx-txt,.ld-aqi-txt{display:flex;flex-direction:column;min-width:0}
+.ld-wx-temp{font:800 1.35rem var(--font-display);color:#fff;line-height:1.1}
+.ld-wx-desc{font-size:.72rem;color:#E8C9CE;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
+.ld-aqi-val{font:800 1.9rem var(--font-display);color:#fff;line-height:1;flex:none}
+.ld-aqi-cap{font:700 .62rem var(--font-body);color:#C89AA1;letter-spacing:.04em}
+.ld-aqi-status{font-size:.78rem;color:#F0DADE;margin-top:2px;font-weight:600}
+/* กราฟความหนาแน่น */
+.ld-density{width:100%;margin-top:20px}
+.ld-density-title{font:700 .72rem var(--font-body);color:#C89AA1;margin-bottom:2px}
+.ld-density-chart{width:100%;height:76px;display:block}
+.ld-density-area{fill:url(#ldDensityFill)}
+.ld-density-line{fill:none;stroke:#E98D9A;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.ld-density-halo{fill:rgba(233,141,154,.4)}
+.ld-density-point{fill:#fff;stroke:#E98D9A;stroke-width:1.5}
+.ld-density-labels text{fill:#B78A91;font-size:9px;font-family:var(--font-body)}
+/* การ์ดรอบถัดไป (ไม่มีแถบสี เวลานับถอยหลังอยู่หน้าประโยค) */
+.landing-cards{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.ld-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:15px;padding:16px}
+.ld-kind{font:600 .74rem var(--font-body);color:#E8C9CE;line-height:1.35}
+.ld-cd{font:800 .8rem var(--font-body);color:#F6C6CD}
+.ld-time{font:800 2.2rem var(--font-display);letter-spacing:-1px;line-height:1.05;margin-top:8px}
+.ld-sub{font-size:.78rem;color:#EAD3D7;margin-top:4px;line-height:1.4}
+.landing-foot{width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:22px;flex-wrap:wrap}
+.ld-speed{cursor:pointer;user-select:none}
+.ld-speed-wrap{display:flex;flex-direction:column;gap:2px}
+.ld-speed-cap{font:600 .72rem var(--font-body);color:#C89AA1}
+.ld-speed-val{font:800 1.7rem var(--font-display);color:#fff;line-height:1}
+.ld-speed-unit{font:700 .8rem var(--font-body);color:#EAD3D7}
+.ld-enter{flex:1;min-width:170px;border:0;border-radius:12px;background:#F7ECEC;color:var(--burgundy);font:800 1rem var(--font-display);padding:14px 20px;cursor:pointer;transition:transform .06s,box-shadow .15s;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.ld-enter:hover{box-shadow:0 8px 26px rgba(0,0,0,.32)}
+.ld-enter:active{transform:translateY(1px)}
+@media (max-width:460px){.landing-cards,.ld-cond{grid-template-columns:1fr}.landing-foot{flex-direction:column-reverse;align-items:stretch}.ld-enter{width:100%}}
 .toast{position:fixed;left:50%;bottom:18px;z-index:20;transform:translate(-50%,30px);opacity:0;pointer-events:none;background:var(--ink);color:#fff;border-radius:9px;padding:9px 14px;font-size:.8rem;box-shadow:var(--shadow);transition:.2s}
 .toast.show{transform:translate(-50%,0);opacity:1}
 .tables-hidden{display:none}
@@ -398,6 +449,87 @@ html{scroll-behavior:smooth}
 </head>
 <body>
 
+<noscript><style>#landing{display:none!important}</style></noscript>
+<div class="landing" id="landing">
+  <div class="landing-inner">
+    <img class="landing-logo" src="brand-logo-v4.svg" alt="PAI.DUY.NA">
+    <div class="landing-clock" id="lClock">--:--:--</div>
+    <div class="landing-date" id="lDate">กำลังโหลด</div>
+
+    <div class="landing-cards">
+      <div class="ld-card">
+        <div class="ld-kind"><span class="ld-cd" id="lSrtCd">กำลังคำนวณ</span><span class="ld-kind-txt"> | รถไฟชานเมือง &bull; เที่ยวถัดไป</span></div>
+        <div class="ld-time" id="lSrtTime">--:--</div>
+        <div class="ld-sub" id="lSrtSub">กำลังคำนวณ</div>
+      </div>
+      <div class="ld-card">
+        <div class="ld-kind"><span class="ld-cd" id="lArlCd">กำลังคำนวณ</span><span class="ld-kind-txt"> | Airport Rail Link &bull; เที่ยวถัดไป</span></div>
+        <div class="ld-time" id="lArlTime">--:--</div>
+        <div class="ld-sub" id="lArlSub">กำลังคำนวณ</div>
+      </div>
+    </div>
+
+    <div class="ld-cond">
+      <div class="ld-wx">
+        <span class="ld-wx-icon" id="lWxIcon">&#9925;</span>
+        <span class="ld-wx-txt">
+          <span class="ld-wx-temp" id="lWxTemp">--&deg;</span>
+          <span class="ld-wx-desc" id="lWxDesc">กำลังโหลดอากาศ</span>
+        </span>
+      </div>
+      <div class="ld-aqi">
+        <span class="ld-aqi-val" id="lAqiVal">--</span>
+        <span class="ld-aqi-txt">
+          <span class="ld-aqi-cap">คุณภาพอากาศ (US AQI)</span>
+          <span class="ld-aqi-status" id="lAqiStatus">กำลังโหลด</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="ld-density">
+      <div class="ld-density-title">ความหนาแน่นผู้โดยสารโดยประมาณ</div>
+      <svg class="ld-density-chart" viewBox="0 0 300 92" role="img" aria-label="กราฟความหนาแน่นผู้โดยสารโดยประมาณ">
+        <defs>
+          <linearGradient id="ldDensityFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#E98D9A" stop-opacity=".28"/>
+            <stop offset="100%" stop-color="#E98D9A" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path class="ld-density-area" d="M8 64 C30 64 40 28 66 27 C92 26 90 60 132 60 C175 60 178 19 218 14 C246 10 257 45 290 58 L290 70 L8 70 Z"/>
+        <path class="ld-density-line" id="ldDensityLine" d="M8 64 C30 64 40 28 66 27 C92 26 90 60 132 60 C175 60 178 19 218 14 C246 10 257 45 290 58"/>
+        <circle class="ld-density-halo" id="ldDensityHalo" cx="66" cy="27" r="9"/>
+        <circle class="ld-density-point" id="ldDensityPoint" cx="66" cy="27" r="4.5"/>
+        <g class="ld-density-labels" text-anchor="middle">
+          <text x="10" y="88">06</text><text x="66" y="88">08</text><text x="132" y="88">12</text><text x="218" y="88">18:30</text><text x="288" y="88">20</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="landing-foot">
+      <div class="ld-speed" id="lSpeed" role="button" tabindex="0" title="แตะเพื่อวัดความเร็ว">
+        <div class="ld-speed-wrap">
+          <span class="ld-speed-cap" id="lSpeedCap">ความเร็วปัจจุบัน · แตะเพื่อเปิด</span>
+          <span><span class="ld-speed-val" id="lSpeedVal">–</span> <span class="ld-speed-unit">กม./ชม.</span></span>
+        </div>
+      </div>
+      <button class="ld-enter" id="btnEnterApp" type="button">เข้าสู่ตารางเดินรถ</button>
+    </div>
+  </div>
+</div>
+<script>
+  /* Failsafe: ให้ปุ่มเข้าสู่แอปทำงานได้เสมอ แม้สคริปต์หลักจะมีปัญหา จะได้ไม่ติดค้างที่หน้า Landing */
+  (function(){
+    var b = document.getElementById("btnEnterApp");
+    if(!b) return;
+    b.addEventListener("click", function(){
+      if(typeof enterApp === "function"){ try{ enterApp(); return; }catch(e){} }
+      var l = document.getElementById("landing");
+      if(l) l.style.display = "none";
+      document.body.style.overflow = "";
+    });
+  })();
+</script>
+
 <header class="masthead">
   <div class="brandbar">
     <div class="wrap">
@@ -405,10 +537,10 @@ html{scroll-behavior:smooth}
         <span class="brand-logo-frame">
           <img class="brand-logo" src="brand-logo-v4.svg" alt="PAI.DUY.NA follow time together">
         </span>
+        <span class="brand-status" id="netDot" aria-label="ออนไลน์" title="ออนไลน์"></span>
       </div>
       <div class="brand-actions">
         <span class="brand-live"><span class="dot"></span>LIVE ASSIST</span>
-        <span class="net-state" id="netState">ออนไลน์</span>
         <button class="top-btn" id="btnInstall" type="button" hidden>ติดตั้งแอพ</button>
       </div>
     </div>
@@ -1079,10 +1211,8 @@ function densityXAtMinute(minute){
   }
   return DENSITY_TIME_MARKS[DENSITY_TIME_MARKS.length-1].x;
 }
-function updateDensityPoint(hour,minute){
-  const path = $("densityLine"), point = $("densityPoint"), halo = $("densityHalo");
+function placeDensityPoint(path, point, halo, targetX){
   if(!path || !point || !halo || typeof path.getTotalLength !== "function") return;
-  const targetX = densityXAtMinute(Number(hour)*60+Number(minute));
   const length = path.getTotalLength();
   let low = 0, high = length;
   for(let i=0;i<18;i++){
@@ -1095,10 +1225,18 @@ function updateDensityPoint(hour,minute){
     el.setAttribute("cx",position.x.toFixed(2));
     el.setAttribute("cy",position.y.toFixed(2));
   });
-  const currentTime = p2(hour)+":"+p2(minute);
-  const description = "จุดสีขาวแสดงความหนาแน่นโดยประมาณ ณ เวลา " + currentTime;
-  $("densityChartDesc").textContent = description;
-  point.closest(".density-block").setAttribute("aria-label",description);
+}
+function updateDensityPoint(hour,minute){
+  const targetX = densityXAtMinute(Number(hour)*60+Number(minute));
+  placeDensityPoint($("densityLine"), $("densityPoint"), $("densityHalo"), targetX);
+  placeDensityPoint($("ldDensityLine"), $("ldDensityPoint"), $("ldDensityHalo"), targetX); // กราฟบนหน้า Landing
+  const path = $("densityLine");
+  if(path && typeof path.getTotalLength === "function"){
+    const description = "จุดสีขาวแสดงความหนาแน่นโดยประมาณ ณ เวลา " + p2(hour)+":"+p2(minute);
+    if($("densityChartDesc")) $("densityChartDesc").textContent = description;
+    const block = path.closest(".density-block");
+    if(block) block.setAttribute("aria-label",description);
+  }
 }
 function tickClock(){
   const d = new Date(), p = bangkokParts(d), today = bangkokISO(d);
@@ -1115,6 +1253,7 @@ function tickClock(){
     }
     renderTrips();
   }
+  updateLanding();
 }
 
 /* ============================================================
@@ -1145,10 +1284,16 @@ async function loadWeather(){
     $("wxMeta").textContent = "ความชื้น " + c.relative_humidity_2m + "% | สูงสุด "
       + Math.round(dl.temperature_2m_max[0]) + "\u00B0 ต่ำสุด " + Math.round(dl.temperature_2m_min[0])
       + "\u00B0 | โอกาสฝน " + dl.precipitation_probability_max[0] + "%";
+    if($("lWxTemp")){
+      $("lWxTemp").textContent = Math.round(c.temperature_2m) + "\u00B0C";
+      $("lWxIcon").textContent = icon;
+      $("lWxDesc").textContent = desc;
+    }
   }catch(e){
     $("wxTemp").textContent = "--\u00B0";
     $("wxDesc").textContent = "เรียกข้อมูลอากาศไม่สำเร็จ";
     $("wxMeta").textContent = "ตรวจสอบการเชื่อมต่ออินเทอร์เน็ต แล้วกดรีเฟรชข้อมูล";
+    if($("lWxTemp")){ $("lWxTemp").textContent = "--\u00B0"; $("lWxDesc").textContent = "อากาศไม่พร้อม"; }
   }
 }
 
@@ -1177,11 +1322,18 @@ async function loadAirQuality(){
     $("aqiStatus").textContent = label;
     $("aqiStatus").className = "aqi-status " + level;
     $("aqiPm").textContent = "PM2.5 " + Math.round(c.pm2_5) + " | PM10 " + Math.round(c.pm10) + " \u00B5g/m\u00B3";
+    if($("lAqiVal")){
+      const AQI_COLOR = {lv1:"#5FD68C",lv2:"#FBBF24",lv3:"#FB923C",lv4:"#F87171",lv5:"#C084FC",lv6:"#FCA5A5"};
+      $("lAqiVal").textContent = aqi;
+      $("lAqiStatus").textContent = label;
+      $("lAqiStatus").style.color = AQI_COLOR[level] || "#F0DADE";
+    }
   }catch(e){
     $("aqiVal").textContent = "--";
     $("aqiStatus").textContent = "เรียกข้อมูลไม่สำเร็จ";
     $("aqiStatus").className = "aqi-status";
     $("aqiPm").textContent = "กดรีเฟรชข้อมูลเพื่อลองใหม่";
+    if($("lAqiVal")){ $("lAqiVal").textContent = "--"; $("lAqiStatus").textContent = "อากาศไม่พร้อม"; }
   }
 }
 
@@ -1748,8 +1900,12 @@ async function setReminder(){
    ============================================================ */
 function updateNetwork(){
   const online = navigator.onLine;
-  $("netState").textContent = online ? "ออนไลน์" : "ออฟไลน์";
-  $("netState").classList.toggle("offline",!online);
+  const dot = $("netDot");
+  if(dot){
+    dot.classList.toggle("offline", !online);
+    dot.title = online ? "ออนไลน์" : "ออฟไลน์";
+    dot.setAttribute("aria-label", online ? "ออนไลน์" : "ออฟไลน์");
+  }
 }
 async function installApp(){
   if(!state.installPrompt) return;
@@ -1768,7 +1924,12 @@ async function installApp(){
    - หมายเหตุ: แสดง "ตำแหน่ง" ลานจอด ไม่ใช่สถานะที่ว่างแบบเรียลไทม์
    ============================================================ */
 let PARKING = null;
-const OVERPASS_URL = "https://overpass-api.de/api/interpreter";
+// Overpass มีหลาย mirror บริการฟรี ลองสลับกันเพื่อลดโอกาสล้มเหลวเมื่อเซิร์ฟเวอร์หลักคิวเต็ม
+const OVERPASS_MIRRORS = [
+  "https://overpass-api.de/api/interpreter",
+  "https://overpass.kumi.systems/api/interpreter",
+  "https://maps.mail.ru/osm/tools/overpass/api/interpreter"
+];
 const PARKING_RADIUS_M = 800; // รัศมีค้นหารอบตำแหน่งผู้ใช้ (เมตร)
 
 // ลิงก์ค้นหาลานจอดบน Google Maps จากข้อความ (ใช้ข้อมูลจริงของ Google ไม่ต้องมีพิกัดเอง)
@@ -1893,6 +2054,34 @@ function renderParkingStation(){
 }
 
 // เลเยอร์ค้นหาสด: หาลานจอดรอบตำแหน่งผู้ใช้ผ่าน Overpass API
+// สอบถาม Overpass โดยลองทีละ mirror และมี timeout ฝั่ง client กันค้าง
+async function overpassQuery(lat, lng){
+  const q = "[out:json][timeout:25];("
+    + 'node["amenity"="parking"](around:' + PARKING_RADIUS_M + "," + lat + "," + lng + ");"
+    + 'way["amenity"="parking"](around:' + PARKING_RADIUS_M + "," + lat + "," + lng + ");"
+    + ");out center 40;";
+  let lastErr;
+  for(const base of OVERPASS_MIRRORS){
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 15000); // เลิกรอ mirror ที่ช้าเกิน 15 วินาที
+    try{
+      const r = await fetch(base, {
+        method: "POST",
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+        body: "data=" + encodeURIComponent(q),
+        signal: ctrl.signal
+      });
+      clearTimeout(timer);
+      if(!r.ok) throw new Error("status " + r.status);
+      return await r.json();
+    }catch(e){
+      clearTimeout(timer);
+      lastErr = e; // ลอง mirror ถัดไป
+    }
+  }
+  throw lastErr || new Error("overpass unavailable");
+}
+
 function findParkingNearMe(){
   const list = $("parkingList");
   if(!("geolocation" in navigator)) return showToast("อุปกรณ์นี้ไม่รองรับการอ่านตำแหน่ง");
@@ -1906,15 +2095,12 @@ function findParkingNearMe(){
 
   navigator.geolocation.getCurrentPosition(async pos => {
     const lat = pos.coords.latitude, lng = pos.coords.longitude;
-    // ดึงทั้งจุด (node) และพื้นที่ (way) ที่เป็น amenity=parking รอบผู้ใช้
-    const q = "[out:json][timeout:20];("
-      + 'node["amenity"="parking"](around:' + PARKING_RADIUS_M + "," + lat + "," + lng + ");"
-      + 'way["amenity"="parking"](around:' + PARKING_RADIUS_M + "," + lat + "," + lng + ");"
-      + ");out center 40;";
+    // แสดงแผนที่รอบตำแหน่งผู้ใช้ทันที เพื่อให้ใช้งานได้แม้ดึงรายชื่อไม่สำเร็จ
+    showParkMap(gmapsEmbedLatLng(lat, lng, "ที่จอดรถ"),
+      gmapsSearch("ที่จอดรถ ใกล้ " + lat.toFixed(5) + "," + lng.toFixed(5)),
+      "ลานจอดใกล้ตำแหน่งคุณ");
     try{
-      const r = await fetch(OVERPASS_URL + "?data=" + encodeURIComponent(q));
-      if(!r.ok) throw new Error("overpass " + r.status);
-      const data = await r.json();
+      const data = await overpassQuery(lat, lng);
       const items = (data.elements || []).map(el => {
         const plat = el.lat != null ? el.lat : (el.center && el.center.lat);
         const plng = el.lon != null ? el.lon : (el.center && el.center.lon);
@@ -1928,11 +2114,8 @@ function findParkingNearMe(){
       }).filter(Boolean).sort((a,b) => a.dist - b.dist).slice(0, 15);
 
       list.innerHTML = "";
-      showParkMap(gmapsEmbedLatLng(lat, lng, "ที่จอดรถ"),
-        gmapsSearch("ที่จอดรถ ใกล้ " + lat.toFixed(5) + "," + lng.toFixed(5)),
-        "ลานจอดใกล้ตำแหน่งคุณ");
       if(!items.length){
-        appendParkingFallback(list, "ไม่พบลานจอดในรัศมีใกล้เคียง ลองค้นหาบน Google Maps แทน", gmapsSearch("ที่จอดรถ"));
+        appendParkingFallback(list, "ยังไม่มีข้อมูลลานจอดในฐานข้อมูลรอบจุดนี้ ดูตำแหน่งได้จากแผนที่ด้านบน", gmapsSearch("ที่จอดรถ ใกล้ " + lat.toFixed(5) + "," + lng.toFixed(5)));
         return;
       }
       list.append(parkingSubhead("ลานจอดใกล้ตำแหน่งคุณ · OpenStreetMap"));
@@ -1943,9 +2126,10 @@ function findParkingNearMe(){
         mapUrl: gmapsDir(it.lat, it.lng)
       })));
     }catch(e){
+      // แผนที่ด้านบนแสดงอยู่แล้ว จึงบอกให้ผู้ใช้ดูจากแผนที่แทน ไม่ใช่ข้อความล้มเหลวที่น่าตกใจ
       list.innerHTML = "";
       appendParkingFallback(list,
-        "ค้นหาสดไม่สำเร็จ (อาจไม่มีอินเทอร์เน็ตหรือระบบค้นหาไม่ว่าง) ลองใหม่หรือค้นหาบนแผนที่",
+        "ดึงรายชื่อลานจอดอัตโนมัติไม่ได้ในขณะนี้ ดูตำแหน่งลานจอดได้จากแผนที่ด้านบน หรือเปิดใน Google Maps",
         gmapsSearch("ที่จอดรถ ใกล้ " + lat.toFixed(5) + "," + lng.toFixed(5)));
     }
   }, error => {
@@ -1964,8 +2148,106 @@ function appendParkingFallback(list, message, url){
   list.append(p, a);
 }
 
+/* ============================================================
+   18. หน้า Dashboard (Landing) รอบถัดไปตามเวลาจริง + ความเร็วผู้ใช้
+   ============================================================ */
+let LANDING_SPEED_WATCH = null;
+
+// หาเวลาออกรอบถัดไปจากรายการเวลา (คืนค่าที่ใกล้ที่สุดที่ยังไม่ผ่าน วนข้ามเที่ยงคืนได้)
+function nextByTimes(times, nowMin){
+  let best = null, bestDiff = Infinity;
+  times.forEach(tt => {
+    const dep = toMin(tt); if(dep == null) return;
+    let diff = dep - nowMin; if(diff < 0) diff += 1440; // เลยไปแล้วถือเป็นรอบพรุ่งนี้
+    if(diff < bestDiff){ bestDiff = diff; best = {dep:tt, depMin:dep, diff}; }
+  });
+  return best;
+}
+// รอบรถไฟชานเมืองปกติถัดไป อ้างอิงเที่ยวขึ้นจากหัวลำโพงไปฉะเชิงเทรา
+function nextSrtDeparture(nowMin){
+  const trips = findTrips(SCHEDULES.daily, "krungthep", "chachoengsao");
+  let best = null, bestDiff = Infinity;
+  trips.forEach(t => {
+    let diff = t.depMin - nowMin; if(diff < 0) diff += 1440;
+    if(diff < bestDiff){ bestDiff = diff; best = Object.assign({}, t, {diff}); }
+  });
+  return best;
+}
+// รอบ Airport Rail Link ถัดไป เลือกตารางวันธรรมดา/วันหยุดตามวันจริง
+function nextArlDeparture(nowMin){
+  const sc = isWeekendDate(bangkokISO()) ? SCHEDULES.arlWeekend : SCHEDULES.arlWeekday;
+  const best = nextByTimes(sc.routes["arl_phayathai|arl_suvarnabhumi"].departures, nowMin);
+  if(best) best.arr = arlArrival(best.dep);
+  return best;
+}
+function setLandingCountdown(id, diff){
+  const el = $(id); if(!el) return;
+  el.textContent = diff <= 0 ? "กำลังออก" : "อีก " + fmtDur(diff);
+}
+// อัปเดตหน้า Landing ทุกวินาที (เรียกจาก tickClock) ทำงานเฉพาะตอนที่ยังแสดงอยู่
+function updateLanding(){
+  const land = $("landing");
+  if(!land || land.hidden || land.style.display === "none") return;
+  const p = bangkokParts(), nowMin = p.hour*60 + p.minute;
+  $("lClock").textContent = p2(p.hour) + ":" + p2(p.minute) + ":" + p2(p.second);
+  $("lDate").textContent = thaiDate(bangkokISO());
+  try{
+    const srt = nextSrtDeparture(nowMin);
+    if(srt){
+      $("lSrtTime").textContent = srt.dep;
+      $("lSrtSub").textContent = "ขบวน " + srt.no + " · หัวลำโพง → ฉะเชิงเทรา";
+      setLandingCountdown("lSrtCd", srt.diff);
+    }
+    const arl = nextArlDeparture(nowMin);
+    if(arl){
+      $("lArlTime").textContent = arl.dep;
+      $("lArlSub").textContent = "พญาไท → สุวรรณภูมิ · ถึง " + arl.arr;
+      setLandingCountdown("lArlCd", arl.diff);
+    }
+  }catch(e){ /* ถ้าคำนวณรอบถัดไปพลาด ก็ยังแสดงนาฬิกาได้ */ }
+}
+// เริ่มวัดความเร็วปัจจุบันของผู้ใช้ (เมตร/วินาที -> กม./ชม.) เมื่อผู้ใช้แตะเปิด
+function startLandingSpeed(){
+  const val = $("lSpeedVal"), cap = $("lSpeedCap");
+  if(!("geolocation" in navigator)){ if(cap) cap.textContent = "อุปกรณ์ไม่รองรับการวัดความเร็ว"; return; }
+  if(LANDING_SPEED_WATCH != null) return; // เปิดอยู่แล้ว
+  if(cap) cap.textContent = "ความเร็วปัจจุบัน · กำลังวัด";
+  LANDING_SPEED_WATCH = navigator.geolocation.watchPosition(pos => {
+    const s = pos.coords.speed; // เมตร/วินาที (บางอุปกรณ์คืน null เมื่ออยู่นิ่ง)
+    if(typeof s === "number" && isFinite(s) && s >= 0){
+      if(val) val.textContent = (s * 3.6).toFixed(1);
+      if(cap) cap.textContent = "ความเร็วปัจจุบัน";
+    }else{
+      if(val) val.textContent = "0.0";
+      if(cap) cap.textContent = "ความเร็วปัจจุบัน · ขยับเพื่อวัด";
+    }
+  }, err => {
+    if(cap) cap.textContent = err.code === 1 ? "ต้องอนุญาตตำแหน่งเพื่อวัดความเร็ว" : "วัดความเร็วไม่ได้";
+    LANDING_SPEED_WATCH = null;
+  }, {enableHighAccuracy:true, maximumAge:1000, timeout:20000});
+}
+// ปิดหน้า Landing เข้าสู่แอปจริง
+function enterApp(){
+  const land = $("landing");
+  if(!land) return;
+  land.classList.add("closing");
+  setTimeout(() => { land.hidden = true; document.body.style.overflow = ""; }, 450);
+  if(LANDING_SPEED_WATCH != null){
+    try{ navigator.geolocation.clearWatch(LANDING_SPEED_WATCH); }catch(e){}
+    LANDING_SPEED_WATCH = null;
+  }
+}
+
 function init(){
   validateSchedules();
+  // แสดงหน้า Dashboard (Landing) ก่อนเข้าแอป และเริ่มอัปเดตทันที
+  document.body.style.overflow = "hidden";
+  updateLanding();
+  const spd = $("lSpeed");
+  if(spd){
+    spd.addEventListener("click", startLandingSpeed);
+    spd.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); startLandingSpeed(); } });
+  }
   // นาฬิกาเริ่มก่อนเสมอ เพื่อให้ยังเดินได้แม้ส่วนอื่นมีปัญหา
   tickClock();
   setInterval(tickClock, 1000);
