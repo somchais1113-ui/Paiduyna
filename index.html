@@ -354,105 +354,219 @@ html{scroll-behavior:smooth}
 @keyframes netpulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}70%{box-shadow:0 0 0 8px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
 .brand-status.offline{background:var(--amber);animation:none}
 @media (prefers-reduced-motion:reduce){.brand-status{animation:none}}
-/* ---------- หน้า Dashboard (Landing) ---------- */
-.landing{position:fixed;inset:0;z-index:60;background:linear-gradient(160deg,var(--burgundy),#3A0A12 72%);color:#F7ECEC;display:flex;align-items:flex-start;justify-content:center;padding:26px 18px;overflow-y:auto}
+/* ---------- หน้า Dashboard (Landing) v25: ปรับ Weather การ์ดสีแบบ AQI และย่อลูกศร ---------- */
+.landing{
+  position:fixed;inset:0;z-index:60;color:#F7ECEC;
+  display:flex;align-items:flex-start;justify-content:center;
+  padding:max(34px,env(safe-area-inset-top)) 18px max(24px,env(safe-area-inset-bottom));
+  overflow-y:auto;overscroll-behavior:contain;
+  background:
+    radial-gradient(circle at 50% -10%,rgba(181,73,91,.24),transparent 38%),
+    linear-gradient(180deg,#641525 0,#53101D 48%,#3A0810 100%);
+}
+.landing::before{
+  content:"";position:fixed;z-index:-1;inset:0 0 auto;height:min(370px,46vh);
+  background:linear-gradient(180deg,rgba(112,29,44,.64),rgba(88,17,30,.18));
+  pointer-events:none;
+}
 .landing[hidden]{display:none}
 .landing.closing{animation:landOut .45s ease forwards}
 @keyframes landOut{to{opacity:0;visibility:hidden}}
-.landing-inner{width:100%;max-width:520px;display:flex;flex-direction:column;align-items:center;animation:landIn .5s ease}
+.landing-inner{
+  width:100%;max-width:430px;display:flex;flex-direction:column;align-items:center;
+  animation:landIn .5s ease;
+}
 @keyframes landIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.landing-logo{height:40px;width:auto;max-width:70%;opacity:1}
-.landing-clock{font:800 clamp(2.3rem,12vw,3.4rem) var(--font-display);letter-spacing:-1px;line-height:1;margin-top:16px;font-variant-numeric:tabular-nums}
-.landing-date{font-size:.88rem;color:#E8C9CE;margin-top:6px}
-/* กลุ่มสถานะระหว่างเดินทาง: อากาศ + AQI + การวิ่ง */
-.ld-wellness{width:100%;display:grid;grid-template-columns:minmax(132px,.76fr) minmax(0,1.24fr);gap:10px;margin-top:14px;align-items:stretch}
-.ld-cond{display:grid;grid-template-rows:1fr 1fr;gap:10px;min-width:0}
-.ld-wx{background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.045));border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:11px 12px;display:flex;align-items:center;gap:8px;min-height:78px;box-shadow:inset 0 1px 0 rgba(255,255,255,.045)}
-.ld-wx-icon{font-size:1.7rem;line-height:1;flex:none;filter:drop-shadow(0 4px 8px rgba(0,0,0,.12))}
-.ld-wx-txt{display:flex;flex-direction:column;min-width:0}
-.ld-wx-temp{font:800 1.35rem var(--font-display);color:#fff;line-height:1.05;font-variant-numeric:tabular-nums}
-.ld-wx-desc{font-size:.72rem;color:#E8C9CE;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:3px}
-/* การ์ด AQI ภาษาไทย ปรับจากแนวคิดของ PurpleAir Widget: สีตามระดับ ค่า แนวโน้ม สถานที่ และเวลาอัปเดต */
-.ld-aqi{--aqi-start:#176B4D;--aqi-end:#0D513A;--aqi-text:#F7FFFB;position:relative;overflow:hidden;min-height:104px;border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:10px 11px;color:var(--aqi-text);background:linear-gradient(145deg,var(--aqi-start),var(--aqi-end));box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 7px 18px rgba(0,0,0,.09);transition:background .35s ease,border-color .35s ease}
-.ld-aqi::after{content:"";position:absolute;width:88px;height:88px;border-radius:50%;right:-35px;top:-44px;background:rgba(255,255,255,.09);pointer-events:none}
+.landing-hero{width:100%;display:flex;flex-direction:column;align-items:center}
+.landing-clock{
+  font:800 clamp(4.45rem,20.5vw,5.8rem) var(--font-display);
+  letter-spacing:-5px;line-height:.88;margin-top:8px;
+  font-variant-numeric:tabular-nums;color:#FFF8F4;white-space:nowrap;
+  text-shadow:0 5px 24px rgba(45,4,12,.16);
+}
+.landing-meta{
+  width:100%;display:grid;grid-template-columns:minmax(124px,.92fr) minmax(0,1.25fr) 50px;
+  align-items:center;gap:12px;margin-top:20px;padding:0 3px;
+}
+.landing-logo{display:block;width:100%;max-width:154px;height:auto;opacity:1;justify-self:start}
+.landing-date{font-size:1rem;line-height:1.45;color:#EBCFD4;font-weight:500;min-width:0}
+.ld-enter-quick{
+  width:50px;height:50px;border-radius:50%;border:0;background:#FFF9F6;color:#54101D;
+  display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 20px rgba(32,2,8,.18);
+  transition:transform .12s ease,box-shadow .18s ease;
+}
+.ld-enter-quick::before{
+  content:"";width:13px;height:13px;border-top:2.5px solid currentColor;border-right:2.5px solid currentColor;
+  transform:rotate(45deg) translate(-1px,1px);border-radius:1px;
+}
+.ld-enter-quick:hover,.ld-enter-quick:focus-visible{box-shadow:0 10px 24px rgba(32,2,8,.24);outline:3px solid rgba(255,255,255,.18);outline-offset:3px}
+.ld-enter-quick:active{transform:translateY(1px)}
+
+/* การ์ดรอบถัดไป เรียงลงตามภาพอ้างอิง */
+.landing-cards{width:100%;display:grid;grid-template-columns:1fr;gap:10px;margin-top:18px}
+.ld-card{
+  background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.045));
+  border:1px solid rgba(255,255,255,.16);border-radius:17px;padding:14px 16px 15px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+}
+.ld-kind{font:600 .79rem var(--font-body);color:#F0D5D9;line-height:1.35}
+.ld-cd{font:800 .79rem var(--font-body);color:#F7D7DC}
+.ld-time{font:800 2.25rem var(--font-display);letter-spacing:-1.3px;line-height:1.02;margin-top:6px;color:#FFF8F4}
+.ld-sub{font-size:.82rem;color:#E9CFD3;margin-top:4px;line-height:1.4}
+
+/* กลุ่มข้อมูลระหว่างเดินทาง: ซ้ายอากาศและ AQI ขวากิจกรรม */
+.ld-wellness{
+  width:100%;display:grid;grid-template-columns:minmax(142px,.76fr) minmax(0,1.24fr);
+  gap:10px;margin-top:10px;align-items:stretch;
+}
+.ld-cond{display:grid;grid-template-rows:.94fr 1.06fr;gap:9px;min-width:0}
+.ld-wx{
+  --wx-start:#2E9ED0;--wx-end:#1B7FB2;--wx-text:#F7FCFF;
+  position:relative;overflow:hidden;min-height:104px;border:1px solid rgba(255,255,255,.22);
+  border-radius:17px;padding:11px 12px;color:var(--wx-text);
+  background:linear-gradient(145deg,var(--wx-start),var(--wx-end));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 7px 18px rgba(0,0,0,.09);
+  transition:background .35s ease,border-color .35s ease;display:flex;flex-direction:column;justify-content:space-between;gap:6px;
+}
+.ld-wx::after{content:"";position:absolute;width:94px;height:94px;border-radius:50%;right:-34px;top:-40px;background:rgba(255,255,255,.11);pointer-events:none}
+.ld-wx-top,.ld-wx-main,.ld-wx-meta{position:relative;z-index:1}
+.ld-wx-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ld-wx-cap{font:800 .58rem var(--font-body);letter-spacing:.045em;line-height:1.2;text-transform:uppercase;opacity:.92}
+.ld-wx-icon{width:23px;height:23px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.32);background:rgba(255,255,255,.13);font-size:.92rem;line-height:1;flex:none;filter:drop-shadow(0 4px 8px rgba(0,0,0,.12))}
+.ld-wx-main{display:flex;align-items:flex-end;gap:8px;min-width:0;margin-top:2px}
+.ld-wx-temp{font:850 2.18rem var(--font-display);color:#fff;line-height:.92;font-variant-numeric:tabular-nums;letter-spacing:-1px}
+.ld-wx-copy{display:flex;flex-direction:column;min-width:0;padding-bottom:2px}
+.ld-wx-desc{font:800 .82rem var(--font-body);color:var(--wx-text);line-height:1.15;white-space:normal}
+.ld-wx-meta{font:650 .54rem var(--font-body);opacity:.86;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* การ์ด AQI ภาษาไทย จากโครงข้อมูล PurpleAir */
+.ld-aqi{
+  --aqi-start:#249668;--aqi-end:#147450;--aqi-text:#F7FFFB;
+  position:relative;overflow:hidden;min-height:104px;border:1px solid rgba(255,255,255,.22);
+  border-radius:17px;padding:11px 12px;color:var(--aqi-text);
+  background:linear-gradient(145deg,var(--aqi-start),var(--aqi-end));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 7px 18px rgba(0,0,0,.09);
+  transition:background .35s ease,border-color .35s ease;
+}
+.ld-aqi::after{content:"";position:absolute;width:92px;height:92px;border-radius:50%;right:-33px;top:-42px;background:rgba(255,255,255,.09);pointer-events:none}
 .ld-aqi-top,.ld-aqi-main,.ld-aqi-meta,.ld-aqi-particles{position:relative;z-index:1}
 .ld-aqi-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.ld-aqi-cap{font:800 .58rem var(--font-body);letter-spacing:.055em;line-height:1.2;text-transform:uppercase;opacity:.88}
-.ld-aqi-icon{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.12);font:900 .52rem var(--font-display)}
-.ld-aqi-main{display:flex;align-items:flex-end;gap:7px;margin-top:4px;min-width:0}
-.ld-aqi-val{font:850 2.15rem var(--font-display);line-height:.95;flex:none;font-variant-numeric:tabular-nums;letter-spacing:-1px}
+.ld-aqi-cap{font:800 .58rem var(--font-body);letter-spacing:.045em;line-height:1.2;text-transform:uppercase;opacity:.9}
+.ld-aqi-icon{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.32);background:rgba(255,255,255,.12);font:900 .53rem var(--font-display)}
+.ld-aqi-main{display:flex;align-items:flex-end;gap:7px;margin-top:5px;min-width:0}
+.ld-aqi-val{font:850 2.22rem var(--font-display);line-height:.92;flex:none;font-variant-numeric:tabular-nums;letter-spacing:-1px}
 .ld-aqi-copy{display:flex;flex-direction:column;min-width:0;padding-bottom:2px}
-.ld-aqi-status{font:800 .75rem var(--font-body);line-height:1.15;white-space:normal}
-.ld-aqi-trend{font:650 .52rem var(--font-body);opacity:.82;margin-top:2px;white-space:nowrap}
-.ld-aqi-meta{display:flex;justify-content:space-between;gap:7px;margin-top:7px;font-size:.49rem;line-height:1.2;opacity:.78}
+.ld-aqi-status{font:800 .76rem var(--font-body);line-height:1.15;white-space:normal}
+.ld-aqi-trend{font:650 .52rem var(--font-body);opacity:.84;margin-top:3px;white-space:nowrap}
+.ld-aqi-meta{display:flex;justify-content:space-between;gap:7px;margin-top:8px;font-size:.49rem;line-height:1.2;opacity:.8}
 .ld-aqi-meta span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ld-aqi-particles{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap}
-.ld-aqi-chip{font:750 .47rem var(--font-body);padding:3px 5px;border-radius:99px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.16);white-space:nowrap}
-/* กราฟความหนาแน่น */
-.ld-density{width:100%;margin-top:20px}
-.ld-density-title{font:700 .72rem var(--font-body);color:#C89AA1;margin-bottom:2px}
-.ld-density-chart{width:100%;height:76px;display:block}
+.ld-aqi-particles{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
+.ld-aqi-chip{font:750 .48rem var(--font-body);padding:3px 6px;border-radius:99px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.18);white-space:nowrap}
+
+/* การ์ดกิจกรรมล่าสุดจาก Strava */
+.ld-run{
+  min-width:0;min-height:220px;
+  background:linear-gradient(145deg,rgba(252,82,0,.17),rgba(255,255,255,.045));
+  border:1px solid rgba(252,82,0,.62);border-radius:18px;padding:12px 13px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.065);display:flex;flex-direction:column;
+}
+.ld-run-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ld-run-title{display:grid;grid-template-columns:36px minmax(0,1fr);grid-template-areas:"icon kicker" "icon state";column-gap:9px;align-items:center;min-width:0}
+.ld-run-title::before{content:attr(data-sport);grid-area:icon;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#FC5200;color:#fff;font:900 .5rem var(--font-display);letter-spacing:.3px;box-shadow:0 5px 12px rgba(252,82,0,.2)}
+.ld-run-kicker{grid-area:kicker;font:800 .67rem var(--font-display);letter-spacing:.7px;color:#FFB08A;line-height:1.1}
+.ld-run-state{grid-area:state;font:600 .61rem var(--font-body);color:#E1C5CA;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.2}
+.ld-run-refresh{flex:none;width:29px;height:29px;border-radius:9px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.075);color:#fff;font:800 .92rem var(--font-display);cursor:pointer;display:grid;place-items:center}
+.ld-run-refresh:hover{background:rgba(255,255,255,.14)}
+.ld-run-refresh:disabled{opacity:.45;cursor:progress}
+.ld-run-body{margin-top:10px;flex:1}
+.ld-run-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px;align-items:stretch}
+.ld-run-stat{min-width:0;padding:2px 1px 7px;border-bottom:1px solid rgba(255,255,255,.085);display:flex;flex-direction:column;justify-content:center}
+.ld-run-stat-label{font:700 .5rem var(--font-body);color:#CEA3AA;letter-spacing:.36px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ld-run-stat-value{font:800 clamp(.9rem,4vw,1.08rem) var(--font-display);color:#fff;margin-top:3px;line-height:1.05;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ld-run-stat-sub{font:600 .49rem var(--font-body);color:#DDBBC1;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ld-run-extra{display:flex;gap:4px 9px;flex-wrap:wrap;margin-top:8px;font-size:.53rem;color:#E8C9CE;line-height:1.3}
+.ld-run-extra strong{color:#fff;font-weight:700}
+.ld-run-empty{border:1px dashed rgba(255,255,255,.18);border-radius:11px;padding:12px;color:#E8C9CE;font-size:.67rem;line-height:1.45;background:rgba(45,6,13,.25);min-height:106px;display:flex;align-items:center}
+.ld-run-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:7px;font-size:.51rem;color:#CFA3AA}
+.ld-run-link{color:#FC9A68;font-weight:800;text-decoration:underline;text-underline-offset:2px}
+
+/* กราฟความหนาแน่น + ความเร็ว วางเป็นกลุ่มเดียวเพื่อลดความรก */
+.ld-transit-summary{
+  width:100%;display:grid;grid-template-columns:minmax(0,1.72fr) minmax(112px,.72fr);
+  align-items:stretch;gap:10px;margin-top:16px;
+}
+.ld-density{min-width:0;padding:10px 11px 6px;border-radius:15px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08)}
+.ld-density-title{font:700 .7rem var(--font-body);color:#D9B3B9;margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ld-density-chart{width:100%;height:73px;display:block}
 .ld-density-area{fill:url(#ldDensityFill)}
 .ld-density-line{fill:none;stroke:#E98D9A;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
 .ld-density-halo{fill:rgba(233,141,154,.4)}
 .ld-density-point{fill:#fff;stroke:#E98D9A;stroke-width:1.5}
-.ld-density-labels text{fill:#B78A91;font-size:9px;font-family:var(--font-body)}
-/* การ์ดรอบถัดไป (ไม่มีแถบสี เวลานับถอยหลังอยู่หน้าประโยค) */
-.landing-cards{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
-.ld-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:15px;padding:16px}
-.ld-kind{font:600 .74rem var(--font-body);color:#E8C9CE;line-height:1.35}
-.ld-cd{font:800 .8rem var(--font-body);color:#F6C6CD}
-.ld-time{font:800 2.2rem var(--font-display);letter-spacing:-1px;line-height:1.05;margin-top:8px}
-.ld-sub{font-size:.78rem;color:#EAD3D7;margin-top:4px;line-height:1.4}
-
-/* การ์ดกิจกรรมวิ่งล่าสุดจาก Strava */
-.ld-run{min-width:0;background:linear-gradient(145deg,rgba(252,82,0,.15),rgba(255,255,255,.045));border:1px solid rgba(252,82,0,.5);border-radius:17px;padding:11px 12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.065);display:flex;flex-direction:column}
-.ld-run-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.ld-run-title{display:grid;grid-template-columns:30px minmax(0,1fr);grid-template-areas:"icon kicker" "icon state";column-gap:8px;align-items:center;min-width:0}
-.ld-run-title::before{content:attr(data-sport);grid-area:icon;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#FC5200;color:#fff;font:900 .48rem var(--font-display);letter-spacing:.3px;box-shadow:0 5px 12px rgba(252,82,0,.2)}
-.ld-run-kicker{grid-area:kicker;font:800 .64rem var(--font-display);letter-spacing:.75px;color:#FFAB83;line-height:1.1}
-.ld-run-state{grid-area:state;font:600 .58rem var(--font-body);color:#DDBFC4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.2}
-.ld-run-refresh{flex:none;width:27px;height:27px;border-radius:8px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.07);color:#fff;font:800 .9rem var(--font-display);cursor:pointer;display:grid;place-items:center}
-.ld-run-refresh:hover{background:rgba(255,255,255,.13)}
-.ld-run-refresh:disabled{opacity:.45;cursor:progress}
-.ld-run-body{margin-top:9px;flex:1}
-.ld-run-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px 8px;align-items:stretch}
-.ld-run-stat{min-width:0;padding:2px 1px 5px;border-bottom:1px solid rgba(255,255,255,.075);display:flex;flex-direction:column;justify-content:center}
-.ld-run-stat-label{font:700 .48rem var(--font-body);color:#C99CA4;letter-spacing:.36px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ld-run-stat-value{font:800 clamp(.84rem,3.5vw,1.05rem) var(--font-display);color:#fff;margin-top:3px;line-height:1.05;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ld-run-stat-sub{font:600 .48rem var(--font-body);color:#DAB8BE;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ld-run-extra{display:flex;gap:4px 9px;flex-wrap:wrap;margin-top:7px;font-size:.52rem;color:#E8C9CE;line-height:1.3}
-.ld-run-extra strong{color:#fff;font-weight:700}
-.ld-run-empty{border:1px dashed rgba(255,255,255,.17);border-radius:11px;padding:11px;color:#E8C9CE;font-size:.67rem;line-height:1.4;background:rgba(45,6,13,.25);min-height:94px;display:flex;align-items:center}
-.ld-run-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:6px;font-size:.5rem;color:#C89AA1}
-.ld-run-link{color:#FC9A68;font-weight:800;text-decoration:underline;text-underline-offset:2px}
-@media (max-width:349px){
-  .ld-wellness{grid-template-columns:1fr;gap:9px}
-  .ld-cond{grid-template-columns:1fr 1fr;grid-template-rows:auto;gap:9px}
+.ld-density-labels text{fill:#B98D94;font-size:9px;font-family:var(--font-body)}
+.ld-speed{
+  cursor:pointer;user-select:none;min-width:0;border-radius:15px;padding:11px 12px;
+  display:flex;align-items:flex-start;gap:8px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.035));
+  border:1px solid rgba(255,255,255,.11);transition:background .16s,border-color .16s,transform .08s;
 }
+.ld-speed:hover,.ld-speed:focus-visible{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.2);outline:none}
+.ld-speed:active{transform:translateY(1px)}
+.ld-speed-dot{width:7px;height:7px;border-radius:50%;background:#E98D9A;box-shadow:0 0 0 4px rgba(233,141,154,.12);margin-top:4px;flex:none}
+.ld-speed-wrap{display:flex;flex-direction:column;min-width:0;flex:1}
+.ld-speed-cap{font:700 .64rem var(--font-body);color:#E4C3C8;line-height:1.25}
+.ld-speed-hint{font:600 .52rem var(--font-body);color:#B98D94;margin-top:1px}
+.ld-speed-reading{display:flex;align-items:baseline;gap:4px;margin-top:auto;padding-top:10px;white-space:nowrap}
+.ld-speed-val{font:800 1.48rem var(--font-display);color:#fff;line-height:1}
+.ld-speed-unit{font:700 .62rem var(--font-body);color:#EAD3D7}
 
-.landing-foot{width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:22px;flex-wrap:wrap}
-.ld-speed{cursor:pointer;user-select:none}
-.ld-speed-wrap{display:flex;flex-direction:column;gap:2px}
-.ld-speed-cap{font:600 .72rem var(--font-body);color:#C89AA1}
-.ld-speed-val{font:800 1.7rem var(--font-display);color:#fff;line-height:1}
-.ld-speed-unit{font:700 .8rem var(--font-body);color:#EAD3D7}
-.ld-enter{flex:1;min-width:170px;border:0;border-radius:12px;background:#F7ECEC;color:var(--burgundy);font:800 1rem var(--font-display);padding:14px 20px;cursor:pointer;transition:transform .06s,box-shadow .15s;box-shadow:0 6px 20px rgba(0,0,0,.25)}
-.ld-enter:hover{box-shadow:0 8px 26px rgba(0,0,0,.32)}
-.ld-enter:active{transform:translateY(1px)}
-@media (max-width:460px){.landing-cards{grid-template-columns:1fr}.landing-foot{flex-direction:column-reverse;align-items:stretch}.ld-enter{width:100%}}
-@media (max-height:900px){
-  .landing{padding-top:17px;padding-bottom:18px}
-  .landing-logo{height:32px}
-  .landing-clock{margin-top:10px;font-size:clamp(2.25rem,11vw,3.1rem)}
-  .landing-date{margin-top:4px;font-size:.8rem}
-  .landing-cards{margin-top:14px;gap:10px}
-  .ld-card{padding:13px 14px}
-  .ld-time{font-size:2rem;margin-top:5px}
-  .ld-wellness{margin-top:10px}
-  .ld-density{margin-top:13px}
-  .ld-density-chart{height:64px}
-  .landing-foot{margin-top:14px}
+@media (max-width:380px){
+  .landing{padding-left:13px;padding-right:13px}
+  .landing-clock{font-size:clamp(3.85rem,20vw,4.75rem);letter-spacing:-4px}
+  .landing-meta{grid-template-columns:minmax(104px,.9fr) minmax(0,1.2fr) 51px;gap:9px;margin-top:18px}
+  .landing-logo{max-width:132px}
+  .landing-date{font-size:.86rem}
+  .ld-enter-quick{width:51px;height:51px}
+  .ld-wellness{grid-template-columns:minmax(126px,.78fr) minmax(0,1.22fr);gap:8px}
+  .ld-cond{gap:8px}
+  .ld-wx,.ld-aqi{padding-left:10px;padding-right:10px}
+  .ld-wx-temp{font-size:2rem}
+  .ld-wx-desc{font-size:.76rem}
+  .ld-wx-meta{font-size:.5rem}
+  .ld-run{padding-left:10px;padding-right:10px}
+}
+@media (max-width:365px){
+  .ld-transit-summary{grid-template-columns:minmax(0,1.55fr) minmax(102px,.75fr);gap:8px}
+  .ld-density{padding-left:8px;padding-right:8px}
+  .ld-speed{padding-left:9px;padding-right:9px}
+  .ld-speed-cap{font-size:.58rem}
+  .ld-speed-val{font-size:1.3rem}
+}
+@media (max-width:339px){
+  .landing-meta{grid-template-columns:1fr 50px}
+  .landing-logo{grid-column:1;max-width:140px}
+  .landing-date{grid-column:1;font-size:.82rem}
+  .ld-enter-quick{grid-column:2;grid-row:1/3}
+  .ld-wellness{grid-template-columns:1fr}
+  .ld-cond{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .ld-run{min-height:205px}
+  .ld-transit-summary{grid-template-columns:1fr}
+  .ld-speed{min-height:82px}
+}
+@media (max-height:950px) and (min-width:340px){
+  .landing{padding-top:max(20px,env(safe-area-inset-top));padding-bottom:16px}
+  .landing-clock{font-size:clamp(3.8rem,18vw,4.85rem);margin-top:2px}
+  .landing-meta{margin-top:14px}
+  .landing-cards{margin-top:13px;gap:8px}
+  .ld-card{padding-top:11px;padding-bottom:12px}
+  .ld-time{font-size:2rem;margin-top:4px}
+  .ld-wellness{margin-top:8px;gap:8px}
+  .ld-cond{gap:8px}
+  .ld-wx{min-height:88px;padding-top:9px;padding-bottom:9px}
+  .ld-wx-temp{font-size:1.9rem}
+  .ld-aqi{min-height:96px;padding-top:9px;padding-bottom:9px}
+  .ld-run{min-height:190px;padding-top:10px;padding-bottom:10px}
+  .ld-density-chart{height:65px}
+  .ld-transit-summary{margin-top:10px}
+  .ld-density-chart{height:60px}
 }
 .toast{position:fixed;left:50%;bottom:18px;z-index:20;transform:translate(-50%,30px);opacity:0;pointer-events:none;background:var(--ink);color:#fff;border-radius:9px;padding:9px 14px;font-size:.8rem;box-shadow:var(--shadow);transition:.2s}
 .toast.show{transform:translate(-50%,0);opacity:1}
@@ -506,9 +620,14 @@ html{scroll-behavior:smooth}
 <noscript><style>#landing{display:none!important}</style></noscript>
 <div class="landing" id="landing">
   <div class="landing-inner">
-    <img class="landing-logo" src="brand-logo-v4.svg" alt="PAI.DUY.NA">
-    <div class="landing-clock" id="lClock">--:--:--</div>
-    <div class="landing-date" id="lDate">กำลังโหลด</div>
+    <header class="landing-hero">
+      <div class="landing-clock" id="lClock">--:--:--</div>
+      <div class="landing-meta">
+        <img class="landing-logo" src="brand-logo-v4.svg" alt="PAI.DUY.NA">
+        <div class="landing-date" id="lDate">กำลังโหลด</div>
+        <button class="ld-enter-quick" id="btnEnterQuick" type="button" aria-label="เข้าสู่หน้าหลัก" title="เข้าสู่หน้าหลัก"></button>
+      </div>
+    </header>
 
     <div class="landing-cards">
       <div class="ld-card">
@@ -527,12 +646,18 @@ html{scroll-behavior:smooth}
 
     <div class="ld-wellness">
       <div class="ld-cond" aria-label="สภาพอากาศและคุณภาพอากาศ">
-        <div class="ld-wx">
-          <span class="ld-wx-icon" id="lWxIcon">&#9925;</span>
-          <span class="ld-wx-txt">
+        <div class="ld-wx" id="lWxCard" role="status" aria-live="polite" aria-label="สภาพอากาศกรุงเทพมหานคร">
+          <div class="ld-wx-top">
+            <span class="ld-wx-cap">สภาพอากาศ</span>
+            <span class="ld-wx-icon" id="lWxIcon" aria-hidden="true">&#9925;</span>
+          </div>
+          <div class="ld-wx-main">
             <span class="ld-wx-temp" id="lWxTemp">--&deg;</span>
-            <span class="ld-wx-desc" id="lWxDesc">กำลังโหลดอากาศ</span>
-          </span>
+            <span class="ld-wx-copy">
+              <span class="ld-wx-desc" id="lWxDesc">กำลังโหลดอากาศ</span>
+            </span>
+          </div>
+          <div class="ld-wx-meta" id="lWxMeta">กรุงเทพมหานคร · กำลังอัปเดต</div>
         </div>
         <div class="ld-aqi" id="lAqiCard" role="status" aria-live="polite" aria-label="คุณภาพอากาศกรุงเทพมหานคร">
           <div class="ld-aqi-top">
@@ -575,46 +700,49 @@ html{scroll-behavior:smooth}
       </section>
     </div>
 
-    <div class="ld-density">
-      <div class="ld-density-title">ความหนาแน่นผู้โดยสารโดยประมาณ</div>
-      <svg class="ld-density-chart" viewBox="0 0 300 92" role="img" aria-label="กราฟความหนาแน่นผู้โดยสารโดยประมาณ">
-        <defs>
-          <linearGradient id="ldDensityFill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#E98D9A" stop-opacity=".28"/>
-            <stop offset="100%" stop-color="#E98D9A" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-        <path class="ld-density-area" d="M8 64 C30 64 40 28 66 27 C92 26 90 60 132 60 C175 60 178 19 218 14 C246 10 257 45 290 58 L290 70 L8 70 Z"/>
-        <path class="ld-density-line" id="ldDensityLine" d="M8 64 C30 64 40 28 66 27 C92 26 90 60 132 60 C175 60 178 19 218 14 C246 10 257 45 290 58"/>
-        <circle class="ld-density-halo" id="ldDensityHalo" cx="66" cy="27" r="9"/>
-        <circle class="ld-density-point" id="ldDensityPoint" cx="66" cy="27" r="4.5"/>
-        <g class="ld-density-labels" text-anchor="middle">
-          <text x="10" y="88">06</text><text x="66" y="88">08</text><text x="132" y="88">12</text><text x="218" y="88">18:30</text><text x="288" y="88">20</text>
-        </g>
-      </svg>
-    </div>
+    <div class="ld-transit-summary" aria-label="ความหนาแน่นผู้โดยสารและความเร็วปัจจุบัน">
+      <div class="ld-density">
+        <div class="ld-density-title">ความหนาแน่นผู้โดยสารโดยประมาณ</div>
+        <svg class="ld-density-chart" viewBox="0 0 300 92" role="img" aria-label="กราฟความหนาแน่นผู้โดยสารโดยประมาณ">
+          <defs>
+            <linearGradient id="ldDensityFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#E98D9A" stop-opacity=".28"/>
+              <stop offset="100%" stop-color="#E98D9A" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path class="ld-density-area" d="M8 64 C30 64 40 28 66 27 C92 26 90 60 132 60 C175 60 178 19 218 14 C246 10 257 45 290 58 L290 70 L8 70 Z"/>
+          <path class="ld-density-line" id="ldDensityLine" d="M8 64 C30 64 40 28 66 27 C92 26 90 60 132 60 C175 60 178 19 218 14 C246 10 257 45 290 58"/>
+          <circle class="ld-density-halo" id="ldDensityHalo" cx="66" cy="27" r="9"/>
+          <circle class="ld-density-point" id="ldDensityPoint" cx="66" cy="27" r="4.5"/>
+          <g class="ld-density-labels" text-anchor="middle">
+            <text x="10" y="88">06</text><text x="66" y="88">08</text><text x="132" y="88">12</text><text x="218" y="88">18:30</text><text x="288" y="88">20</text>
+          </g>
+        </svg>
+      </div>
 
-    <div class="landing-foot">
-      <div class="ld-speed" id="lSpeed" role="button" tabindex="0" title="แตะเพื่อวัดความเร็ว">
+      <div class="ld-speed" id="lSpeed" role="button" tabindex="0" title="แตะเพื่อวัดความเร็ว" aria-label="แตะเพื่อวัดความเร็วปัจจุบัน">
+        <span class="ld-speed-dot" aria-hidden="true"></span>
         <div class="ld-speed-wrap">
-          <span class="ld-speed-cap" id="lSpeedCap">ความเร็วปัจจุบัน · แตะเพื่อเปิด</span>
-          <span><span class="ld-speed-val" id="lSpeedVal">–</span> <span class="ld-speed-unit">กม./ชม.</span></span>
+          <span class="ld-speed-cap" id="lSpeedCap">ความเร็วปัจจุบัน</span>
+          <span class="ld-speed-hint" id="lSpeedHint">แตะเพื่อเปิด</span>
+          <span class="ld-speed-reading"><span class="ld-speed-val" id="lSpeedVal">–</span><span class="ld-speed-unit">กม./ชม.</span></span>
         </div>
       </div>
-      <button class="ld-enter" id="btnEnterApp" type="button">เข้าสู่ตารางเดินรถ</button>
     </div>
   </div>
 </div>
 <script>
   /* Failsafe: ให้ปุ่มเข้าสู่แอปทำงานได้เสมอ แม้สคริปต์หลักจะมีปัญหา จะได้ไม่ติดค้างที่หน้า Landing */
   (function(){
-    var b = document.getElementById("btnEnterApp");
-    if(!b) return;
-    b.addEventListener("click", function(){
-      if(typeof enterApp === "function"){ try{ enterApp(); return; }catch(e){} }
-      var l = document.getElementById("landing");
-      if(l) l.style.display = "none";
-      document.body.style.overflow = "";
+    var buttons = [document.getElementById("btnEnterQuick")].filter(Boolean);
+    if(!buttons.length) return;
+    buttons.forEach(function(b){
+      b.addEventListener("click", function(){
+        if(typeof enterApp === "function"){ try{ enterApp(); return; }catch(e){} }
+        var l = document.getElementById("landing");
+        if(l) l.style.display = "none";
+        document.body.style.overflow = "";
+      });
     });
   })();
 </script>
@@ -1315,23 +1443,50 @@ async function loadWeather(){
     if(!r.ok) throw new Error(r.status);
     const j = await r.json(), c = j.current, dl = j.daily;
     const [desc,icon] = WX[c.weather_code] || ["ไม่ทราบสภาพอากาศ","\uD83C\uDF21\uFE0F"];
-    $("wxTemp").textContent = Math.round(c.temperature_2m) + "\u00B0C";
+    const theme = getWeatherTheme(c.weather_code);
+    const tempNow = Math.round(c.temperature_2m);
+    const feelsLike = Math.round(c.apparent_temperature);
+    const humid = Math.round(c.relative_humidity_2m);
+    const rainChance = Math.round(dl.precipitation_probability_max[0]);
+    $("wxTemp").textContent = tempNow + "\u00B0C";
     $("wxIcon").textContent = icon;
-    $("wxDesc").textContent = desc + " รู้สึกเหมือน " + Math.round(c.apparent_temperature) + "\u00B0C";
-    $("wxMeta").textContent = "ความชื้น " + c.relative_humidity_2m + "% | สูงสุด "
+    $("wxDesc").textContent = desc + " รู้สึกเหมือน " + feelsLike + "\u00B0C";
+    $("wxMeta").textContent = "ความชื้น " + humid + "% | สูงสุด "
       + Math.round(dl.temperature_2m_max[0]) + "\u00B0 ต่ำสุด " + Math.round(dl.temperature_2m_min[0])
-      + "\u00B0 | โอกาสฝน " + dl.precipitation_probability_max[0] + "%";
+      + "\u00B0 | โอกาสฝน " + rainChance + "%";
     if($("lWxTemp")){
-      $("lWxTemp").textContent = Math.round(c.temperature_2m) + "\u00B0C";
+      $("lWxTemp").textContent = tempNow + "\u00B0C";
       $("lWxIcon").textContent = icon;
       $("lWxDesc").textContent = desc;
+      if($("lWxMeta")) $("lWxMeta").textContent = "รู้สึกเหมือน " + feelsLike + "° · ชื้น " + humid + "% · ฝน " + rainChance + "%";
+      const card = $("lWxCard");
+      if(card){
+        card.style.setProperty("--wx-start", theme.start);
+        card.style.setProperty("--wx-end", theme.end);
+        card.style.setProperty("--wx-text", theme.text);
+        card.setAttribute("aria-label","สภาพอากาศกรุงเทพมหานคร " + desc + " อุณหภูมิ " + tempNow + " องศาเซลเซียส");
+      }
     }
   }catch(e){
     $("wxTemp").textContent = "--\u00B0";
     $("wxDesc").textContent = "เรียกข้อมูลอากาศไม่สำเร็จ";
     $("wxMeta").textContent = "ตรวจสอบการเชื่อมต่ออินเทอร์เน็ต แล้วกดรีเฟรชข้อมูล";
-    if($("lWxTemp")){ $("lWxTemp").textContent = "--\u00B0"; $("lWxDesc").textContent = "อากาศไม่พร้อม"; }
+    if($("lWxTemp")){
+      $("lWxTemp").textContent = "--\u00B0";
+      $("lWxDesc").textContent = "อากาศไม่พร้อม";
+      if($("lWxMeta")) $("lWxMeta").textContent = "กรุงเทพมหานคร · ลองรีเฟรชอีกครั้ง";
+    }
   }
+}
+
+function getWeatherTheme(code){
+  if(code === 0) return {start:"#38A6D8", end:"#1F86BE", text:"#F7FCFF"};
+  if(code === 1 || code === 2) return {start:"#4AA8C8", end:"#2D8FAF", text:"#F7FCFF"};
+  if(code === 3) return {start:"#508FA4", end:"#346E86", text:"#F7FCFF"};
+  if(code === 45 || code === 48) return {start:"#6C8796", end:"#4E6572", text:"#F7FCFF"};
+  if((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return {start:"#2E9394", end:"#1E6E7A", text:"#F6FFFE"};
+  if(code >= 95) return {start:"#5F5AB3", end:"#423B86", text:"#F8F7FF"};
+  return {start:"#3C9C68", end:"#176B4D", text:"#F7FFFB"};
 }
 
 /* เกณฑ์ US AQI และชุดสีแบบไล่ระดับสำหรับการ์ด Landing */
@@ -2378,21 +2533,21 @@ function updateLanding(){
 }
 // เริ่มวัดความเร็วปัจจุบันของผู้ใช้ (เมตร/วินาที -> กม./ชม.) เมื่อผู้ใช้แตะเปิด
 function startLandingSpeed(){
-  const val = $("lSpeedVal"), cap = $("lSpeedCap");
-  if(!("geolocation" in navigator)){ if(cap) cap.textContent = "อุปกรณ์ไม่รองรับการวัดความเร็ว"; return; }
+  const val = $("lSpeedVal"), hint = $("lSpeedHint");
+  if(!("geolocation" in navigator)){ if(hint) hint.textContent = "อุปกรณ์ไม่รองรับ"; return; }
   if(LANDING_SPEED_WATCH != null) return; // เปิดอยู่แล้ว
-  if(cap) cap.textContent = "ความเร็วปัจจุบัน · กำลังวัด";
+  if(hint) hint.textContent = "กำลังขอพิกัด";
   LANDING_SPEED_WATCH = navigator.geolocation.watchPosition(pos => {
     const s = pos.coords.speed; // เมตร/วินาที (บางอุปกรณ์คืน null เมื่ออยู่นิ่ง)
     if(typeof s === "number" && isFinite(s) && s >= 0){
       if(val) val.textContent = (s * 3.6).toFixed(1);
-      if(cap) cap.textContent = "ความเร็วปัจจุบัน";
+      if(hint) hint.textContent = "กำลังวัดแบบเรียลไทม์";
     }else{
       if(val) val.textContent = "0.0";
-      if(cap) cap.textContent = "ความเร็วปัจจุบัน · ขยับเพื่อวัด";
+      if(hint) hint.textContent = "ขยับเพื่อเริ่มวัด";
     }
   }, err => {
-    if(cap) cap.textContent = err.code === 1 ? "ต้องอนุญาตตำแหน่งเพื่อวัดความเร็ว" : "วัดความเร็วไม่ได้";
+    if(hint) hint.textContent = err.code === 1 ? "กรุณาอนุญาตตำแหน่ง" : "วัดความเร็วไม่ได้";
     LANDING_SPEED_WATCH = null;
   }, {enableHighAccuracy:true, maximumAge:1000, timeout:20000});
 }

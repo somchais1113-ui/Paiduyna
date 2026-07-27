@@ -1,4 +1,4 @@
-const CACHE = "paiduyna-full-2026-07-27-v22-thai-aqi";
+const CACHE = "paiduyna-full-2026-07-27-v25-weather-tune";
 const APP_SHELL = [
   "./",
   "./index.html",
