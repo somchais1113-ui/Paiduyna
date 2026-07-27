@@ -657,7 +657,7 @@ html{scroll-behavior:smooth}
 @media print{body{background:#fff}.planner,.btn-refresh,.livebar,.sched-tabs{display:none}.card{box-shadow:none;border:1px solid #ccc}}
 
 
-/* ---------- Landing responsive composition v35 overlap-safe clock ----------
+/* ---------- Landing responsive composition v36 commute direction + GPS speed fallback ----------
    ใช้ HTML/JS ชุดเดียว แล้วจัดวางใหม่ตามขนาดหน้าจออัตโนมัติ */
 @media (min-width:600px) and (max-width:1023px){
   .landing{
@@ -1277,7 +1277,7 @@ html{scroll-behavior:smooth}
     ข้อมูลตารางเดินรถ: เพจ ป้ายหยุดรถพระจอมเกล้า<br>
     ข้อมูลเวลา Airport Rail Link: ถอดจากตารางภาพที่ผู้ใช้จัดเตรียม<br>
     ตารางปกติปรับปรุงข้อมูลล่าสุดเมื่อวันที่ 1 กรกฎาคม 2569<br>
-    <span style="opacity:.75">PAI.DUY.NA Full build 2026-07-27 v30 Google Parking</span>
+    <span style="opacity:.75">PAI.DUY.NA Full build 2026-07-27 v36 Commute Direction & Speed</span>
   </p>
 </div>
 
@@ -1291,7 +1291,7 @@ html{scroll-behavior:smooth}
    ============================================================ */
 const STATUS_URL = "data/status.json";
 const STRAVA_LATEST_URL = "/api/strava/latest";
-const APP_VERSION = "2026-07-27-v30-google-parking";
+const APP_VERSION = "2026-07-27-v36-commute-direction-speed";
 const STORE = {
   favorites:"pdn-favorites",
   recents:"pdn-recents"
@@ -2685,9 +2685,11 @@ function appendParkingFallback(list, message, url){
 }
 
 /* ============================================================
-   18. หน้า Dashboard (Landing) รอบถัดไปตามเวลาจริง + ความเร็วผู้ใช้
+   18. หน้า Dashboard (Landing) รอบถัดไปตามช่วงเวลา + ความเร็วผู้ใช้
    ============================================================ */
 let LANDING_SPEED_WATCH = null;
+let LANDING_SPEED_ANCHOR = null;
+let LANDING_SPEED_SAMPLES = [];
 
 // หาเวลาออกรอบถัดไปจากรายการเวลา (คืนค่าที่ใกล้ที่สุดที่ยังไม่ผ่าน วนข้ามเที่ยงคืนได้)
 function nextByTimes(times, nowMin){
@@ -2699,9 +2701,32 @@ function nextByTimes(times, nowMin){
   });
   return best;
 }
-// รอบรถไฟชานเมืองปกติถัดไป อ้างอิงเที่ยวขึ้นจากหัวลำโพงไปฉะเชิงเทรา
-function nextSrtDeparture(nowMin){
-  const trips = findTrips(SCHEDULES.daily, "krungthep", "chachoengsao");
+
+/* ทิศทางหน้า Landing ตามเวลาที่ผู้ใช้กำหนด
+   06:00–11:59  ขาเข้าเมือง
+   12:00–19:59  ขากลับ
+   20:00–05:59  เตรียมแสดงรอบขาเข้าเมืองถัดไป */
+function landingCommuteProfile(nowMin){
+  const evening = nowMin >= 12*60 && nowMin < 20*60;
+  return evening ? {
+    period:"12:00–20:00",
+    srtFrom:"asok", srtTo:"latkrabang",
+    srtLabel:"อโศก → ลาดกระบัง",
+    arlFrom:"arl_phayathai", arlTo:"arl_suvarnabhumi",
+    arlLabel:"พญาไท → สุวรรณภูมิ"
+  } : {
+    period:"06:00–12:00",
+    srtFrom:"latkrabang", srtTo:"asok",
+    srtLabel:"ลาดกระบัง → อโศก",
+    arlFrom:"arl_suvarnabhumi", arlTo:"arl_phayathai",
+    arlLabel:"สุวรรณภูมิ → พญาไท"
+  };
+}
+
+// รอบรถไฟชานเมืองถัดไปตามทิศทางช่วงเวลา
+function nextSrtDeparture(nowMin, profile){
+  const cfg = profile || landingCommuteProfile(nowMin);
+  const trips = findTrips(SCHEDULES.daily, cfg.srtFrom, cfg.srtTo);
   let best = null, bestDiff = Infinity;
   trips.forEach(t => {
     let diff = t.depMin - nowMin; if(diff < 0) diff += 1440;
@@ -2709,10 +2734,14 @@ function nextSrtDeparture(nowMin){
   });
   return best;
 }
-// รอบ Airport Rail Link ถัดไป เลือกตารางวันธรรมดา/วันหยุดตามวันจริง
-function nextArlDeparture(nowMin){
-  const sc = isWeekendDate(bangkokISO()) ? SCHEDULES.arlWeekend : SCHEDULES.arlWeekday;
-  const best = nextByTimes(sc.routes["arl_phayathai|arl_suvarnabhumi"].departures, nowMin);
+
+// รอบ Airport Rail Link ถัดไปตามทิศทางช่วงเวลาและประเภทวันจริง
+function nextArlDeparture(nowMin, profile, dateIso){
+  const cfg = profile || landingCommuteProfile(nowMin);
+  const sc = isWeekendDate(dateIso || bangkokISO()) ? SCHEDULES.arlWeekend : SCHEDULES.arlWeekday;
+  const route = sc.routes[cfg.arlFrom + "|" + cfg.arlTo];
+  if(!route) return null;
+  const best = nextByTimes(route.departures, nowMin);
   if(best) best.arr = arlArrival(best.dep);
   return best;
 }
@@ -2824,39 +2853,114 @@ function updateLanding(dateObj, partsObj, todayIso, millis){
   $("lClock").innerHTML = clockMarkup(p.hour, p.minute, p.second, ms);
   $("lDate").textContent = thaiLandingDate(today);
   try{
-    const srt = nextSrtDeparture(nowMin);
+    const profile = landingCommuteProfile(nowMin);
+    const srt = nextSrtDeparture(nowMin, profile);
     if(srt){
       $("lSrtTime").textContent = srt.dep;
-      $("lSrtSub").textContent = "ขบวน " + srt.no + " · หัวลำโพง → ฉะเชิงเทรา";
+      $("lSrtSub").textContent = "ขบวน " + srt.no + " · " + profile.srtLabel + " · ถึง " + srt.arr;
       setLandingCountdown("lSrtCd", srt.diff);
+    }else{
+      $("lSrtTime").textContent = "--:--";
+      $("lSrtSub").textContent = profile.srtLabel + " · ยังไม่พบเที่ยวที่จอดครบ";
+      $("lSrtCd").textContent = profile.period;
     }
-    const arl = nextArlDeparture(nowMin);
+    const arl = nextArlDeparture(nowMin, profile, today);
     if(arl){
       $("lArlTime").textContent = arl.dep;
-      $("lArlSub").textContent = "พญาไท → สุวรรณภูมิ · ถึง " + arl.arr;
+      $("lArlSub").textContent = profile.arlLabel + " · ถึง " + arl.arr;
       setLandingCountdown("lArlCd", arl.diff);
+    }else{
+      $("lArlTime").textContent = "--:--";
+      $("lArlSub").textContent = profile.arlLabel + " · ยังไม่พบเที่ยวถัดไป";
+      $("lArlCd").textContent = profile.period;
     }
   }catch(e){ /* ถ้าคำนวณรอบถัดไปพลาด ก็ยังแสดงนาฬิกาได้ */ }
 }
-// เริ่มวัดความเร็วปัจจุบันของผู้ใช้ (เมตร/วินาที -> กม./ชม.) เมื่อผู้ใช้แตะเปิด
+
+function haversineMeters(a,b){
+  const rad = value => value * Math.PI / 180;
+  const earth = 6371000;
+  const dLat = rad(b.lat-a.lat), dLon = rad(b.lon-a.lon);
+  const lat1 = rad(a.lat), lat2 = rad(b.lat);
+  const h = Math.sin(dLat/2)**2 + Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLon/2)**2;
+  return 2 * earth * Math.asin(Math.min(1,Math.sqrt(h)));
+}
+function median(values){
+  const list=values.slice().sort((a,b)=>a-b), mid=Math.floor(list.length/2);
+  return list.length%2 ? list[mid] : (list[mid-1]+list[mid])/2;
+}
+function resetLandingSpeed(){
+  LANDING_SPEED_ANCHOR = null;
+  LANDING_SPEED_SAMPLES = [];
+}
+function resolveLandingSpeed(position){
+  const c=position.coords || {}, timestamp=Number(position.timestamp)||Date.now();
+  const current={lat:Number(c.latitude),lon:Number(c.longitude),accuracy:Number(c.accuracy)||50,ts:timestamp};
+  const native=Number(c.speed);
+  let fallback=null;
+
+  if(LANDING_SPEED_ANCHOR && Number.isFinite(current.lat) && Number.isFinite(current.lon)){
+    const dt=(current.ts-LANDING_SPEED_ANCHOR.ts)/1000;
+    if(dt>=0.5 && dt<=45){
+      const distance=haversineMeters(LANDING_SPEED_ANCHOR,current);
+      const uncertainty=Math.max(current.accuracy,LANDING_SPEED_ANCHOR.accuracy);
+      const movementThreshold=Math.max(2.5,Math.min(12,uncertainty*0.32));
+      if(distance>=movementThreshold){
+        fallback=distance/dt;
+        LANDING_SPEED_ANCHOR=current;
+      }else if(dt>=12){
+        fallback=0;
+        LANDING_SPEED_ANCHOR=current;
+      }
+    }else if(dt>45 || dt<0){
+      LANDING_SPEED_ANCHOR=current;
+    }
+  }else{
+    LANDING_SPEED_ANCHOR=current;
+  }
+
+  let metersPerSecond=null, source="";
+  if(Number.isFinite(native) && native>0.35){
+    metersPerSecond=native; source="GPS";
+    if(Number.isFinite(fallback) && fallback>0.35) metersPerSecond=native*.7+fallback*.3;
+  }else if(Number.isFinite(fallback)){
+    metersPerSecond=fallback; source="คำนวณจากตำแหน่ง";
+  }else if(Number.isFinite(native) && native>=0){
+    metersPerSecond=native; source="GPS";
+  }
+  if(!Number.isFinite(metersPerSecond)) return null;
+
+  let kmh=Math.max(0,Math.min(220,metersPerSecond*3.6));
+  if(kmh<1.2) kmh=0;
+  LANDING_SPEED_SAMPLES.push(kmh);
+  if(LANDING_SPEED_SAMPLES.length>5) LANDING_SPEED_SAMPLES.shift();
+  return {kmh:median(LANDING_SPEED_SAMPLES),source,accuracy:current.accuracy};
+}
+
+// เริ่มวัดความเร็วปัจจุบัน: ใช้ค่า speed จาก GPS และสำรองด้วยระยะทางระหว่างพิกัด
 function startLandingSpeed(){
   const val = $("lSpeedVal"), hint = $("lSpeedHint");
   if(!("geolocation" in navigator)){ if(hint) hint.textContent = "อุปกรณ์ไม่รองรับ"; return; }
   if(LANDING_SPEED_WATCH != null) return; // เปิดอยู่แล้ว
-  if(hint) hint.textContent = "กำลังขอพิกัด";
+  resetLandingSpeed();
+  if(hint) hint.textContent = "กำลังจับสัญญาณ GPS";
   LANDING_SPEED_WATCH = navigator.geolocation.watchPosition(pos => {
-    const s = pos.coords.speed; // เมตร/วินาที (บางอุปกรณ์คืน null เมื่ออยู่นิ่ง)
-    if(typeof s === "number" && isFinite(s) && s >= 0){
-      if(val) val.textContent = (s * 3.6).toFixed(1);
-      if(hint) hint.textContent = "กำลังวัดแบบเรียลไทม์";
+    const result=resolveLandingSpeed(pos);
+    if(result){
+      if(val) val.textContent=result.kmh.toFixed(1);
+      if(hint){
+        if(result.kmh>0) hint.textContent=result.source+" · กำลังวัดแบบเรียลไทม์";
+        else hint.textContent="กำลังรอการเคลื่อนที่";
+      }
     }else{
-      if(val) val.textContent = "0.0";
-      if(hint) hint.textContent = "ขยับเพื่อเริ่มวัด";
+      if(val) val.textContent="0.0";
+      if(hint) hint.textContent="กำลังเทียบตำแหน่งครั้งถัดไป";
     }
   }, err => {
-    if(hint) hint.textContent = err.code === 1 ? "กรุณาอนุญาตตำแหน่ง" : "วัดความเร็วไม่ได้";
+    if(hint) hint.textContent = err.code === 1 ? "กรุณาเปิดตำแหน่งแบบแม่นยำ" : "รับสัญญาณ GPS ไม่ได้";
     LANDING_SPEED_WATCH = null;
-  }, {enableHighAccuracy:true, maximumAge:1000, timeout:20000});
+    resetLandingSpeed();
+  }, {enableHighAccuracy:true, maximumAge:0, timeout:30000});
 }
 // ปิดหน้า Landing เข้าสู่แอปจริง
 function enterApp(){

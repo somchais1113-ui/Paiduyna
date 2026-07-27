@@ -1,4 +1,4 @@
-const CACHE = "paiduyna-full-2026-07-27-v35-clock-overlap-safe";
+const CACHE = "paiduyna-full-2026-07-27-v36-commute-direction-speed";
 const APP_SHELL = [
   "./",
   "./index.html",
