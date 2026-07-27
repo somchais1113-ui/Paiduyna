@@ -377,7 +377,7 @@ html{scroll-behavior:smooth}
   animation:landIn .5s ease;
 }
 @keyframes landIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.landing-hero{width:100%;display:flex;flex-direction:column;align-items:center}
+.landing-hero{width:100%;display:flex;flex-direction:column;align-items:center;container-type:inline-size}
 .landing-clock{
   font:800 clamp(3.5rem,16.5vw,5.25rem) var(--font-display);
   line-height:.9;margin-top:8px;width:100%;max-width:100%;
@@ -657,7 +657,7 @@ html{scroll-behavior:smooth}
 @media print{body{background:#fff}.planner,.btn-refresh,.livebar,.sched-tabs{display:none}.card{box-shadow:none;border:1px solid #ccc}}
 
 
-/* ---------- Landing responsive composition v32 ----------
+/* ---------- Landing responsive composition v35 overlap-safe clock ----------
    ใช้ HTML/JS ชุดเดียว แล้วจัดวางใหม่ตามขนาดหน้าจออัตโนมัติ */
 @media (min-width:600px) and (max-width:1023px){
   .landing{
@@ -671,13 +671,19 @@ html{scroll-behavior:smooth}
     box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 18px 48px rgba(29,2,8,.1);
   }
   .landing-clock{
-    font-size:clamp(5.8rem,15.8vw,8.35rem);margin:auto 0;align-self:center;
-    grid-template-columns:.92em .13em .92em .13em .92em .1em .5em;
-    column-gap:.015em;
+    display:flex;width:100%;justify-content:center;align-items:flex-end;
+    font-size:clamp(4.6rem,14.2cqw,7.6rem);margin:auto 0;align-self:center;
+    column-gap:0;overflow:visible;
   }
-  .landing-clock .clock-unit{letter-spacing:-.06em}
-  .landing-clock .clock-sep{font-weight:400;opacity:.88}
-  .landing-clock .clock-ms{font-size:.3em;padding-bottom:.12em}
+  .landing-clock .clock-unit{
+    flex:0 0 1.48em;width:1.48em;letter-spacing:-.035em;text-align:center;
+  }
+  .landing-clock .clock-sep{
+    flex:0 0 .23em;width:.23em;font-weight:400;opacity:.88;text-align:center;
+  }
+  .landing-clock .clock-ms{
+    flex:0 0 .55em;width:.55em;font-size:.29em;padding-bottom:.11em;text-align:left;
+  }
   .landing-meta{grid-template-columns:minmax(150px,.9fr) minmax(0,1.25fr) 50px;gap:18px;margin-top:0}
   .landing-logo{max-width:172px}
   .landing-date{font-size:1.05rem}
@@ -731,15 +737,19 @@ html{scroll-behavior:smooth}
     box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 18px 48px rgba(29,2,8,.12);
   }
   .landing-clock{
-    font-size:clamp(6.25rem,8.7vw,8.2rem);
-    margin:auto 0;
-    align-self:center;
-    grid-template-columns:.92em .13em .92em .13em .92em .1em .5em;
-    column-gap:.015em;
+    display:flex;width:100%;justify-content:center;align-items:flex-end;
+    font-size:clamp(4.55rem,14.4cqw,8rem);
+    margin:auto 0;align-self:center;column-gap:0;overflow:visible;
   }
-  .landing-clock .clock-unit{letter-spacing:-.06em}
-  .landing-clock .clock-sep{font-weight:400;opacity:.88}
-  .landing-clock .clock-ms{font-size:.3em;padding-bottom:.12em}
+  .landing-clock .clock-unit{
+    flex:0 0 1.48em;width:1.48em;letter-spacing:-.035em;text-align:center;
+  }
+  .landing-clock .clock-sep{
+    flex:0 0 .23em;width:.23em;font-weight:400;opacity:.88;text-align:center;
+  }
+  .landing-clock .clock-ms{
+    flex:0 0 .55em;width:.55em;font-size:.29em;padding-bottom:.11em;text-align:left;
+  }
   .landing-meta{
     grid-template-columns:minmax(150px,.98fr) minmax(0,1.12fr) 50px;
     gap:16px;
@@ -824,7 +834,7 @@ html{scroll-behavior:smooth}
 
 @media (min-width:1280px){
   .landing-inner{max-width:1320px;grid-template-columns:minmax(500px,.96fr) minmax(680px,1.04fr)}
-  .landing-clock{font-size:clamp(7.2rem,8.25vw,8.55rem)}
+  .landing-clock{font-size:clamp(5rem,14.6cqw,8rem)}
   .landing-hero{min-height:500px;padding:38px 32px 30px}
   .ld-speed-val{font-size:5rem}
 }
@@ -833,7 +843,7 @@ html{scroll-behavior:smooth}
   .landing{align-items:flex-start;padding-top:22px;padding-bottom:22px}
   .landing-inner{gap:13px 18px}
   .landing-hero{min-height:410px;padding:24px 22px 20px}
-  .landing-clock{font-size:clamp(5.7rem,7.7vw,6.8rem)}
+  .landing-clock{font-size:clamp(4.4rem,13.8cqw,6.25rem)}
   .landing-meta{margin-top:0}
   .ld-card{min-height:134px;padding-top:14px;padding-bottom:14px}
   .ld-time{font-size:2.35rem;margin-top:6px}

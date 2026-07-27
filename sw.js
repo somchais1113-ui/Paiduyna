@@ -1,4 +1,4 @@
-const CACHE = "paiduyna-full-2026-07-27-v34-large-clock";
+const CACHE = "paiduyna-full-2026-07-27-v35-clock-overlap-safe";
 const APP_SHELL = [
   "./",
   "./index.html",

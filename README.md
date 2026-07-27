@@ -4,7 +4,7 @@
 
 เว็บตารางเดินรถและผู้ช่วยวางแผนการเดินทาง รถไฟชานเมืองสายตะวันออก ช่วงกรุงเทพ ถึง ฉะเชิงเทรา
 
-Build: `2026-07-27-v34-large-clock`
+Build: `2026-07-27-v35-clock-overlap-fix`
 
 Full Version รวมงานจาก Version 1.1, 1.5 และ 2.0 ไว้ในชุดเดียว โดยยังเปิดผ่าน GitHub Pages ได้
 
@@ -358,6 +358,18 @@ https://ชื่อโดเมนของคุณ/api/strava/connect?key=ค
 - ขยายค่าความเร็วและจัดกึ่งกลางการ์ด
 
 
+## v35 Clock Overlap Fix
+
+- Fixed overlap in landing hero clock on tablet and desktop by widening each time slot
+- Rebalanced desktop/tablet hero font size and spacing to keep large display without collision
+
 ## v34 Large Clock
 - ขยายนาฬิกาบน Tablet และ Desktop ให้ใช้พื้นที่แบบเต็มการ์ดตามภาพอ้างอิง
 - ล็อกสัดส่วนช่องเวลาและมิลลิวินาทีเพื่อไม่ให้เบียดกัน
+
+
+## v35 Clock Overlap Safe
+- เปลี่ยนนาฬิกา Tablet/Desktop จาก Grid ที่ถูกบีบได้ เป็น Flex ช่องคงที่
+- คำนวณขนาดตัวเลขจากความกว้างจริงของการ์ดด้วย Container Query units
+- ล็อกความกว้าง ชั่วโมง นาที วินาที เครื่องหมายคั่น และมิลลิวินาที
+- ป้องกันตัวเลขทับกันเมื่อหน้าต่าง Desktop หรือ Tablet มีหลายสัดส่วน
