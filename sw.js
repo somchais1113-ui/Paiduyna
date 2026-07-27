@@ -1,4 +1,4 @@
-const CACHE = "paiduyna-full-2026-07-27-v20-landing-compose";
+const CACHE = "paiduyna-full-2026-07-27-v21-strava-walk";
 const APP_SHELL = [
   "./",
   "./index.html",

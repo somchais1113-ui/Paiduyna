@@ -4,7 +4,7 @@
 
 เว็บตารางเดินรถและผู้ช่วยวางแผนการเดินทาง รถไฟชานเมืองสายตะวันออก ช่วงกรุงเทพ ถึง ฉะเชิงเทรา
 
-Build: `2026-07-27-v19-strava-landing`
+Build: `2026-07-27-v21-strava-walk`
 
 Full Version รวมงานจาก Version 1.1, 1.5 และ 2.0 ไว้ในชุดเดียว โดยยังเปิดผ่าน GitHub Pages ได้
 
@@ -196,9 +196,9 @@ python3 -m http.server 8000
 
 ---
 
-## แสดงผลการวิ่งล่าสุดบน Landing Page ด้วย Strava
+## แสดงผลกิจกรรมล่าสุดบน Landing Page ด้วย Strava
 
-Build นี้เพิ่มการ์ด `TODAY'S RUN` บนหน้า Dashboard ก่อนเข้าสู่ตารางเดินรถ โดยดึงเฉพาะสถิติที่จำเป็นจากกิจกรรมประเภท Run, Trail Run หรือ Virtual Run ของวันนี้ตามเวลา `Asia/Bangkok`
+Build นี้เพิ่มการ์ดกิจกรรมบนหน้า Dashboard ก่อนเข้าสู่ตารางเดินรถ โดยดึงกิจกรรมล่าสุดของวันนี้ตามเวลา `Asia/Bangkok` รองรับ Run, Walk, Trail Run, Hike และ Virtual Run พร้อมเปลี่ยนหัวการ์ดตามประเภทกิจกรรมอัตโนมัติ
 
 ข้อมูลที่แสดง:
 
@@ -206,7 +206,7 @@ Build นี้เพิ่มการ์ด `TODAY'S RUN` บนหน้า D
 - ระยะทาง
 - Average Pace
 - Moving Time
-- เวลาเริ่มวิ่ง
+- เวลาเริ่มกิจกรรม
 - Heart Rate เฉลี่ย ถ้ามี
 - Calories ถ้ามี
 - Elevation Gain

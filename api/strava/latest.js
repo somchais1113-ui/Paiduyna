@@ -1,9 +1,9 @@
-import { latestRunToday } from "../../lib/strava.js";
+import { latestActivityToday } from "../../lib/strava.js";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") return res.status(405).json({ error: "Method not allowed" });
   try {
-    const result = await latestRunToday();
+    const result = await latestActivityToday();
     res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
     return res.status(200).json(result);
   } catch (error) {
