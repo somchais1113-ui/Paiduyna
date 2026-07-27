@@ -354,7 +354,7 @@ html{scroll-behavior:smooth}
 @keyframes netpulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}70%{box-shadow:0 0 0 8px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
 .brand-status.offline{background:var(--amber);animation:none}
 @media (prefers-reduced-motion:reduce){.brand-status{animation:none}}
-/* ---------- หน้า Dashboard (Landing) v33: ขยายนาฬิกาและการ์ดความเร็วสำหรับ Desktop ---------- */
+/* ---------- หน้า Dashboard (Landing) v34: นาฬิกาขนาดใหญ่สำหรับ Tablet และ Desktop ---------- */
 .landing{
   position:fixed;inset:0;z-index:60;color:#F7ECEC;
   display:flex;align-items:flex-start;justify-content:center;
@@ -664,8 +664,21 @@ html{scroll-behavior:smooth}
     padding:max(28px,env(safe-area-inset-top)) 28px max(26px,env(safe-area-inset-bottom));
   }
   .landing-inner{max-width:850px}
-  .landing-clock{font-size:clamp(4.35rem,11.4vw,6rem)}
-  .landing-meta{grid-template-columns:minmax(150px,.9fr) minmax(0,1.25fr) 50px;gap:18px;margin-top:22px}
+  .landing-hero{
+    min-height:350px;padding:24px 28px 22px;justify-content:space-between;
+    border:1px solid rgba(255,255,255,.11);border-radius:24px;
+    background:linear-gradient(155deg,rgba(255,255,255,.052),rgba(255,255,255,.018));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 18px 48px rgba(29,2,8,.1);
+  }
+  .landing-clock{
+    font-size:clamp(5.8rem,15.8vw,8.35rem);margin:auto 0;align-self:center;
+    grid-template-columns:.92em .13em .92em .13em .92em .1em .5em;
+    column-gap:.015em;
+  }
+  .landing-clock .clock-unit{letter-spacing:-.06em}
+  .landing-clock .clock-sep{font-weight:400;opacity:.88}
+  .landing-clock .clock-ms{font-size:.3em;padding-bottom:.12em}
+  .landing-meta{grid-template-columns:minmax(150px,.9fr) minmax(0,1.25fr) 50px;gap:18px;margin-top:0}
   .landing-logo{max-width:172px}
   .landing-date{font-size:1.05rem}
   .landing-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:22px}
@@ -710,7 +723,7 @@ html{scroll-behavior:smooth}
     align-items:stretch;
     justify-content:space-between;
     min-width:0;
-    min-height:462px;
+    min-height:486px;
     padding:34px 28px 28px;
     border:1px solid rgba(255,255,255,.10);
     border-radius:24px;
@@ -718,10 +731,15 @@ html{scroll-behavior:smooth}
     box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 18px 48px rgba(29,2,8,.12);
   }
   .landing-clock{
-    font-size:clamp(4.5rem,5.35vw,6rem);
+    font-size:clamp(6.25rem,8.7vw,8.2rem);
     margin:auto 0;
     align-self:center;
+    grid-template-columns:.92em .13em .92em .13em .92em .1em .5em;
+    column-gap:.015em;
   }
+  .landing-clock .clock-unit{letter-spacing:-.06em}
+  .landing-clock .clock-sep{font-weight:400;opacity:.88}
+  .landing-clock .clock-ms{font-size:.3em;padding-bottom:.12em}
   .landing-meta{
     grid-template-columns:minmax(150px,.98fr) minmax(0,1.12fr) 50px;
     gap:16px;
@@ -805,17 +823,17 @@ html{scroll-behavior:smooth}
 }
 
 @media (min-width:1280px){
-  .landing-inner{max-width:1320px;grid-template-columns:minmax(470px,.94fr) minmax(690px,1.06fr)}
-  .landing-clock{font-size:clamp(5.35rem,5.4vw,6.25rem)}
-  .landing-hero{min-height:486px;padding:38px 32px 30px}
+  .landing-inner{max-width:1320px;grid-template-columns:minmax(500px,.96fr) minmax(680px,1.04fr)}
+  .landing-clock{font-size:clamp(7.2rem,8.25vw,8.55rem)}
+  .landing-hero{min-height:500px;padding:38px 32px 30px}
   .ld-speed-val{font-size:5rem}
 }
 
 @media (min-width:1024px) and (max-height:800px){
   .landing{align-items:flex-start;padding-top:22px;padding-bottom:22px}
   .landing-inner{gap:13px 18px}
-  .landing-hero{min-height:390px;padding:24px 22px 20px}
-  .landing-clock{font-size:clamp(4.35rem,5vw,5rem)}
+  .landing-hero{min-height:410px;padding:24px 22px 20px}
+  .landing-clock{font-size:clamp(5.7rem,7.7vw,6.8rem)}
   .landing-meta{margin-top:0}
   .ld-card{min-height:134px;padding-top:14px;padding-bottom:14px}
   .ld-time{font-size:2.35rem;margin-top:6px}
