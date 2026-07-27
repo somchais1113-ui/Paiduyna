@@ -367,14 +367,27 @@ html{scroll-behavior:smooth}
 /* กลุ่มสถานะระหว่างเดินทาง: อากาศ + AQI + การวิ่ง */
 .ld-wellness{width:100%;display:grid;grid-template-columns:minmax(132px,.76fr) minmax(0,1.24fr);gap:10px;margin-top:14px;align-items:stretch}
 .ld-cond{display:grid;grid-template-rows:1fr 1fr;gap:10px;min-width:0}
-.ld-wx,.ld-aqi{background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.045));border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:11px 12px;display:flex;align-items:center;gap:8px;min-height:78px;box-shadow:inset 0 1px 0 rgba(255,255,255,.045)}
+.ld-wx{background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.045));border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:11px 12px;display:flex;align-items:center;gap:8px;min-height:78px;box-shadow:inset 0 1px 0 rgba(255,255,255,.045)}
 .ld-wx-icon{font-size:1.7rem;line-height:1;flex:none;filter:drop-shadow(0 4px 8px rgba(0,0,0,.12))}
-.ld-wx-txt,.ld-aqi-txt{display:flex;flex-direction:column;min-width:0}
+.ld-wx-txt{display:flex;flex-direction:column;min-width:0}
 .ld-wx-temp{font:800 1.35rem var(--font-display);color:#fff;line-height:1.05;font-variant-numeric:tabular-nums}
 .ld-wx-desc{font-size:.72rem;color:#E8C9CE;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:3px}
-.ld-aqi-val{font:800 1.8rem var(--font-display);color:#fff;line-height:1;flex:none;font-variant-numeric:tabular-nums}
-.ld-aqi-cap{font:700 .6rem var(--font-body);color:#C89AA1;letter-spacing:.035em;line-height:1.3}
-.ld-aqi-status{font-size:.8rem;color:#F0DADE;margin-top:3px;font-weight:700}
+/* การ์ด AQI ภาษาไทย ปรับจากแนวคิดของ PurpleAir Widget: สีตามระดับ ค่า แนวโน้ม สถานที่ และเวลาอัปเดต */
+.ld-aqi{--aqi-start:#176B4D;--aqi-end:#0D513A;--aqi-text:#F7FFFB;position:relative;overflow:hidden;min-height:104px;border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:10px 11px;color:var(--aqi-text);background:linear-gradient(145deg,var(--aqi-start),var(--aqi-end));box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 7px 18px rgba(0,0,0,.09);transition:background .35s ease,border-color .35s ease}
+.ld-aqi::after{content:"";position:absolute;width:88px;height:88px;border-radius:50%;right:-35px;top:-44px;background:rgba(255,255,255,.09);pointer-events:none}
+.ld-aqi-top,.ld-aqi-main,.ld-aqi-meta,.ld-aqi-particles{position:relative;z-index:1}
+.ld-aqi-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ld-aqi-cap{font:800 .58rem var(--font-body);letter-spacing:.055em;line-height:1.2;text-transform:uppercase;opacity:.88}
+.ld-aqi-icon{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.12);font:900 .52rem var(--font-display)}
+.ld-aqi-main{display:flex;align-items:flex-end;gap:7px;margin-top:4px;min-width:0}
+.ld-aqi-val{font:850 2.15rem var(--font-display);line-height:.95;flex:none;font-variant-numeric:tabular-nums;letter-spacing:-1px}
+.ld-aqi-copy{display:flex;flex-direction:column;min-width:0;padding-bottom:2px}
+.ld-aqi-status{font:800 .75rem var(--font-body);line-height:1.15;white-space:normal}
+.ld-aqi-trend{font:650 .52rem var(--font-body);opacity:.82;margin-top:2px;white-space:nowrap}
+.ld-aqi-meta{display:flex;justify-content:space-between;gap:7px;margin-top:7px;font-size:.49rem;line-height:1.2;opacity:.78}
+.ld-aqi-meta span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ld-aqi-particles{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap}
+.ld-aqi-chip{font:750 .47rem var(--font-body);padding:3px 5px;border-radius:99px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.16);white-space:nowrap}
 /* กราฟความหนาแน่น */
 .ld-density{width:100%;margin-top:20px}
 .ld-density-title{font:700 .72rem var(--font-body);color:#C89AA1;margin-bottom:2px}
@@ -521,12 +534,26 @@ html{scroll-behavior:smooth}
             <span class="ld-wx-desc" id="lWxDesc">กำลังโหลดอากาศ</span>
           </span>
         </div>
-        <div class="ld-aqi">
-          <span class="ld-aqi-val" id="lAqiVal">--</span>
-          <span class="ld-aqi-txt">
-            <span class="ld-aqi-cap">คุณภาพอากาศ (US AQI)</span>
-            <span class="ld-aqi-status" id="lAqiStatus">กำลังโหลด</span>
-          </span>
+        <div class="ld-aqi" id="lAqiCard" role="status" aria-live="polite" aria-label="คุณภาพอากาศกรุงเทพมหานคร">
+          <div class="ld-aqi-top">
+            <span class="ld-aqi-cap">คุณภาพอากาศ · US AQI</span>
+            <span class="ld-aqi-icon" id="lAqiIcon" aria-hidden="true">AQI</span>
+          </div>
+          <div class="ld-aqi-main">
+            <span class="ld-aqi-val" id="lAqiVal">--</span>
+            <span class="ld-aqi-copy">
+              <span class="ld-aqi-status" id="lAqiStatus">กำลังโหลด</span>
+              <span class="ld-aqi-trend" id="lAqiTrend">กำลังตรวจแนวโน้ม</span>
+            </span>
+          </div>
+          <div class="ld-aqi-meta">
+            <span id="lAqiLocation">กรุงเทพมหานคร</span>
+            <span id="lAqiUpdated">อัปเดต --:--</span>
+          </div>
+          <div class="ld-aqi-particles">
+            <span class="ld-aqi-chip" id="lAqiPm25">PM2.5 --</span>
+            <span class="ld-aqi-chip" id="lAqiPm10">PM10 --</span>
+          </div>
         </div>
       </div>
 
@@ -1307,16 +1334,35 @@ async function loadWeather(){
   }
 }
 
-/* เกณฑ์ US AQI: [ค่าสูงสุดของช่วง, ชื่อสถานะ, ระดับสีที่ใช้] */
+/* เกณฑ์ US AQI และชุดสีแบบไล่ระดับสำหรับการ์ด Landing */
 const AQI_BANDS = [
-  [50,  "ดีมาก",           "lv1"],
-  [100, "ปานกลาง",         "lv2"],
-  [150, "มีผลต่อกลุ่มเสี่ยง","lv3"],
-  [200, "มีผลต่อสุขภาพ",   "lv4"],
-  [300, "อันตราย",         "lv5"],
-  [Infinity,"อันตรายมาก",  "lv6"]
+  {max:50,       label:"ดี",                       level:"lv1", start:"#3C9C68", end:"#176B4D", text:"#F7FFFB", icon:"✓", advice:"เหมาะกับกิจกรรมกลางแจ้ง"},
+  {max:100,      label:"ปานกลาง",                  level:"lv2", start:"#D0A92B", end:"#A77712", text:"#FFFDF3", icon:"•", advice:"ทำกิจกรรมได้ตามปกติ"},
+  {max:150,      label:"เริ่มมีผลต่อกลุ่มเสี่ยง",   level:"lv3", start:"#E18B2E", end:"#B75B19", text:"#FFF8F0", icon:"!", advice:"กลุ่มเสี่ยงควรลดเวลานอกอาคาร"},
+  {max:200,      label:"มีผลต่อสุขภาพ",             level:"lv4", start:"#C94A46", end:"#8E292D", text:"#FFF5F5", icon:"!", advice:"ควรลดกิจกรรมกลางแจ้ง"},
+  {max:300,      label:"มีผลต่อสุขภาพมาก",          level:"lv5", start:"#8E4A9D", end:"#5E2C6B", text:"#FFF6FF", icon:"!!", advice:"หลีกเลี่ยงกิจกรรมกลางแจ้ง"},
+  {max:Infinity, label:"อันตราย",                   level:"lv6", start:"#71213A", end:"#3F1021", text:"#FFF2F5", icon:"!!", advice:"ควรอยู่ภายในอาคาร"}
 ];
-const aqiBand = value => AQI_BANDS.find(band => value <= band[0]) || AQI_BANDS[AQI_BANDS.length-1];
+const aqiBand = value => AQI_BANDS.find(band => value <= band.max) || AQI_BANDS[AQI_BANDS.length-1];
+
+function getAqiTrend(aqi){
+  const key = "paiduyna-last-aqi";
+  let previous = null;
+  try{
+    const saved = JSON.parse(localStorage.getItem(key) || "null");
+    if(saved && Number.isFinite(saved.value)) previous = saved.value;
+    localStorage.setItem(key, JSON.stringify({value:aqi,updatedAt:Date.now()}));
+  }catch(e){}
+  if(!Number.isFinite(previous)) return {symbol:"→",label:"ค่าล่าสุด"};
+  const delta = aqi - previous;
+  if(delta >= 3) return {symbol:"↑",label:"แนวโน้มเพิ่มขึ้น"};
+  if(delta <= -3) return {symbol:"↓",label:"แนวโน้มลดลง"};
+  return {symbol:"→",label:"แนวโน้มคงที่"};
+}
+
+function thaiUpdatedTime(){
+  return new Intl.DateTimeFormat("th-TH",{hour:"2-digit",minute:"2-digit",hour12:false,timeZone:"Asia/Bangkok"}).format(new Date());
+}
 
 async function loadAirQuality(){
   const url = "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=13.7563&longitude=100.5018"
@@ -1326,27 +1372,47 @@ async function loadAirQuality(){
     if(!r.ok) throw new Error(r.status);
     const c = (await r.json()).current;
     const aqi = Math.round(c.us_aqi);
+    const pm25 = Math.round(c.pm2_5);
+    const pm10 = Math.round(c.pm10);
     if(!Number.isFinite(aqi)) throw new Error("no aqi");
-    const [,label,level] = aqiBand(aqi);
+    const band = aqiBand(aqi);
+    const trend = getAqiTrend(aqi);
+
     $("aqiVal").textContent = aqi;
-    $("aqiStatus").textContent = label;
-    $("aqiStatus").className = "aqi-status " + level;
-    $("aqiPm").textContent = "PM2.5 " + Math.round(c.pm2_5) + " | PM10 " + Math.round(c.pm10) + " \u00B5g/m\u00B3";
-    if($("lAqiVal")){
-      const AQI_COLOR = {lv1:"#5FD68C",lv2:"#FBBF24",lv3:"#FB923C",lv4:"#F87171",lv5:"#C084FC",lv6:"#FCA5A5"};
+    $("aqiStatus").textContent = band.label;
+    $("aqiStatus").className = "aqi-status " + band.level;
+    $("aqiPm").textContent = "PM2.5 " + pm25 + " | PM10 " + pm10 + " µg/m³ · " + band.advice;
+
+    const card = $("lAqiCard");
+    if(card){
+      card.style.setProperty("--aqi-start",band.start);
+      card.style.setProperty("--aqi-end",band.end);
+      card.style.setProperty("--aqi-text",band.text);
+      card.setAttribute("aria-label","คุณภาพอากาศกรุงเทพมหานคร AQI " + aqi + " ระดับ" + band.label);
       $("lAqiVal").textContent = aqi;
-      $("lAqiStatus").textContent = label;
-      $("lAqiStatus").style.color = AQI_COLOR[level] || "#F0DADE";
+      $("lAqiStatus").textContent = band.label;
+      $("lAqiTrend").textContent = trend.symbol + " " + trend.label;
+      $("lAqiIcon").textContent = band.icon;
+      $("lAqiUpdated").textContent = "อัปเดต " + thaiUpdatedTime();
+      $("lAqiPm25").textContent = "PM2.5 " + pm25;
+      $("lAqiPm10").textContent = "PM10 " + pm10;
     }
   }catch(e){
     $("aqiVal").textContent = "--";
     $("aqiStatus").textContent = "เรียกข้อมูลไม่สำเร็จ";
     $("aqiStatus").className = "aqi-status";
     $("aqiPm").textContent = "กดรีเฟรชข้อมูลเพื่อลองใหม่";
-    if($("lAqiVal")){ $("lAqiVal").textContent = "--"; $("lAqiStatus").textContent = "อากาศไม่พร้อม"; }
+    if($("lAqiCard")){
+      $("lAqiVal").textContent = "--";
+      $("lAqiStatus").textContent = "ข้อมูลอากาศไม่พร้อม";
+      $("lAqiTrend").textContent = "ลองรีเฟรชอีกครั้ง";
+      $("lAqiIcon").textContent = "?";
+      $("lAqiUpdated").textContent = "ยังไม่อัปเดต";
+      $("lAqiPm25").textContent = "PM2.5 --";
+      $("lAqiPm10").textContent = "PM10 --";
+    }
   }
 }
-
 /* ============================================================
    10. แถบสถานะเรียลไทม์ (อ่านจาก data/status.json)
    ============================================================ */
