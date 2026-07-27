@@ -1,4 +1,4 @@
-const CACHE = "paiduyna-full-2026-07-27-v30-google-parking";
+const CACHE = "paiduyna-full-2026-07-27-v32-density-compose";
 const APP_SHELL = [
   "./",
   "./index.html",

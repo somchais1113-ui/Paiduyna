@@ -354,7 +354,7 @@ html{scroll-behavior:smooth}
 @keyframes netpulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}70%{box-shadow:0 0 0 8px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
 .brand-status.offline{background:var(--amber);animation:none}
 @media (prefers-reduced-motion:reduce){.brand-status{animation:none}}
-/* ---------- หน้า Dashboard (Landing) v30: ปรับนาฬิกาไม่ทับกัน วันที่ไม่มีคำว่า พ.ศ. และยกข้อความ Weather ---------- */
+/* ---------- หน้า Dashboard (Landing) v32: ปรับ Compose กราฟความหนาแน่นสำหรับ Tablet และ Desktop ---------- */
 .landing{
   position:fixed;inset:0;z-index:60;color:#F7ECEC;
   display:flex;align-items:flex-start;justify-content:center;
@@ -517,14 +517,33 @@ html{scroll-behavior:smooth}
   width:100%;display:grid;grid-template-columns:minmax(0,1.72fr) minmax(112px,.72fr);
   align-items:stretch;gap:10px;margin-top:16px;
 }
-.ld-density{min-width:0;padding:10px 11px 6px;border-radius:15px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08)}
-.ld-density-title{font:700 .7rem var(--font-body);color:#D9B3B9;margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ld-density{
+  min-width:0;padding:10px 11px 7px;border-radius:15px;
+  background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.025));
+  border:1px solid rgba(255,255,255,.09);display:flex;flex-direction:column;
+}
+.ld-density-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;min-width:0}
+.ld-density-title{font:700 .7rem var(--font-body);color:#D9B3B9;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ld-density-sub{display:none;font:600 .54rem var(--font-body);color:#A87B83;margin-top:2px;line-height:1.3}
+.ld-density-current{display:none;align-items:center;gap:6px;flex:none;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);font:700 .54rem var(--font-body);color:#EACED2;white-space:nowrap}
+.ld-density-current-dot{width:7px;height:7px;border-radius:50%;background:#8DD2A7;box-shadow:0 0 0 4px rgba(141,210,167,.12)}
+.ld-density-current.level-medium .ld-density-current-dot{background:#F0C36A;box-shadow:0 0 0 4px rgba(240,195,106,.12)}
+.ld-density-current.level-high .ld-density-current-dot{background:#F19A75;box-shadow:0 0 0 4px rgba(241,154,117,.12)}
+.ld-density-current.level-peak .ld-density-current-dot{background:#E98D9A;box-shadow:0 0 0 4px rgba(233,141,154,.15)}
+.ld-density-current time{font-weight:500;color:#CBA4AB}
+.ld-density-plot{width:100%;min-width:0}
 .ld-density-chart{width:100%;height:73px;display:block}
 .ld-density-area{fill:url(#ldDensityFill)}
 .ld-density-line{fill:none;stroke:#E98D9A;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
 .ld-density-halo{fill:rgba(233,141,154,.4)}
 .ld-density-point{fill:#fff;stroke:#E98D9A;stroke-width:1.5}
 .ld-density-labels text{fill:#B98D94;font-size:9px;font-family:var(--font-body)}
+.ld-density-notes{display:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px}
+.ld-density-note{min-width:0;padding:7px 9px;border-radius:10px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);font:600 .54rem var(--font-body);color:#B98D94;line-height:1.35}
+.ld-density-note strong{display:block;color:#E8C9CE;font:800 .66rem var(--font-display);margin-bottom:1px}
+.ld-density-note.peak{background:rgba(233,141,154,.07);border-color:rgba(233,141,154,.16)}
+.ld-density-note.now{display:flex;align-items:center;gap:7px}
+.ld-density-note.now::before{content:"";width:8px;height:8px;border-radius:50%;background:#fff;border:2px solid #E98D9A;box-shadow:0 0 0 4px rgba(233,141,154,.12);flex:none}
 .ld-speed{
   cursor:pointer;user-select:none;min-width:0;border-radius:15px;padding:11px 12px;
   display:flex;align-items:flex-start;gap:8px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.035));
@@ -636,6 +655,166 @@ html{scroll-behavior:smooth}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media print{body{background:#fff}.planner,.btn-refresh,.livebar,.sched-tabs{display:none}.card{box-shadow:none;border:1px solid #ccc}}
+
+
+/* ---------- Landing responsive composition v32 ----------
+   ใช้ HTML/JS ชุดเดียว แล้วจัดวางใหม่ตามขนาดหน้าจออัตโนมัติ */
+@media (min-width:600px) and (max-width:1023px){
+  .landing{
+    padding:max(28px,env(safe-area-inset-top)) 28px max(26px,env(safe-area-inset-bottom));
+  }
+  .landing-inner{max-width:850px}
+  .landing-clock{font-size:clamp(4.35rem,11.4vw,6rem)}
+  .landing-meta{grid-template-columns:minmax(150px,.9fr) minmax(0,1.25fr) 50px;gap:18px;margin-top:22px}
+  .landing-logo{max-width:172px}
+  .landing-date{font-size:1.05rem}
+  .landing-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:22px}
+  .ld-card{min-height:148px;padding:17px 18px}
+  .ld-kind,.ld-cd{font-size:.84rem}
+  .ld-time{font-size:2.55rem;margin-top:9px}
+  .ld-sub{font-size:.88rem}
+  .ld-wellness{grid-template-columns:minmax(220px,.76fr) minmax(0,1.24fr);gap:12px;margin-top:12px}
+  .ld-cond{gap:10px}
+  .ld-wx{min-height:128px}
+  .ld-aqi{min-height:112px}
+  .ld-run{min-height:250px;padding:15px 16px}
+  .ld-run-stat-value{font-size:1.16rem}
+  .ld-transit-summary{grid-template-columns:minmax(0,1.62fr) minmax(170px,.58fr);gap:12px;margin-top:14px}
+  .ld-density{padding:14px 15px 12px}
+  .ld-density-sub,.ld-density-current{display:flex}
+  .ld-density-plot{max-width:560px;margin:4px auto 0}
+  .ld-density-chart{height:auto;aspect-ratio:300/92}
+  .ld-density-notes{display:grid}
+  .ld-speed{padding:14px 15px;min-height:100%}
+}
+
+@media (min-width:1024px){
+  .landing{
+    align-items:center;
+    padding:max(30px,env(safe-area-inset-top)) 32px max(30px,env(safe-area-inset-bottom));
+  }
+  .landing::before{height:min(430px,54vh)}
+  .landing-inner{
+    max-width:1180px;
+    display:grid;
+    grid-template-columns:minmax(350px,.78fr) minmax(600px,1.22fr);
+    grid-template-areas:
+      "hero cards"
+      "hero wellness"
+      "transit transit";
+    gap:18px 22px;
+    align-items:stretch;
+  }
+  .landing-hero{
+    grid-area:hero;
+    align-items:stretch;
+    justify-content:center;
+    min-width:0;
+    padding:28px 24px;
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:24px;
+    background:linear-gradient(155deg,rgba(255,255,255,.052),rgba(255,255,255,.018));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 18px 48px rgba(29,2,8,.12);
+  }
+  .landing-clock{
+    font-size:clamp(4.05rem,5.2vw,4.85rem);
+    margin-top:0;
+  }
+  .landing-meta{
+    grid-template-columns:minmax(138px,.95fr) minmax(0,1.15fr) 48px;
+    gap:14px;
+    margin-top:34px;
+    padding:0;
+  }
+  .landing-logo{max-width:162px}
+  .landing-date{font-size:1rem;line-height:1.45}
+  .ld-enter-quick{width:48px;height:48px}
+  .landing-cards{
+    grid-area:cards;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px;
+    margin-top:0;
+    align-self:start;
+  }
+  .ld-card{
+    min-height:158px;
+    padding:18px 19px;
+    border-radius:20px;
+  }
+  .ld-kind,.ld-cd{font-size:.86rem}
+  .ld-time{font-size:2.7rem;margin-top:10px}
+  .ld-sub{font-size:.88rem;margin-top:7px}
+  .ld-wellness{
+    grid-area:wellness;
+    grid-template-columns:minmax(225px,.72fr) minmax(0,1.28fr);
+    gap:14px;
+    margin-top:0;
+    align-self:stretch;
+  }
+  .ld-cond{gap:11px}
+  .ld-wx{min-height:130px;padding:14px 15px}
+  .ld-wx-temp{font-size:2.35rem}
+  .ld-wx-desc{font-size:.84rem}
+  .ld-wx-meta{font-size:.58rem}
+  .ld-aqi{min-height:116px;padding:14px 15px}
+  .ld-aqi-val{font-size:2.5rem}
+  .ld-aqi-status{font-size:.82rem}
+  .ld-aqi-meta{font-size:.54rem}
+  .ld-aqi-chip{font-size:.52rem;padding:4px 8px}
+  .ld-run{min-height:257px;padding:15px 17px;border-radius:20px}
+  .ld-run-title{grid-template-columns:42px minmax(0,1fr);column-gap:11px}
+  .ld-run-title::before{width:42px;height:42px;font-size:.56rem}
+  .ld-run-kicker{font-size:.74rem}
+  .ld-run-state{font-size:.67rem}
+  .ld-run-refresh{width:34px;height:34px}
+  .ld-run-grid{gap:10px 14px}
+  .ld-run-stat-label{font-size:.55rem}
+  .ld-run-stat-value{font-size:1.2rem}
+  .ld-run-stat-sub{font-size:.53rem}
+  .ld-run-extra{font-size:.58rem}
+  .ld-transit-summary{
+    grid-area:transit;
+    grid-template-columns:minmax(0,1.58fr) minmax(220px,.48fr);
+    gap:14px;
+    margin-top:0;
+  }
+  .ld-density{padding:16px 18px 14px;border-radius:18px}
+  .ld-density-title{font-size:.8rem}
+  .ld-density-sub,.ld-density-current{display:flex}
+  .ld-density-plot{max-width:650px;margin:6px auto 0}
+  .ld-density-chart{height:auto;aspect-ratio:300/92}
+  .ld-density-notes{display:grid;gap:10px;margin-top:10px}
+  .ld-density-note{padding:8px 10px;font-size:.58rem}
+  .ld-density-note strong{font-size:.7rem}
+  .ld-speed{padding:15px 16px;border-radius:18px}
+  .ld-speed-cap{font-size:.72rem}
+  .ld-speed-hint{font-size:.58rem}
+  .ld-speed-val{font-size:1.8rem}
+  .ld-speed-unit{font-size:.68rem}
+}
+
+@media (min-width:1280px){
+  .landing-inner{max-width:1240px;grid-template-columns:minmax(380px,.8fr) minmax(680px,1.2fr)}
+  .landing-clock{font-size:4.9rem}
+}
+
+@media (min-width:1024px) and (max-height:800px){
+  .landing{align-items:flex-start;padding-top:22px;padding-bottom:22px}
+  .landing-inner{gap:13px 18px}
+  .landing-hero{padding:20px 21px}
+  .landing-clock{font-size:4rem}
+  .landing-meta{margin-top:22px}
+  .ld-card{min-height:134px;padding-top:14px;padding-bottom:14px}
+  .ld-time{font-size:2.35rem;margin-top:6px}
+  .ld-wx{min-height:112px}
+  .ld-aqi{min-height:104px}
+  .ld-run{min-height:227px}
+  .ld-density-plot{max-width:500px}
+  .ld-density-chart{height:auto}
+  .ld-density-notes{margin-top:6px}
+  .ld-density-note{padding:6px 8px}
+}
+
 </style>
 </head>
 <body>
@@ -723,22 +902,39 @@ html{scroll-behavior:smooth}
 
     <div class="ld-transit-summary" aria-label="ความหนาแน่นผู้โดยสารและความเร็วปัจจุบัน">
       <div class="ld-density">
-        <div class="ld-density-title">ความหนาแน่นผู้โดยสารโดยประมาณ</div>
-        <svg class="ld-density-chart" viewBox="0 0 300 92" role="img" aria-label="กราฟความหนาแน่นผู้โดยสารโดยประมาณ">
-          <defs>
-            <linearGradient id="ldDensityFill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#E98D9A" stop-opacity=".28"/>
-              <stop offset="100%" stop-color="#E98D9A" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <path class="ld-density-area" d="M8 64 C30 64 40 28 66 27 C92 26 90 60 132 60 C175 60 178 19 218 14 C246 10 257 45 290 58 L290 70 L8 70 Z"/>
-          <path class="ld-density-line" id="ldDensityLine" d="M8 64 C30 64 40 28 66 27 C92 26 90 60 132 60 C175 60 178 19 218 14 C246 10 257 45 290 58"/>
-          <circle class="ld-density-halo" id="ldDensityHalo" cx="66" cy="27" r="9"/>
-          <circle class="ld-density-point" id="ldDensityPoint" cx="66" cy="27" r="4.5"/>
-          <g class="ld-density-labels" text-anchor="middle">
-            <text x="10" y="88">06</text><text x="66" y="88">08</text><text x="132" y="88">12</text><text x="218" y="88">18:30</text><text x="288" y="88">20</text>
-          </g>
-        </svg>
+        <div class="ld-density-head">
+          <div>
+            <div class="ld-density-title">ความหนาแน่นผู้โดยสารโดยประมาณ</div>
+            <div class="ld-density-sub">แนวโน้มตามช่วงเวลาของวัน</div>
+          </div>
+          <div class="ld-density-current" id="lDensityCurrent" aria-live="polite">
+            <span class="ld-density-current-dot" aria-hidden="true"></span>
+            <span id="lDensityLevel">ปกติ</span>
+            <time id="lDensityTime">--:--</time>
+          </div>
+        </div>
+        <div class="ld-density-plot">
+          <svg class="ld-density-chart" viewBox="0 0 300 92" role="img" aria-label="กราฟความหนาแน่นผู้โดยสารโดยประมาณ">
+            <defs>
+              <linearGradient id="ldDensityFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#E98D9A" stop-opacity=".28"/>
+                <stop offset="100%" stop-color="#E98D9A" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path class="ld-density-area" d="M8 64 C30 64 40 28 66 27 C92 26 90 60 132 60 C175 60 178 19 218 14 C246 10 257 45 290 58 L290 70 L8 70 Z"/>
+            <path class="ld-density-line" id="ldDensityLine" d="M8 64 C30 64 40 28 66 27 C92 26 90 60 132 60 C175 60 178 19 218 14 C246 10 257 45 290 58"/>
+            <circle class="ld-density-halo" id="ldDensityHalo" cx="66" cy="27" r="9"/>
+            <circle class="ld-density-point" id="ldDensityPoint" cx="66" cy="27" r="4.5"/>
+            <g class="ld-density-labels" text-anchor="middle">
+              <text x="10" y="88">06</text><text x="66" y="88">08</text><text x="132" y="88">12</text><text x="218" y="88">18:30</text><text x="288" y="88">20</text>
+            </g>
+          </svg>
+        </div>
+        <div class="ld-density-notes" aria-hidden="true">
+          <div class="ld-density-note"><strong>08:00</strong>ช่วงเช้าหนาแน่น</div>
+          <div class="ld-density-note peak"><strong>18:30</strong>ช่วงเย็นหนาแน่นสูงสุด</div>
+          <div class="ld-density-note now">จุดสีขาวคือเวลาปัจจุบัน</div>
+        </div>
       </div>
 
       <div class="ld-speed" id="lSpeed" role="button" tabindex="0" title="แตะเพื่อวัดความเร็ว" aria-label="แตะเพื่อวัดความเร็วปัจจุบัน">
@@ -1425,9 +1621,22 @@ function placeDensityPoint(path, point, halo, targetX){
   });
 }
 function updateDensityPoint(hour,minute){
-  const targetX = densityXAtMinute(Number(hour)*60+Number(minute));
+  const totalMinute = Number(hour)*60+Number(minute);
+  const targetX = densityXAtMinute(totalMinute);
   placeDensityPoint($("densityLine"), $("densityPoint"), $("densityHalo"), targetX);
   placeDensityPoint($("ldDensityLine"), $("ldDensityPoint"), $("ldDensityHalo"), targetX); // กราฟบนหน้า Landing
+
+  const current = $("lDensityCurrent");
+  if(current){
+    let label = "เบาบาง", levelClass = "level-low";
+    if(totalMinute >= 430 && totalMinute <= 570){ label = "หนาแน่น"; levelClass = "level-high"; }
+    else if(totalMinute >= 990 && totalMinute <= 1170){ label = "หนาแน่นมาก"; levelClass = "level-peak"; }
+    else if((totalMinute > 570 && totalMinute < 990) || (totalMinute > 1170 && totalMinute <= 1230)){ label = "ปานกลาง"; levelClass = "level-medium"; }
+    current.className = "ld-density-current " + levelClass;
+    if($("lDensityLevel")) $("lDensityLevel").textContent = label;
+    if($("lDensityTime")) $("lDensityTime").textContent = p2(hour)+":"+p2(minute);
+  }
+
   const path = $("densityLine");
   if(path && typeof path.getTotalLength === "function"){
     const description = "จุดสีขาวแสดงความหนาแน่นโดยประมาณ ณ เวลา " + p2(hour)+":"+p2(minute);
