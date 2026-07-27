@@ -1,4 +1,4 @@
-const CACHE = "paiduyna-full-2026-07-26-v17-landing-plus";
+const CACHE = "paiduyna-full-2026-07-27-v20-landing-compose";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -27,6 +27,12 @@ self.addEventListener("fetch", event => {
   const url = new URL(event.request.url);
 
   if(url.origin === self.location.origin && url.pathname.includes("/admin/")) {
+    event.respondWith(fetch(event.request, {cache:"no-store"}));
+    return;
+  }
+
+  // API ต้องอ่านข้อมูลสดและห้ามถูกเก็บใน App Shell โดยเฉพาะข้อมูลล่าสุดจาก Strava
+  if(url.origin === self.location.origin && url.pathname.includes("/api/")) {
     event.respondWith(fetch(event.request, {cache:"no-store"}));
     return;
   }

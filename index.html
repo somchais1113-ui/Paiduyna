@@ -355,7 +355,7 @@ html{scroll-behavior:smooth}
 .brand-status.offline{background:var(--amber);animation:none}
 @media (prefers-reduced-motion:reduce){.brand-status{animation:none}}
 /* ---------- หน้า Dashboard (Landing) ---------- */
-.landing{position:fixed;inset:0;z-index:60;background:linear-gradient(160deg,var(--burgundy),#3A0A12 72%);color:#F7ECEC;display:flex;align-items:center;justify-content:center;padding:26px 18px;overflow-y:auto}
+.landing{position:fixed;inset:0;z-index:60;background:linear-gradient(160deg,var(--burgundy),#3A0A12 72%);color:#F7ECEC;display:flex;align-items:flex-start;justify-content:center;padding:26px 18px;overflow-y:auto}
 .landing[hidden]{display:none}
 .landing.closing{animation:landOut .45s ease forwards}
 @keyframes landOut{to{opacity:0;visibility:hidden}}
@@ -364,16 +364,17 @@ html{scroll-behavior:smooth}
 .landing-logo{height:40px;width:auto;max-width:70%;opacity:1}
 .landing-clock{font:800 clamp(2.3rem,12vw,3.4rem) var(--font-display);letter-spacing:-1px;line-height:1;margin-top:16px;font-variant-numeric:tabular-nums}
 .landing-date{font-size:.88rem;color:#E8C9CE;margin-top:6px}
-/* แถบสภาพอากาศ + AQI */
-.ld-cond{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
-.ld-wx,.ld-aqi{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:11px}
-.ld-wx-icon{font-size:1.9rem;line-height:1;flex:none}
+/* กลุ่มสถานะระหว่างเดินทาง: อากาศ + AQI + การวิ่ง */
+.ld-wellness{width:100%;display:grid;grid-template-columns:minmax(132px,.76fr) minmax(0,1.24fr);gap:10px;margin-top:14px;align-items:stretch}
+.ld-cond{display:grid;grid-template-rows:1fr 1fr;gap:10px;min-width:0}
+.ld-wx,.ld-aqi{background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.045));border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:11px 12px;display:flex;align-items:center;gap:8px;min-height:78px;box-shadow:inset 0 1px 0 rgba(255,255,255,.045)}
+.ld-wx-icon{font-size:1.7rem;line-height:1;flex:none;filter:drop-shadow(0 4px 8px rgba(0,0,0,.12))}
 .ld-wx-txt,.ld-aqi-txt{display:flex;flex-direction:column;min-width:0}
-.ld-wx-temp{font:800 1.35rem var(--font-display);color:#fff;line-height:1.1}
-.ld-wx-desc{font-size:.72rem;color:#E8C9CE;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
-.ld-aqi-val{font:800 1.9rem var(--font-display);color:#fff;line-height:1;flex:none}
-.ld-aqi-cap{font:700 .62rem var(--font-body);color:#C89AA1;letter-spacing:.04em}
-.ld-aqi-status{font-size:.78rem;color:#F0DADE;margin-top:2px;font-weight:600}
+.ld-wx-temp{font:800 1.35rem var(--font-display);color:#fff;line-height:1.05;font-variant-numeric:tabular-nums}
+.ld-wx-desc{font-size:.72rem;color:#E8C9CE;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:3px}
+.ld-aqi-val{font:800 1.8rem var(--font-display);color:#fff;line-height:1;flex:none;font-variant-numeric:tabular-nums}
+.ld-aqi-cap{font:700 .6rem var(--font-body);color:#C89AA1;letter-spacing:.035em;line-height:1.3}
+.ld-aqi-status{font-size:.8rem;color:#F0DADE;margin-top:3px;font-weight:700}
 /* กราฟความหนาแน่น */
 .ld-density{width:100%;margin-top:20px}
 .ld-density-title{font:700 .72rem var(--font-body);color:#C89AA1;margin-bottom:2px}
@@ -390,6 +391,33 @@ html{scroll-behavior:smooth}
 .ld-cd{font:800 .8rem var(--font-body);color:#F6C6CD}
 .ld-time{font:800 2.2rem var(--font-display);letter-spacing:-1px;line-height:1.05;margin-top:8px}
 .ld-sub{font-size:.78rem;color:#EAD3D7;margin-top:4px;line-height:1.4}
+
+/* การ์ดกิจกรรมวิ่งล่าสุดจาก Strava */
+.ld-run{min-width:0;background:linear-gradient(145deg,rgba(252,82,0,.15),rgba(255,255,255,.045));border:1px solid rgba(252,82,0,.5);border-radius:17px;padding:11px 12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.065);display:flex;flex-direction:column}
+.ld-run-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ld-run-title{display:grid;grid-template-columns:30px minmax(0,1fr);grid-template-areas:"icon kicker" "icon state";column-gap:8px;align-items:center;min-width:0}
+.ld-run-title::before{content:"RUN";grid-area:icon;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#FC5200;color:#fff;font:900 .48rem var(--font-display);letter-spacing:.3px;box-shadow:0 5px 12px rgba(252,82,0,.2)}
+.ld-run-kicker{grid-area:kicker;font:800 .64rem var(--font-display);letter-spacing:.75px;color:#FFAB83;line-height:1.1}
+.ld-run-state{grid-area:state;font:600 .58rem var(--font-body);color:#DDBFC4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.2}
+.ld-run-refresh{flex:none;width:27px;height:27px;border-radius:8px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.07);color:#fff;font:800 .9rem var(--font-display);cursor:pointer;display:grid;place-items:center}
+.ld-run-refresh:hover{background:rgba(255,255,255,.13)}
+.ld-run-refresh:disabled{opacity:.45;cursor:progress}
+.ld-run-body{margin-top:9px;flex:1}
+.ld-run-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px 8px;align-items:stretch}
+.ld-run-stat{min-width:0;padding:2px 1px 5px;border-bottom:1px solid rgba(255,255,255,.075);display:flex;flex-direction:column;justify-content:center}
+.ld-run-stat-label{font:700 .48rem var(--font-body);color:#C99CA4;letter-spacing:.36px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ld-run-stat-value{font:800 clamp(.84rem,3.5vw,1.05rem) var(--font-display);color:#fff;margin-top:3px;line-height:1.05;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ld-run-stat-sub{font:600 .48rem var(--font-body);color:#DAB8BE;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ld-run-extra{display:flex;gap:4px 9px;flex-wrap:wrap;margin-top:7px;font-size:.52rem;color:#E8C9CE;line-height:1.3}
+.ld-run-extra strong{color:#fff;font-weight:700}
+.ld-run-empty{border:1px dashed rgba(255,255,255,.17);border-radius:11px;padding:11px;color:#E8C9CE;font-size:.67rem;line-height:1.4;background:rgba(45,6,13,.25);min-height:94px;display:flex;align-items:center}
+.ld-run-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:6px;font-size:.5rem;color:#C89AA1}
+.ld-run-link{color:#FC9A68;font-weight:800;text-decoration:underline;text-underline-offset:2px}
+@media (max-width:349px){
+  .ld-wellness{grid-template-columns:1fr;gap:9px}
+  .ld-cond{grid-template-columns:1fr 1fr;grid-template-rows:auto;gap:9px}
+}
+
 .landing-foot{width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:22px;flex-wrap:wrap}
 .ld-speed{cursor:pointer;user-select:none}
 .ld-speed-wrap{display:flex;flex-direction:column;gap:2px}
@@ -399,7 +427,20 @@ html{scroll-behavior:smooth}
 .ld-enter{flex:1;min-width:170px;border:0;border-radius:12px;background:#F7ECEC;color:var(--burgundy);font:800 1rem var(--font-display);padding:14px 20px;cursor:pointer;transition:transform .06s,box-shadow .15s;box-shadow:0 6px 20px rgba(0,0,0,.25)}
 .ld-enter:hover{box-shadow:0 8px 26px rgba(0,0,0,.32)}
 .ld-enter:active{transform:translateY(1px)}
-@media (max-width:460px){.landing-cards,.ld-cond{grid-template-columns:1fr}.landing-foot{flex-direction:column-reverse;align-items:stretch}.ld-enter{width:100%}}
+@media (max-width:460px){.landing-cards{grid-template-columns:1fr}.landing-foot{flex-direction:column-reverse;align-items:stretch}.ld-enter{width:100%}}
+@media (max-height:900px){
+  .landing{padding-top:17px;padding-bottom:18px}
+  .landing-logo{height:32px}
+  .landing-clock{margin-top:10px;font-size:clamp(2.25rem,11vw,3.1rem)}
+  .landing-date{margin-top:4px;font-size:.8rem}
+  .landing-cards{margin-top:14px;gap:10px}
+  .ld-card{padding:13px 14px}
+  .ld-time{font-size:2rem;margin-top:5px}
+  .ld-wellness{margin-top:10px}
+  .ld-density{margin-top:13px}
+  .ld-density-chart{height:64px}
+  .landing-foot{margin-top:14px}
+}
 .toast{position:fixed;left:50%;bottom:18px;z-index:20;transform:translate(-50%,30px);opacity:0;pointer-events:none;background:var(--ink);color:#fff;border-radius:9px;padding:9px 14px;font-size:.8rem;box-shadow:var(--shadow);transition:.2s}
 .toast.show{transform:translate(-50%,0);opacity:1}
 .tables-hidden{display:none}
@@ -469,21 +510,42 @@ html{scroll-behavior:smooth}
       </div>
     </div>
 
-    <div class="ld-cond">
-      <div class="ld-wx">
-        <span class="ld-wx-icon" id="lWxIcon">&#9925;</span>
-        <span class="ld-wx-txt">
-          <span class="ld-wx-temp" id="lWxTemp">--&deg;</span>
-          <span class="ld-wx-desc" id="lWxDesc">กำลังโหลดอากาศ</span>
-        </span>
+
+
+    <div class="ld-wellness">
+      <div class="ld-cond" aria-label="สภาพอากาศและคุณภาพอากาศ">
+        <div class="ld-wx">
+          <span class="ld-wx-icon" id="lWxIcon">&#9925;</span>
+          <span class="ld-wx-txt">
+            <span class="ld-wx-temp" id="lWxTemp">--&deg;</span>
+            <span class="ld-wx-desc" id="lWxDesc">กำลังโหลดอากาศ</span>
+          </span>
+        </div>
+        <div class="ld-aqi">
+          <span class="ld-aqi-val" id="lAqiVal">--</span>
+          <span class="ld-aqi-txt">
+            <span class="ld-aqi-cap">คุณภาพอากาศ (US AQI)</span>
+            <span class="ld-aqi-status" id="lAqiStatus">กำลังโหลด</span>
+          </span>
+        </div>
       </div>
-      <div class="ld-aqi">
-        <span class="ld-aqi-val" id="lAqiVal">--</span>
-        <span class="ld-aqi-txt">
-          <span class="ld-aqi-cap">คุณภาพอากาศ (US AQI)</span>
-          <span class="ld-aqi-status" id="lAqiStatus">กำลังโหลด</span>
-        </span>
-      </div>
+
+      <section class="ld-run" id="lRunCard" aria-live="polite" aria-label="กิจกรรมวิ่งล่าสุดของวันนี้">
+        <div class="ld-run-head">
+          <div class="ld-run-title">
+            <span class="ld-run-kicker">TODAY'S RUN</span>
+            <span class="ld-run-state" id="lRunState">กำลังดึงข้อมูลล่าสุด</span>
+          </div>
+          <button class="ld-run-refresh" id="btnRunRefresh" type="button" aria-label="รีเฟรชข้อมูลการวิ่ง" title="รีเฟรชข้อมูลการวิ่ง">↻</button>
+        </div>
+        <div class="ld-run-body" id="lRunBody">
+          <div class="ld-run-empty">กำลังเชื่อมต่อข้อมูลการวิ่งล่าสุดของวันนี้</div>
+        </div>
+        <div class="ld-run-foot">
+          <span id="lRunSource">ข้อมูลจาก Strava</span>
+          <a class="ld-run-link" id="lRunLink" href="#" target="_blank" rel="noopener" hidden>ดูใน Strava</a>
+        </div>
+      </section>
     </div>
 
     <div class="ld-density">
@@ -800,7 +862,7 @@ html{scroll-behavior:smooth}
     ข้อมูลตารางเดินรถ: เพจ ป้ายหยุดรถพระจอมเกล้า<br>
     ข้อมูลเวลา Airport Rail Link: ถอดจากตารางภาพที่ผู้ใช้จัดเตรียม<br>
     ตารางปกติปรับปรุงข้อมูลล่าสุดเมื่อวันที่ 1 กรกฎาคม 2569<br>
-    <span style="opacity:.75">PAI.DUY.NA Full build 2026-07-23 v8</span>
+    <span style="opacity:.75">PAI.DUY.NA Full build 2026-07-27 v20 Landing Compose</span>
   </p>
 </div>
 
@@ -813,7 +875,8 @@ html{scroll-behavior:smooth}
    ตำแหน่งไฟล์ข้อมูลภายนอก  << แก้ 2 บรรทัดนี้หากย้ายโฟลเดอร์ >>
    ============================================================ */
 const STATUS_URL = "data/status.json";
-const APP_VERSION = "2026-07-23-full-v8";
+const STRAVA_LATEST_URL = "/api/strava/latest";
+const APP_VERSION = "2026-07-27-full-v20-compose";
 const STORE = {
   favorites:"pdn-favorites",
   recents:"pdn-recents"
@@ -887,41 +950,7 @@ const DAILY_DOWN = [
 ];
 
 /* ============================================================
-   3. ตารางที่ 2: ตารางพิเศษฉุกเฉิน เฉพาะวันที่ 22/07/2569
-   ============================================================ */
-const SPECIAL_STATIONS = ["phayathai","makkasan","asok","khlongtan","sukhumvit71","huamak","banthapchang","latkrabang"];
-
-const SPECIAL_UP = [
-  {no:"277", type:"ธรรมดา",   from:"กรุงเทพ",to:"กบินทร์บุรี",times:["15:41","15:45","15:48","15:52","15:54","15:59","16:05","16:12"]},
-  {no:"1211",type:"ดีเซลราง", from:"พญาไท",  to:"ลาดกระบัง", times:["16:00","16:09","16:14","16:21","16:25","16:31","16:37","16:41"]},
-  {no:"1213",type:"สปรินเตอร์",from:"กรุงเทพ",to:"ลาดกระบัง", times:["16:23","16:30","16:34","16:40","16:44","16:51","16:56","21:02"]},
-  {no:"379", type:"ชานเมือง", from:"กรุงเทพ",to:"ฉะเชิงเทรา",times:["16:45","16:52","16:56","17:00","17:03","17:09","17:15","17:24"]},
-  {no:"391", type:"ชานเมือง", from:"กรุงเทพ",to:"ฉะเชิงเทรา",times:["17:07","17:13","17:17","17:21","17:24","17:30","17:36","17:45"]},
-  {no:"1217",type:"ดีเซลราง", from:"พญาไท",  to:"ลาดกระบัง", times:["17:43","17:50","17:53","17:59","18:04","18:11","18:16","18:22"]},
-  {no:"371", type:"ชานเมือง", from:"กรุงเทพ",to:"ปราจีนบุรี", times:["17:53","18:02","18:06","18:11","18:13","18:18","18:24","18:34"]},
-  {no:"1215",type:"สปรินเตอร์",from:"พญาไท",  to:"ลาดกระบัง", times:["18:33","18:39","18:44","18:50","18:54","19:01","19:07","19:12"]},
-  {no:"383", type:"ชานเมือง", from:"กรุงเทพ",to:"ฉะเชิงเทรา",times:["19:13","19:18","19:23","19:30","19:34","19:42","19:49","19:59"]},
-  {no:"1219",type:"ดีเซลราง", from:"พญาไท",  to:"ลาดกระบัง", times:["19:33","19:40","19:44","19:50","19:54","20:01","20:08","20:12"]},
-  {no:"1221",type:"สปรินเตอร์",from:"พญาไท",  to:"ลาดกระบัง", times:["20:03","20:10","20:14","20:20","20:24","20:30","20:37","20:42"]},
-  {no:"1223",type:"สปรินเตอร์",from:"พญาไท",  to:"ลาดกระบัง", times:["21:33","21:37","21:40","21:50","21:54","22:01","22:07","22:12"]}
-];
-
-const SPECIAL_DOWN = [
-  {no:"1210",type:"ดีเซลราง", from:"ลาดกระบัง",  to:"พญาไท", times:["15:20","15:26","15:32","15:39","15:42","15:48","15:53","15:59"]},
-  {no:"282", type:"ธรรมดา",   from:"กบินทร์บุรี", to:"กรุงเทพ",times:["16:18","16:26","16:33",null,  "16:42","16:48","16:55","17:00"]},
-  {no:"1212",type:"ดีเซลราง", from:"ลาดกระบัง",  to:"พญาไท", times:["17:00","17:06","17:12","17:18","17:22","17:28","17:32","17:39"]},
-  {no:"284", type:"ธรรมดา",   from:"จุกเสม็ด",   to:"กรุงเทพ",times:["17:15","17:27","17:41","17:47","17:51","17:56","18:01","18:06"]},
-  {no:"1214",type:"สปรินเตอร์",from:"ลาดกระบัง",  to:"พญาไท", times:["17:40","17:45","17:51","17:58","18:02","18:08","18:12","18:19"]},
-  {no:"1218",type:"ดีเซลราง", from:"ลาดกระบัง",  to:"พญาไท", times:["18:40","18:44","18:51","18:57","19:01","19:08","19:20","19:25"]},
-  {no:"1216",type:"สปรินเตอร์",from:"ลาดกระบัง",  to:"พญาไท", times:["19:20","19:25","19:31","19:38","19:42","19:48","19:52","19:59"]},
-  {no:"276", type:"ธรรมดา",   from:"บ้านคลองลึก",to:"กรุงเทพ",times:["19:37","19:47","19:54",null,  "20:02","20:07","20:11","20:15"]},
-  {no:"1220",type:"ดีเซลราง", from:"ลาดกระบัง",  to:"พญาไท", times:["20:20","20:25","20:31","20:38","20:42","20:48","20:52","20:59"]},
-  {no:"1222",type:"สปรินเตอร์",from:"ลาดกระบัง",  to:"พญาไท", times:["20:50","20:55","21:01","21:08","21:12","21:18","21:22","21:29"]},
-  {no:"1224",type:"สปรินเตอร์",from:"ลาดกระบัง",  to:"กรุงเทพ",times:["22:20","22:25","22:31","22:38","22:42","22:48","22:52","23:05"]}
-];
-
-/* ============================================================
-   4. Airport Rail Link พญาไท <-> สุวรรณภูมิ
+   3. Airport Rail Link พญาไท <-> สุวรรณภูมิ
    ถอดตามตารางภาพชุดล่าสุด แยกวันธรรมดาและวันหยุด
    ============================================================ */
 /* เวลาเดินทางจากสถานีต้นทางถึงปลายทางของ Airport Rail Link
@@ -975,7 +1004,7 @@ const ARL_WEEKEND_SUV_TO_PHAYA = [
 ];
 
 /* ============================================================
-   5. นิยามตารางเดินรถ
+   4. นิยามตารางเดินรถ
    validDates: null = ใช้ได้ทุกวัน | อาเรย์ = ใช้ได้เฉพาะวันที่ระบุ
    ============================================================ */
 const SCHEDULES = {
@@ -997,25 +1026,6 @@ const SCHEDULES = {
       "ตารางแสดงเฉพาะรถธรรมดา และชานเมือง ในช่วง กรุงเทพ ฉะเชิงเทรา กรุงเทพ เท่านั้น",
       "ตารางแสดงเวลารถออก โปรดมารอการโดยสารอย่างน้อย 10 นาที ก่อนเวลาที่แสดงในตาราง",
       "ปรับปรุงข้อมูลล่าสุดเมื่อวันที่ 1 กรกฎาคม 2569"
-    ]
-  },
-  special: {
-    id:"special",
-    mode:"srt", kind:"rail",
-    title:"ตารางพิเศษ (ฉุกเฉิน) วัน ARL ตกราง",
-    subtitle:"เฉพาะวันที่ 22/07/69 ช่วงพญาไท ถึง ลาดกระบัง",
-    banner:"\u2605 ตารางเดินรถวิ่งเฉพาะวัน 22/07/69 \u2605",
-    upLabel:"ไปลาดกระบัง", downLabel:"ไปพญาไท",
-    stations:SPECIAL_STATIONS,
-    keys:["phayathai","asok","huamak","latkrabang"],
-    up:SPECIAL_UP, down:SPECIAL_DOWN,
-    useAltNames:true,
-    validDates:["2026-07-22"],
-    freshness:"ตารางพิเศษเฉพาะ 22 กรกฎาคม 2569",
-    notes:[
-      "ตารางนี้เป็นตารางเดินรถพิเศษโดยสาร (ฉุกเฉิน) ใช้เฉพาะวันที่ 22 กรกฎาคม 2569 เท่านั้น",
-      "ชื่อในวงเล็บคือสถานีของ Airport Rail Link ที่อยู่บริเวณใกล้เคียงกัน",
-      "หากเดินทางวันอื่น ระบบจะสลับไปใช้ตารางปกติให้อัตโนมัติ"
     ]
   },
   arlWeekday: {
@@ -1060,12 +1070,12 @@ const SCHEDULES = {
   }
 };
 const MODE_SCHEDULES = {
-  srt:["daily","special"],
+  srt:["daily"],
   arl:["arlWeekday","arlWeekend"]
 };
 
 /* ============================================================
-   6. ฟังก์ชันช่วยเหลือ
+   5. ฟังก์ชันช่วยเหลือ
    ============================================================ */
 const $ = id => document.getElementById(id);
 const p2 = n => String(n).padStart(2,"0");
@@ -2184,6 +2194,84 @@ function setLandingCountdown(id, diff){
   const el = $(id); if(!el) return;
   el.textContent = diff <= 0 ? "กำลังออก" : "อีก " + fmtDur(diff);
 }
+
+function runDuration(seconds){
+  const total = Math.max(0,Number(seconds)||0), h = Math.floor(total/3600), m = Math.floor((total%3600)/60), sec = Math.floor(total%60);
+  if(h) return h + ":" + p2(m) + ":" + p2(sec);
+  return m + ":" + p2(sec);
+}
+function runPace(seconds){
+  const total = Math.round(Number(seconds));
+  if(!Number.isFinite(total) || total <= 0) return "–";
+  return Math.floor(total/60) + ":" + p2(total%60);
+}
+function runStartTime(iso){
+  if(!iso) return "–";
+  try{
+    return new Intl.DateTimeFormat("th-TH",{timeZone:"Asia/Bangkok",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).format(new Date(iso)) + " น.";
+  }catch(e){ return "–"; }
+}
+function setRunEmpty(message,state){
+  const body=$("lRunBody"), link=$("lRunLink"), label=$("lRunState");
+  if(body) body.innerHTML="<div class='ld-run-empty'></div>";
+  if(body && body.firstElementChild) body.firstElementChild.textContent=message;
+  if(label) label.textContent=state || "";
+  if(link) link.hidden=true;
+}
+function renderRun(activity,updatedAt){
+  const body=$("lRunBody"), link=$("lRunLink"), stateEl=$("lRunState");
+  if(!body || !activity) return;
+  body.innerHTML="";
+  const grid=document.createElement("div"); grid.className="ld-run-grid";
+  const distanceKm=(Number(activity.distance_km)||0).toFixed(2)+" km";
+  const pace=runPace(activity.pace_seconds_per_km);
+  const stats=[
+    ["DISTANCE",distanceKm,"ระยะทาง"],
+    activity.calories ? ["CALORIES",Math.round(activity.calories)+" kcal","พลังงาน"] : ["PACE",pace,"/ km"],
+    ["MOVING",runDuration(activity.moving_time_seconds),"เวลาวิ่งจริง"],
+    activity.average_heartrate ? ["AVG HEART",Math.round(activity.average_heartrate)+" bpm","ค่าเฉลี่ย"] : ["PACE",pace,"/ km"]
+  ];
+  stats.forEach(item=>{
+    const card=document.createElement("div"); card.className="ld-run-stat";
+    const a=document.createElement("span"); a.className="ld-run-stat-label"; a.textContent=item[0];
+    const b=document.createElement("span"); b.className="ld-run-stat-value"; b.textContent=item[1];
+    const c=document.createElement("span"); c.className="ld-run-stat-sub"; c.textContent=item[2];
+    card.append(a,b,c); grid.append(card);
+  });
+  body.append(grid);
+
+  const extra=document.createElement("div"); extra.className="ld-run-extra";
+  const extras=[["Pace",pace+" /km"],["เริ่ม",runStartTime(activity.start_date)]];
+  if(Number.isFinite(Number(activity.elevation_gain_m))) extras.push(["สูงสะสม",Math.round(activity.elevation_gain_m)+" ม."]);
+  extras.forEach(item=>{
+    const span=document.createElement("span");
+    span.append(document.createTextNode(item[0]+" "));
+    const strong=document.createElement("strong"); strong.textContent=item[1];
+    span.append(strong); extra.append(span);
+  });
+  body.append(extra);
+  if(stateEl) stateEl.textContent=(activity.name || "Run")+(updatedAt?" · "+relativeAge(updatedAt):"");
+  if(link && activity.url){link.href=activity.url;link.hidden=false;}
+}
+
+async function loadStravaRun(){
+  const button=$("btnRunRefresh");
+  if(button) button.disabled=true;
+  const localPreview=location.protocol==="file:" || ["localhost","127.0.0.1"].includes(location.hostname);
+  try{
+    const response=await fetch(STRAVA_LATEST_URL,{cache:"no-store"});
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok) throw new Error(data.message||"โหลด Strava ไม่สำเร็จ");
+    if(data.status==="ok" && data.activity){renderRun(data.activity,data.updated_at);return;}
+    if(data.status==="no_activity"){setRunEmpty("วันนี้ยังไม่พบกิจกรรมประเภท Run, Trail Run หรือ Virtual Run ในบัญชีที่เชื่อมไว้","วันนี้ยังไม่ได้วิ่ง");return;}
+    setRunEmpty("ยังไม่ได้เชื่อมบัญชี Strava กรุณาตั้งค่า Strava API และเชื่อมบัญชีเจ้าของเว็บหนึ่งครั้ง","รอการเชื่อมบัญชี");
+  }catch(error){
+    setRunEmpty(localPreview?"โหมดพรีวิวในเครื่อง: การ์ดนี้จะแสดงข้อมูลจริงเมื่อ Deploy บน Vercel และเชื่อมบัญชี Strava":"ยังดึงข้อมูล Strava ไม่ได้ กรุณาตรวจสอบการเชื่อมต่อหรือการตั้งค่า API","ยังไม่พร้อมใช้งาน");
+  }finally{
+    if(button) button.disabled=false;
+  }
+}
+
 // อัปเดตหน้า Landing ทุกวินาที (เรียกจาก tickClock) ทำงานเฉพาะตอนที่ยังแสดงอยู่
 function updateLanding(){
   const land = $("landing");
@@ -2248,6 +2336,9 @@ function init(){
     spd.addEventListener("click", startLandingSpeed);
     spd.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); startLandingSpeed(); } });
   }
+  const runRefresh = $("btnRunRefresh");
+  if(runRefresh) runRefresh.addEventListener("click", loadStravaRun);
+  loadStravaRun();
   // นาฬิกาเริ่มก่อนเสมอ เพื่อให้ยังเดินได้แม้ส่วนอื่นมีปัญหา
   tickClock();
   setInterval(tickClock, 1000);
@@ -2339,7 +2430,7 @@ function init(){
   }catch(e){ /* บางเบราว์เซอร์บล็อก Service Worker เมื่อเปิดจากไฟล์ในเครื่อง */ }
 
   loadWeather(); loadAirQuality(); loadStatus(); loadParking();
-  setInterval(() => { loadWeather(); loadAirQuality(); loadStatus(); }, 600000);
+  setInterval(() => { loadWeather(); loadAirQuality(); loadStatus(); loadStravaRun(); }, 600000);
 }
 
 /** เริ่มระบบอย่างปลอดภัย: หากส่วนใดผิดพลาด จะแจ้งบนหน้าจอแทนที่จะเงียบ */
