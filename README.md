@@ -4,7 +4,7 @@
 
 เว็บตารางเดินรถและผู้ช่วยวางแผนการเดินทาง รถไฟชานเมืองสายตะวันออก ช่วงกรุงเทพ ถึง ฉะเชิงเทรา
 
-Build: `2026-07-27-v29-weather-text-fix`
+Build: `2026-07-27-v30-google-parking`
 
 Full Version รวมงานจาก Version 1.1, 1.5 และ 2.0 ไว้ในชุดเดียว โดยยังเปิดผ่าน GitHub Pages ได้
 
@@ -316,3 +316,20 @@ https://ชื่อโดเมนของคุณ/api/strava/connect?key=ค
 - เพิ่มความสูงการ์ดสภาพอากาศและระยะด้านล่าง
 - ข้อความรายละเอียดสภาพอากาศสามารถตัดขึ้นบรรทัดใหม่และไม่ถูกซ่อน
 - ย้ายข้อความขึ้นและปรับ line-height ให้อ่านง่ายบนมือถือ
+
+## v30 Google Places Parking
+
+- เปลี่ยนการค้นหาลานจอดแบบสดจาก OpenStreetMap เป็น Google Places API (New)
+- เพิ่ม Vercel Function `api/parking/search.js` รองรับทั้งค้นหาใกล้ตำแหน่งผู้ใช้และค้นหารอบสถานีต้นทาง
+- แสดงชื่อจริง ที่อยู่ ประเภทลานจอด ระยะห่าง และลิงก์นำทางของแต่ละ Place
+- ใช้ Place ID แยกรายการ และเติมที่อยู่ต่อท้ายเมื่อชื่อสถานที่ซ้ำ
+- เก็บ API Key ใน `GOOGLE_PLACES_API_KEY` ฝั่ง Vercel เท่านั้น ไม่ฝังในหน้าเว็บ
+- Cache ผลลัพธ์ฝั่ง Vercel 10 นาทีเพื่อลดการเรียก API ซ้ำ
+
+### ตั้งค่า Google Places
+
+1. เปิด Places API (New) และสร้าง API Key ที่จำกัดให้ใช้เฉพาะ Places API (New)
+2. ใน Vercel Project Settings > Environment Variables เพิ่ม `GOOGLE_PLACES_API_KEY` ใน Production และเปิด Sensitive
+3. อัปโหลดไฟล์เวอร์ชันนี้แล้ว Redeploy
+4. ทดสอบจากปุ่ม “ใกล้สถานีต้นทาง” และ “ใกล้ตำแหน่งฉัน”
+

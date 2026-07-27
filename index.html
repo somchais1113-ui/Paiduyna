@@ -315,13 +315,13 @@ td.nostop{color:#D6C3C6;font-weight:400}
 .parking-subhead{font:700 .8rem var(--font-display);color:var(--navy-700);display:flex;align-items:center;gap:10px;margin-top:2px}
 .parking-subhead::after{content:"";flex:1;height:1px;background:var(--line)}
 .parking-empty{font-size:.85rem;color:var(--ink-mute);line-height:1.6;background:var(--blue-100);border-radius:10px;padding:13px 15px}
-.parking-item{display:flex;align-items:center;gap:12px;border:1.5px solid var(--blue-200);border-radius:11px;padding:11px 13px}
+.parking-item{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--blue-200);border-radius:11px;padding:12px 13px;background:#fff}
 .park-badge{flex:none;width:34px;height:34px;border-radius:8px;background:var(--navy-700);color:#fff;display:flex;align-items:center;justify-content:center;font:800 .95rem var(--font-display)}
 .parking-info{min-width:0;flex:1}
-.parking-title{font:700 .92rem var(--font-body);color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.parking-meta{display:flex;align-items:center;gap:8px;font-size:.76rem;color:var(--ink-mute);margin-top:3px;flex-wrap:wrap}
+.parking-title{font:700 .92rem var(--font-body);color:var(--ink);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.parking-meta{display:flex;align-items:center;gap:6px 8px;font-size:.76rem;color:var(--ink-mute);margin-top:5px;flex-wrap:wrap;line-height:1.4}
 .park-chip{background:var(--blue-100);color:var(--navy-700);border-radius:999px;padding:2px 9px;font-weight:700;font-size:.72rem}
-.parking-go{flex:none;border:1.5px solid var(--navy-700);background:var(--navy-700);color:#fff;border-radius:8px;padding:8px 13px;font:700 .78rem var(--font-body);text-decoration:none}
+.parking-go{flex:none;border:1.5px solid var(--navy-700);background:var(--navy-700);color:#fff;border-radius:8px;padding:8px 13px;font:700 .78rem var(--font-body);text-decoration:none;margin-top:1px}
 .parking-go:hover{background:var(--navy-900)}
 .park-loading{display:flex;align-items:center;gap:11px;font-size:.85rem;color:var(--ink-mute);background:var(--blue-100);border-radius:10px;padding:13px 15px}
 .park-spin{flex:none;width:18px;height:18px;border:2.4px solid var(--blue-200);border-top-color:var(--navy-700);border-radius:50%;animation:parkspin .7s linear infinite}
@@ -354,7 +354,7 @@ html{scroll-behavior:smooth}
 @keyframes netpulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}70%{box-shadow:0 0 0 8px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
 .brand-status.offline{background:var(--amber);animation:none}
 @media (prefers-reduced-motion:reduce){.brand-status{animation:none}}
-/* ---------- หน้า Dashboard (Landing) v29: ปรับนาฬิกาไม่ทับกัน วันที่ไม่มีคำว่า พ.ศ. และยกข้อความ Weather ---------- */
+/* ---------- หน้า Dashboard (Landing) v30: ปรับนาฬิกาไม่ทับกัน วันที่ไม่มีคำว่า พ.ศ. และยกข้อความ Weather ---------- */
 .landing{
   position:fixed;inset:0;z-index:60;color:#F7ECEC;
   display:flex;align-items:flex-start;justify-content:center;
@@ -986,7 +986,7 @@ html{scroll-behavior:smooth}
           <span class="park-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="M20.5 20.5 17 17"></path></svg></span>
           <span class="park-method-txt">
             <span class="park-method-ttl">ใกล้สถานีต้นทาง</span>
-            <span class="park-method-sub" id="parkStationSub">เปิดแผนที่ลานจอดรอบสถานีต้นทาง</span>
+            <span class="park-method-sub" id="parkStationSub">ค้นหาชื่อและที่อยู่รอบสถานีต้นทาง</span>
           </span>
           <span class="park-method-go" aria-hidden="true">&rsaquo;</span>
         </button>
@@ -994,12 +994,12 @@ html{scroll-behavior:smooth}
           <span class="park-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path></svg></span>
           <span class="park-method-txt">
             <span class="park-method-ttl">ใกล้ตำแหน่งฉัน</span>
-            <span class="park-method-sub">ค้นหาสดจากจุดที่คุณอยู่ตอนนี้</span>
+            <span class="park-method-sub">ค้นหาชื่อจริงและที่อยู่จาก Google Places</span>
           </span>
           <span class="park-method-go" aria-hidden="true">&rsaquo;</span>
         </button>
       </div>
-      <p class="park-disclaimer"><span class="park-dot" aria-hidden="true"></span>แสดงตำแหน่งลานจอด ไม่ใช่สถานะที่ว่างแบบเรียลไทม์</p>
+      <p class="park-disclaimer"><span class="park-dot" aria-hidden="true"></span>ข้อมูลชื่อและที่อยู่จาก Google Places ไม่ใช่สถานะที่ว่างแบบเรียลไทม์</p>
       <div class="park-map" id="parkMap" hidden>
         <div class="park-map-bar">
           <span class="park-map-cap" id="parkMapCap">แผนที่ลานจอด</span>
@@ -1038,7 +1038,7 @@ html{scroll-behavior:smooth}
     ข้อมูลตารางเดินรถ: เพจ ป้ายหยุดรถพระจอมเกล้า<br>
     ข้อมูลเวลา Airport Rail Link: ถอดจากตารางภาพที่ผู้ใช้จัดเตรียม<br>
     ตารางปกติปรับปรุงข้อมูลล่าสุดเมื่อวันที่ 1 กรกฎาคม 2569<br>
-    <span style="opacity:.75">PAI.DUY.NA Full build 2026-07-27 v20 Landing Compose</span>
+    <span style="opacity:.75">PAI.DUY.NA Full build 2026-07-27 v30 Google Parking</span>
   </p>
 </div>
 
@@ -1052,7 +1052,7 @@ html{scroll-behavior:smooth}
    ============================================================ */
 const STATUS_URL = "data/status.json";
 const STRAVA_LATEST_URL = "/api/strava/latest";
-const APP_VERSION = "2026-07-27-full-v20-compose";
+const APP_VERSION = "2026-07-27-v30-google-parking";
 const STORE = {
   favorites:"pdn-favorites",
   recents:"pdn-recents"
@@ -2184,44 +2184,27 @@ async function installApp(){
 }
 
 /* ============================================================
-   18. เริ่มการทำงาน
-   ============================================================ */
-/* ============================================================
-   17. ลานจอดรถใกล้สถานี (Hybrid: ข้อมูลนิ่ง + ค้นหาสด)
-   - เลเยอร์ข้อมูลนิ่ง: data/parking.json (ลานจอดที่ยืนยันแล้ว) ใช้ Offline ได้ผ่าน SW
-   - เลเยอร์ค้นหาสด: OpenStreetMap Overpass API รอบตำแหน่งผู้ใช้ (ต้องมีอินเทอร์เน็ต)
-   - ปุ่มค้นหาสถานีใช้ชื่อสถานีค้นบน Google Maps จึงทำงานได้แม้ไม่มีพิกัดในไฟล์
-   - หมายเหตุ: แสดง "ตำแหน่ง" ลานจอด ไม่ใช่สถานะที่ว่างแบบเรียลไทม์
+   17. ลานจอดรถใกล้สถานี (Google Places + ข้อมูลที่ยืนยันเอง)
+   - data/parking.json: รายการที่เจ้าของเว็บตรวจสอบเอง ใช้ Offline ได้
+   - /api/parking/search: ค้นหาชื่อจริง ที่อยู่ ประเภท และ Place ID จาก Google Places
+   - API Key อยู่ใน Vercel Environment Variable และไม่ถูกส่งมายังหน้าเว็บ
+   - แสดงตำแหน่งลานจอด ไม่ใช่จำนวนช่องว่างแบบเรียลไทม์
    ============================================================ */
 let PARKING = null;
-// Overpass มีหลาย mirror บริการฟรี ลองสลับกันเพื่อลดโอกาสล้มเหลวเมื่อเซิร์ฟเวอร์หลักคิวเต็ม
-const OVERPASS_MIRRORS = [
-  "https://overpass-api.de/api/interpreter",
-  "https://overpass.kumi.systems/api/interpreter",
-  "https://maps.mail.ru/osm/tools/overpass/api/interpreter"
-];
-const PARKING_RADIUS_M = 800; // รัศมีค้นหารอบตำแหน่งผู้ใช้ (เมตร)
+const PARKING_SEARCH_URL = "/api/parking/search";
+const PARKING_RADIUS_M = 1200;
 
-// ลิงก์ค้นหาลานจอดบน Google Maps จากข้อความ (ใช้ข้อมูลจริงของ Google ไม่ต้องมีพิกัดเอง)
 function gmapsSearch(query){
   return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(query);
 }
-// ลิงก์นำทางไปยังพิกัดปลายทาง
 function gmapsDir(lat, lng){
   return "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng;
 }
-// ระยะทางโดยประมาณระหว่างสองพิกัด (เมตร) ด้วยสูตร Haversine
-function haversine(aLat, aLng, bLat, bLng){
-  const R = 6371000, toRad = d => d * Math.PI / 180;
-  const dLat = toRad(bLat - aLat), dLng = toRad(bLng - aLng);
-  const s = Math.sin(dLat/2)**2 + Math.cos(toRad(aLat))*Math.cos(toRad(bLat))*Math.sin(dLng/2)**2;
-  return Math.round(2 * R * Math.asin(Math.sqrt(s)));
-}
 function formatDistance(m){
-  return m >= 1000 ? (m/1000).toFixed(1) + " กม." : m + " ม.";
+  if(!Number.isFinite(Number(m))) return "";
+  const value = Number(m);
+  return value >= 1000 ? (value/1000).toFixed(1) + " กม." : Math.round(value) + " ม.";
 }
-
-// สร้าง URL แผนที่ Google แบบฝัง (ไม่ต้องใช้ API Key)
 function gmapsEmbedQuery(query){
   return "https://maps.google.com/maps?q=" + encodeURIComponent(query) + "&z=16&hl=th&output=embed";
 }
@@ -2229,7 +2212,6 @@ function gmapsEmbedLatLng(lat, lng, query){
   return "https://maps.google.com/maps?q=" + encodeURIComponent(query || "ที่จอดรถ")
        + "&ll=" + lat + "," + lng + "&z=16&hl=th&output=embed";
 }
-// เปิดแผงแผนที่ในการ์ด โหลด iframe เมื่อผู้ใช้เรียกใช้เท่านั้น (ประหยัดและเป็นส่วนตัวกว่า)
 function showParkMap(embedSrc, openUrl, caption){
   const panel = $("parkMap"), frame = $("parkMapFrame"), cap = $("parkMapCap"), open = $("parkMapOpen");
   if(!panel || !frame) return;
@@ -2239,12 +2221,11 @@ function showParkMap(embedSrc, openUrl, caption){
   panel.hidden = false;
 }
 
-// โหลดข้อมูลลานจอดนิ่ง แล้ว render ตามสถานีต้นทางปัจจุบัน
 async function loadParking(){
   try{
     const r = await fetch("data/parking.json", {cache:"no-store"});
     if(r.ok) PARKING = await r.json();
-  }catch(e){ /* ไม่มีเน็ตหรือไฟล์ ระบบยังค้นหาผ่านชื่อสถานีและตำแหน่งผู้ใช้ได้ */ }
+  }catch(e){ /* ระบบค้นหา Google Places ยังใช้งานได้ */ }
   renderParkingStation();
 }
 
@@ -2252,40 +2233,54 @@ function currentOriginId(){
   const sel = $("selFrom");
   return sel && sel.value ? sel.value : null;
 }
-
-// สร้างหัวข้อย่อยพร้อมเส้นคั่น
 function parkingSubhead(text){
   const h = document.createElement("div");
-  h.className = "parking-subhead"; h.textContent = text;
+  h.className = "parking-subhead";
+  h.textContent = text;
   return h;
 }
-
-// สร้างแถวรายการลานจอดหนึ่งรายการ (P badge + ชื่อ + chip/หมายเหตุ + ปุ่มนำทาง)
-function parkingItem({title, chip, meta, mapUrl}){
+function parkingItem({title, chip, secondaryChip, meta, mapUrl}){
   const row = document.createElement("div");
   row.className = "parking-item";
   const badge = document.createElement("span");
-  badge.className = "park-badge"; badge.textContent = "P"; badge.setAttribute("aria-hidden","true");
+  badge.className = "park-badge";
+  badge.textContent = "P";
+  badge.setAttribute("aria-hidden","true");
+
   const info = document.createElement("div");
   info.className = "parking-info";
   const t = document.createElement("div");
-  t.className = "parking-title"; t.textContent = title;
+  t.className = "parking-title";
+  t.textContent = title || "ลานจอดรถ";
   info.append(t);
-  if(chip || meta){
+
+  if(chip || secondaryChip || meta){
     const m = document.createElement("div");
     m.className = "parking-meta";
-    if(chip){ const c = document.createElement("span"); c.className = "park-chip"; c.textContent = chip; m.append(c); }
-    if(meta){ const s = document.createElement("span"); s.textContent = meta; m.append(s); }
+    [chip, secondaryChip].filter(Boolean).forEach(value => {
+      const c = document.createElement("span");
+      c.className = "park-chip";
+      c.textContent = value;
+      m.append(c);
+    });
+    if(meta){
+      const s = document.createElement("span");
+      s.textContent = meta;
+      m.append(s);
+    }
     info.append(m);
   }
+
   const a = document.createElement("a");
-  a.className = "parking-go"; a.href = mapUrl; a.target = "_blank"; a.rel = "noopener";
+  a.className = "parking-go";
+  a.href = mapUrl;
+  a.target = "_blank";
+  a.rel = "noopener";
   a.textContent = "นำทาง";
   row.append(badge, info, a);
   return row;
 }
 
-// เลเยอร์ข้อมูลนิ่ง: แสดงลานจอดของสถานีต้นทางที่เลือก
 function renderParkingStation(){
   const list = $("parkingList"), nameEl = $("parkingStationName"), btnStation = $("btnParkStation");
   if(!list || !nameEl || !btnStation) return;
@@ -2293,12 +2288,10 @@ function renderParkingStation(){
   const originId = currentOriginId();
   const stationName = originId ? st(originId).name : "";
   nameEl.textContent = stationName ? "ต้นทาง " + stationName : "";
-
-  // ปุ่มค้นหาใช้ชื่อสถานีเป็นหลัก ทำงานได้แม้ไฟล์ไม่มีพิกัด (อัปเดตเฉพาะข้อความอธิบาย ไม่ทับทั้งปุ่ม)
-  const query = stationName ? "ที่จอดรถ ใกล้ สถานี" + stationName : "ที่จอดรถ";
-  btnStation.dataset.url = gmapsSearch(query);
   const sub = $("parkStationSub");
-  if(sub) sub.textContent = stationName ? "เปิดแผนที่ลานจอดรอบสถานี" + stationName : "เปิดแผนที่ลานจอดรอบสถานีต้นทาง";
+  if(sub) sub.textContent = stationName
+    ? "ค้นหาชื่อและที่อยู่รอบสถานี" + stationName
+    : "ค้นหาชื่อและที่อยู่รอบสถานีต้นทาง";
 
   list.innerHTML = "";
   const rec = PARKING && PARKING.stations && originId ? PARKING.stations[originId] : null;
@@ -2311,96 +2304,112 @@ function renderParkingStation(){
                  : lot.type === "private" ? "ส่วนบุคคล" : "สาธารณะ";
       list.append(parkingItem({
         title: lot.name || "ลานจอด",
-        chip, meta: lot.note || "",
+        chip,
+        meta: lot.note || "",
         mapUrl: hasGeo ? gmapsDir(lot.lat, lot.lng) : gmapsSearch((lot.name || "ที่จอดรถ") + " " + stationName)
       }));
     });
-  }else{
-    const hint = document.createElement("p");
-    hint.className = "parking-empty";
-    hint.textContent = "เลือกวิธีค้นหาด้านบน เพื่อดูลานจอดรอบสถานีต้นทาง หรือค้นหาสดจากตำแหน่งที่คุณอยู่";
-    list.append(hint);
   }
+
+  const hint = document.createElement("p");
+  hint.className = "parking-empty";
+  hint.textContent = lots.length
+    ? "กดค้นหาด้านบนเพื่อดูรายชื่อเพิ่มเติมจาก Google Places"
+    : "เลือกวิธีค้นหาด้านบน เพื่อดูชื่อ ที่อยู่ และตำแหน่งลานจอดจาก Google Places";
+  list.append(hint);
 }
 
-// เลเยอร์ค้นหาสด: หาลานจอดรอบตำแหน่งผู้ใช้ผ่าน Overpass API
-// สอบถาม Overpass โดยลองทีละ mirror และมี timeout ฝั่ง client กันค้าง
-async function overpassQuery(lat, lng){
-  const q = "[out:json][timeout:25];("
-    + 'node["amenity"="parking"](around:' + PARKING_RADIUS_M + "," + lat + "," + lng + ");"
-    + 'way["amenity"="parking"](around:' + PARKING_RADIUS_M + "," + lat + "," + lng + ");"
-    + ");out center 40;";
-  let lastErr;
-  for(const base of OVERPASS_MIRRORS){
-    const ctrl = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), 15000); // เลิกรอ mirror ที่ช้าเกิน 15 วินาที
-    try{
-      const r = await fetch(base, {
-        method: "POST",
-        headers: {"Content-Type": "application/x-www-form-urlencoded"},
-        body: "data=" + encodeURIComponent(q),
-        signal: ctrl.signal
-      });
-      clearTimeout(timer);
-      if(!r.ok) throw new Error("status " + r.status);
-      return await r.json();
-    }catch(e){
-      clearTimeout(timer);
-      lastErr = e; // ลอง mirror ถัดไป
-    }
-  }
-  throw lastErr || new Error("overpass unavailable");
-}
-
-function findParkingNearMe(){
+function setParkingLoading(message){
   const list = $("parkingList");
-  if(!("geolocation" in navigator)) return showToast("อุปกรณ์นี้ไม่รองรับการอ่านตำแหน่ง");
   list.innerHTML = "";
   const loading = document.createElement("div");
   loading.className = "park-loading";
-  const spin = document.createElement("span"); spin.className = "park-spin"; spin.setAttribute("aria-hidden","true");
-  const ltxt = document.createElement("span"); ltxt.textContent = "กำลังขอตำแหน่งและค้นหาลานจอดใกล้คุณ";
-  loading.append(spin, ltxt);
+  const spin = document.createElement("span");
+  spin.className = "park-spin";
+  spin.setAttribute("aria-hidden","true");
+  const text = document.createElement("span");
+  text.textContent = message;
+  loading.append(spin, text);
   list.append(loading);
+}
+
+async function fetchParkingPlaces(params){
+  const url = new URL(PARKING_SEARCH_URL, location.origin);
+  Object.entries(params).forEach(([key,value]) => {
+    if(value !== undefined && value !== null && value !== "") url.searchParams.set(key, String(value));
+  });
+  const response = await fetch(url, {cache:"no-store"});
+  const data = await response.json().catch(() => ({}));
+  if(!response.ok || data.status !== "ok") throw new Error(data.message || "ค้นหาลานจอดไม่สำเร็จ");
+  return Array.isArray(data.places) ? data.places : [];
+}
+
+function renderGoogleParkingResults(places, heading, fallbackUrl){
+  const list = $("parkingList");
+  list.innerHTML = "";
+  if(!places.length){
+    appendParkingFallback(list, "ยังไม่พบรายชื่อลานจอดในบริเวณนี้ ลองเปิด Google Maps เพื่อดูเพิ่มเติม", fallbackUrl);
+    return;
+  }
+  list.append(parkingSubhead(heading + " · " + places.length + " แห่ง"));
+  places.forEach(place => {
+    const distance = formatDistance(place.distanceM);
+    const status = place.businessStatus === "CLOSED_TEMPORARILY" ? "ปิดชั่วคราว" : "";
+    const metaParts = [place.address || place.shortAddress, status].filter(Boolean);
+    list.append(parkingItem({
+      title: place.title || place.name || "ลานจอดรถ",
+      chip: distance,
+      secondaryChip: place.typeLabel || "ลานจอดรถ",
+      meta: metaParts.join(" · "),
+      mapUrl: place.googleMapsUri || gmapsDir(place.lat, place.lng)
+    }));
+  });
+}
+
+async function findParkingNearStation(){
+  const originId = currentOriginId();
+  const stationName = originId ? st(originId).name : "";
+  if(!stationName) return showToast("กรุณาเลือกสถานีต้นทางก่อน");
+
+  const query = "ลานจอดรถ ใกล้ สถานีรถไฟ " + stationName + " ประเทศไทย";
+  const mapUrl = gmapsSearch(query);
+  showParkMap(gmapsEmbedQuery(query), mapUrl, "ลานจอดรอบสถานี" + stationName);
+  setParkingLoading("กำลังค้นหาชื่อและที่อยู่รอบสถานี" + stationName);
+
+  try{
+    const places = await fetchParkingPlaces({q:query});
+    renderGoogleParkingResults(places, "ผลค้นหาจาก Google Places", mapUrl);
+  }catch(error){
+    const list = $("parkingList");
+    list.innerHTML = "";
+    appendParkingFallback(list,
+      location.protocol === "file:"
+        ? "โหมดพรีวิวในเครื่องจะยังเรียก Google Places ไม่ได้ หลัง Deploy บน Vercel ระบบจะแสดงรายชื่อจริง"
+        : "ยังดึงรายชื่อจาก Google Places ไม่ได้ กรุณาตรวจสอบ GOOGLE_PLACES_API_KEY หรือเปิดแผนที่แทน",
+      mapUrl);
+  }
+  $("parkMap").scrollIntoView({behavior:"smooth", block:"nearest"});
+}
+
+function findParkingNearMe(){
+  if(!("geolocation" in navigator)) return showToast("อุปกรณ์นี้ไม่รองรับการอ่านตำแหน่ง");
+  setParkingLoading("กำลังขอตำแหน่งและค้นหาลานจอดใกล้คุณ");
 
   navigator.geolocation.getCurrentPosition(async pos => {
     const lat = pos.coords.latitude, lng = pos.coords.longitude;
-    // แสดงแผนที่รอบตำแหน่งผู้ใช้ทันที เพื่อให้ใช้งานได้แม้ดึงรายชื่อไม่สำเร็จ
-    showParkMap(gmapsEmbedLatLng(lat, lng, "ที่จอดรถ"),
-      gmapsSearch("ที่จอดรถ ใกล้ " + lat.toFixed(5) + "," + lng.toFixed(5)),
-      "ลานจอดใกล้ตำแหน่งคุณ");
+    const mapUrl = gmapsSearch("ที่จอดรถ ใกล้ " + lat.toFixed(5) + "," + lng.toFixed(5));
+    showParkMap(gmapsEmbedLatLng(lat, lng, "ที่จอดรถ"), mapUrl, "ลานจอดใกล้ตำแหน่งคุณ");
     try{
-      const data = await overpassQuery(lat, lng);
-      const items = (data.elements || []).map(el => {
-        const plat = el.lat != null ? el.lat : (el.center && el.center.lat);
-        const plng = el.lon != null ? el.lon : (el.center && el.center.lon);
-        if(plat == null || plng == null) return null;
-        const tags = el.tags || {};
-        const isPrivate = tags.access === "private" || tags.access === "no";
-        return {
-          name: tags.name || (tags.parking === "multi-storey" ? "อาคารจอดรถ" : "ลานจอดรถ (ไม่ระบุชื่อ)"),
-          dist: haversine(lat, lng, plat, plng), lat: plat, lng: plng, isPrivate
-        };
-      }).filter(Boolean).sort((a,b) => a.dist - b.dist).slice(0, 15);
-
-      list.innerHTML = "";
-      if(!items.length){
-        appendParkingFallback(list, "ยังไม่มีข้อมูลลานจอดในฐานข้อมูลรอบจุดนี้ ดูตำแหน่งได้จากแผนที่ด้านบน", gmapsSearch("ที่จอดรถ ใกล้ " + lat.toFixed(5) + "," + lng.toFixed(5)));
-        return;
-      }
-      list.append(parkingSubhead("ลานจอดใกล้ตำแหน่งคุณ · OpenStreetMap"));
-      items.forEach(it => list.append(parkingItem({
-        title: it.name,
-        chip: formatDistance(it.dist),
-        meta: it.isPrivate ? "อาจเป็นลานส่วนบุคคล" : "",
-        mapUrl: gmapsDir(it.lat, it.lng)
-      })));
-    }catch(e){
-      // แผนที่ด้านบนแสดงอยู่แล้ว จึงบอกให้ผู้ใช้ดูจากแผนที่แทน ไม่ใช่ข้อความล้มเหลวที่น่าตกใจ
+      const places = await fetchParkingPlaces({lat:lat.toFixed(6), lng:lng.toFixed(6), radius:PARKING_RADIUS_M});
+      renderGoogleParkingResults(places, "ใกล้ตำแหน่งคุณ · Google Places", mapUrl);
+    }catch(error){
+      const list = $("parkingList");
       list.innerHTML = "";
       appendParkingFallback(list,
-        "ดึงรายชื่อลานจอดอัตโนมัติไม่ได้ในขณะนี้ ดูตำแหน่งลานจอดได้จากแผนที่ด้านบน หรือเปิดใน Google Maps",
-        gmapsSearch("ที่จอดรถ ใกล้ " + lat.toFixed(5) + "," + lng.toFixed(5)));
+        location.protocol === "file:"
+          ? "โหมดพรีวิวในเครื่องจะยังเรียก Google Places ไม่ได้ หลัง Deploy บน Vercel ระบบจะแสดงรายชื่อจริง"
+          : "ยังดึงรายชื่อจาก Google Places ไม่ได้ กรุณาตรวจสอบการตั้งค่า API หรือเปิดแผนที่แทน",
+        mapUrl);
     }
   }, error => {
     renderParkingStation();
@@ -2408,13 +2417,18 @@ function findParkingNearMe(){
   }, {enableHighAccuracy:true, timeout:12000, maximumAge:60000});
 }
 
-// แสดงข้อความและปุ่มสำรองเปิด Google Maps เมื่อค้นหาสดไม่ได้ผล
 function appendParkingFallback(list, message, url){
   const p = document.createElement("p");
-  p.className = "parking-empty"; p.textContent = message;
+  p.className = "parking-empty";
+  p.textContent = message;
   const a = document.createElement("a");
-  a.className = "action-btn"; a.style.marginTop = "10px"; a.style.display = "inline-block";
-  a.href = url; a.target = "_blank"; a.rel = "noopener"; a.textContent = "เปิด Google Maps";
+  a.className = "action-btn";
+  a.style.marginTop = "10px";
+  a.style.display = "inline-block";
+  a.href = url;
+  a.target = "_blank";
+  a.rel = "noopener";
+  a.textContent = "เปิด Google Maps";
   list.append(p, a);
 }
 
@@ -2679,14 +2693,7 @@ function init(){
   $("btnUseNow").addEventListener("click", useCurrentTime);
   $("btnClearPlanner").addEventListener("click", clearPlannerData);
   $("btnReminder").addEventListener("click", setReminder);
-  $("btnParkStation").addEventListener("click", () => {
-    const originId = currentOriginId();
-    const stationName = originId ? st(originId).name : "";
-    const query = stationName ? "ที่จอดรถ ใกล้ สถานี" + stationName : "ที่จอดรถ";
-    showParkMap(gmapsEmbedQuery(query), gmapsSearch(query),
-      stationName ? "ลานจอดรอบสถานี" + stationName : "ลานจอดรถ");
-    $("parkMap").scrollIntoView({behavior:"smooth", block:"nearest"});
-  });
+  $("btnParkStation").addEventListener("click", findParkingNearStation);
   $("btnParkNearMe").addEventListener("click", findParkingNearMe);
   $("btnTables").addEventListener("click", () => {
     const hidden = !$("cardTableUp").classList.contains("tables-hidden");
