@@ -412,7 +412,7 @@ html{scroll-behavior:smooth}
   display:flex;align-items:flex-start;justify-content:center;
   padding:max(34px,env(safe-area-inset-top)) 18px max(24px,env(safe-area-inset-bottom));
   overflow-y:auto;overscroll-behavior:contain;
-  animation:landPanelIn .55s cubic-bezier(.22,1,.36,1) both;
+  animation:landPanelIn .82s cubic-bezier(.22,1,.36,1) both;
   background:
     radial-gradient(circle at 50% -10%,rgba(181,73,91,.24),transparent 38%),
     linear-gradient(180deg,#641525 0,#53101D 48%,#3A0810 100%);
@@ -424,7 +424,7 @@ html{scroll-behavior:smooth}
 }
 .landing[hidden]{display:none}
 /* ปลดล็อคแบบ iOS: ล็อคสกรีนเลื่อนขึ้น จางหาย เผยหน้าหลักด้านหลัง */
-.landing.closing{animation:landUnlock .58s cubic-bezier(.32,.72,0,1) forwards}
+.landing.closing{animation:landUnlock .66s cubic-bezier(.32,.72,0,1) forwards}
 @keyframes landUnlock{
   from{opacity:1;transform:translateY(0) scale(1)}
   to{opacity:0;transform:translateY(-9%) scale(.955);visibility:hidden}
@@ -437,13 +437,17 @@ html{scroll-behavior:smooth}
   width:100%;max-width:430px;display:flex;flex-direction:column;align-items:center;
 }
 /* เนื้อหาไล่ปรากฏนุ่ม ๆ แบบ staggered ให้ดูมีชีวิตแต่ไม่กวนตา */
-.landing-hero{animation:landIn .6s cubic-bezier(.22,1,.36,1) both;animation-delay:.06s}
-.landing-cards{animation:landIn .6s cubic-bezier(.22,1,.36,1) both;animation-delay:.15s}
-@keyframes landIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+/* เนื้อหาไล่ปรากฏทีละบล็อกจากบนลงล่าง ให้เห็นจังหวะชัดและนุ่ม */
+.landing-inner>*{animation:landIn .82s cubic-bezier(.22,1,.36,1) both}
+.landing-inner>*:nth-child(1){animation-delay:.12s}
+.landing-inner>*:nth-child(2){animation-delay:.26s}
+.landing-inner>*:nth-child(3){animation-delay:.40s}
+.landing-inner>*:nth-child(4){animation-delay:.54s}
+@keyframes landIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 /* เคารพผู้ใช้ที่ตั้งค่าลดการเคลื่อนไหว: เหลือเพียงการจางเบา ๆ */
 @media (prefers-reduced-motion:reduce){
-  .landing,.landing-hero,.landing-cards{animation:none!important;filter:none!important}
-  .landing.closing{animation:landFade .25s ease forwards}
+  .landing,.landing-inner>*{animation:none!important;filter:none!important}
+  .landing.closing{animation:landFade .3s ease forwards}
   @keyframes landFade{to{opacity:0;visibility:hidden}}
 }
 .landing-hero{width:100%;display:flex;flex-direction:column;align-items:center;container-type:inline-size}
@@ -1373,7 +1377,7 @@ html{scroll-behavior:smooth}
     ข้อมูลตารางเดินรถ: เพจ ป้ายหยุดรถพระจอมเกล้า<br>
     ข้อมูลเวลา Airport Rail Link: ถอดจากตารางภาพที่ผู้ใช้จัดเตรียม<br>
     ตารางปกติปรับปรุงข้อมูลล่าสุดเมื่อวันที่ 1 กรกฎาคม 2569<br>
-    <span style="opacity:.75">PAI.DUY.NA Full build 2026-07-29 v38 Cross Inline &amp; iOS Unlock</span>
+    <span style="opacity:.75">PAI.DUY.NA Full build 2026-07-29 v39 Landing Smoother</span>
   </p>
 </div>
 
@@ -1387,7 +1391,7 @@ html{scroll-behavior:smooth}
    ============================================================ */
 const STATUS_URL = "data/status.json";
 const STRAVA_LATEST_URL = "/api/strava/latest";
-const APP_VERSION = "2026-07-29-v38-cross-inline-ios-unlock";
+const APP_VERSION = "2026-07-29-v39-landing-smoother";
 const STORE = {
   favorites:"pdn-favorites",
   recents:"pdn-recents"
@@ -3319,7 +3323,7 @@ function enterApp(){
   const land = $("landing");
   if(!land) return;
   land.classList.add("closing");
-  setTimeout(() => { land.hidden = true; document.body.style.overflow = ""; }, 600);
+  setTimeout(() => { land.hidden = true; document.body.style.overflow = ""; }, 720);
   if(LANDING_SPEED_WATCH != null){
     try{ navigator.geolocation.clearWatch(LANDING_SPEED_WATCH); }catch(e){}
     LANDING_SPEED_WATCH = null;
