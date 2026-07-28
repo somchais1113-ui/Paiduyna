@@ -1,4 +1,4 @@
-const CACHE = "paiduyna-full-2026-07-27-v36-commute-direction-speed";
+const CACHE = "paiduyna-full-2026-07-29-v38-cross-inline-ios-unlock";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -7,7 +7,8 @@ const APP_SHELL = [
   "./brand-logo-v4.svg",
   "./strava-logo.png",
   "./data/status.json",
-  "./data/parking.json"
+  "./data/parking.json",
+  "./data/network.json"
 ];
 
 self.addEventListener("install", event => {
@@ -38,7 +39,7 @@ self.addEventListener("fetch", event => {
     return;
   }
 
-  if(url.pathname.endsWith("/data/status.json") || url.pathname.endsWith("/data/parking.json")) {
+  if(url.pathname.endsWith("/data/status.json") || url.pathname.endsWith("/data/parking.json") || url.pathname.endsWith("/data/network.json")) {
     event.respondWith(
       fetch(event.request)
         .then(response => {

@@ -328,6 +328,58 @@ td.nostop{color:#D6C3C6;font-weight:400}
 @keyframes parkspin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.park-spin{animation:none}}
 @media (max-width:560px){.park-methods{grid-template-columns:1fr}}
+/* ---------- ต่อรถไฟฟ้า / วางแผนข้ามระบบ (Cross-system) ---------- */
+.cross-card .card-head{background:linear-gradient(110deg,var(--navy-800),var(--blue-500))}
+.cross-origin-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:11px}
+.cross-origin-now{display:inline-flex;align-items:center;gap:8px;font-size:.88rem;color:var(--ink)}
+.cross-origin-now b{font:700 .9rem var(--font-display);color:var(--navy-700)}
+.cross-origin-now .co-ic{flex:none;width:19px;height:19px;color:var(--navy-700)}
+.cross-origin-switch{margin-left:auto;border:1.5px solid var(--blue-200);background:#fff;color:var(--navy-700);border-radius:999px;padding:5px 13px;font:700 .78rem var(--font-body);cursor:pointer;transition:border-color .15s,background .15s;white-space:nowrap}
+.cross-origin-switch:hover{border-color:var(--navy-700);background:var(--blue-100)}
+.cross-row{display:flex;gap:8px}
+.cross-row input{flex:1;min-width:0;border:1.5px solid var(--blue-200);border-radius:11px;padding:12px 14px;font:500 .92rem var(--font-body);color:var(--ink);background:#fff}
+.cross-row input:focus{outline:none;border-color:var(--navy-700);box-shadow:0 0 0 3px var(--blue-100)}
+.cross-go{flex:none;border:none;background:var(--navy-700);color:#fff;border-radius:11px;padding:0 22px;font:700 .95rem var(--font-display);cursor:pointer;transition:background .15s}
+.cross-go:hover{background:var(--navy-900)}
+.cross-go:disabled{opacity:.55;cursor:default}
+.cross-results{margin-top:14px;display:flex;flex-direction:column;gap:14px}
+.cross-route{border:1.5px solid var(--blue-200);border-radius:13px;overflow:hidden;background:#fff}
+.cross-route-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 14px;background:var(--blue-100);border-bottom:1px solid var(--line)}
+.cross-route-dur{font:800 1.05rem var(--font-display);color:var(--navy-700)}
+.cross-route-meta{font-size:.78rem;color:var(--ink-mute)}
+.cross-route-chip{margin-left:auto;background:#fff;border:1px solid var(--blue-200);color:var(--navy-700);border-radius:999px;padding:3px 10px;font:700 .72rem var(--font-body)}
+.cross-steps{list-style:none;margin:0;padding:10px 14px;display:flex;flex-direction:column;gap:2px}
+.cross-step{display:flex;gap:11px;align-items:flex-start;padding:6px 0}
+.cross-step-ic{flex:none;width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font:800 .62rem var(--font-display);color:#fff;background:var(--ink-mute)}
+.cross-step.k-rail .cross-step-ic{background:var(--navy-700)}
+.cross-step.k-transit .cross-step-ic{background:var(--blue-500)}
+.cross-step.k-walk .cross-step-ic{background:#fff;color:var(--ink-mute);box-shadow:inset 0 0 0 1.5px var(--blue-200)}
+.cross-step-body{min-width:0;flex:1;font-size:.86rem;line-height:1.5}
+.cross-step-line{font:700 .9rem var(--font-display);color:var(--ink)}
+.cross-step-sub{font-size:.78rem;color:var(--ink-mute);margin-top:1px}
+.cross-msg{font-size:.85rem;color:var(--ink-mute);line-height:1.6;background:var(--blue-100);border-radius:10px;padding:13px 15px}
+.cross-loading{display:flex;align-items:center;gap:11px;font-size:.85rem;color:var(--ink-mute);background:var(--blue-100);border-radius:10px;padding:13px 15px}
+.cross-spin{flex:none;width:18px;height:18px;border:2.4px solid var(--blue-200);border-top-color:var(--navy-700);border-radius:50%;animation:parkspin .7s linear infinite}
+/* ป้ายสถานะสายในโครงข่าย */
+.net-status{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:2px 9px;font:700 .68rem var(--font-body);white-space:nowrap}
+.net-status::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.net-status.s-open{background:#E6F4EA;color:#1E7B34}
+.net-status.s-construction{background:#FDF1DD;color:#B26A00}
+.net-status.s-planned{background:#EEF0F2;color:#5A6470}
+/* การ์ดสายอนาคต */
+.future-lines{margin-top:18px}
+.future-lines h3{font:700 .9rem var(--font-display);color:var(--navy-700);margin:0 0 4px}
+.future-hint{font-size:.78rem;color:var(--ink-mute);margin-bottom:12px;line-height:1.55}
+.future-list{display:grid;grid-template-columns:1fr;gap:9px}
+.future-item{display:flex;align-items:flex-start;gap:11px;border:1.5px solid var(--blue-200);border-radius:11px;padding:11px 13px;background:#fff}
+.future-swatch{flex:none;width:10px;align-self:stretch;min-height:38px;border-radius:5px;background:var(--ink-mute)}
+.future-info{min-width:0;flex:1}
+.future-name{font:700 .92rem var(--font-display);color:var(--ink)}
+.future-seg{font-size:.8rem;color:var(--ink-mute);margin-top:2px;line-height:1.4}
+.future-rel{font-size:.76rem;color:var(--navy-700);margin-top:5px;line-height:1.4}
+.future-review{font-size:.72rem;color:#B26A00;margin-top:4px}
+@media (min-width:640px){.future-list{grid-template-columns:1fr 1fr}}
+
 /* ---------- ปุ่มลัดไปแต่ละหัวข้อ ---------- */
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -360,6 +412,7 @@ html{scroll-behavior:smooth}
   display:flex;align-items:flex-start;justify-content:center;
   padding:max(34px,env(safe-area-inset-top)) 18px max(24px,env(safe-area-inset-bottom));
   overflow-y:auto;overscroll-behavior:contain;
+  animation:landPanelIn .55s cubic-bezier(.22,1,.36,1) both;
   background:
     radial-gradient(circle at 50% -10%,rgba(181,73,91,.24),transparent 38%),
     linear-gradient(180deg,#641525 0,#53101D 48%,#3A0810 100%);
@@ -370,13 +423,29 @@ html{scroll-behavior:smooth}
   pointer-events:none;
 }
 .landing[hidden]{display:none}
-.landing.closing{animation:landOut .45s ease forwards}
-@keyframes landOut{to{opacity:0;visibility:hidden}}
+/* ปลดล็อคแบบ iOS: ล็อคสกรีนเลื่อนขึ้น จางหาย เผยหน้าหลักด้านหลัง */
+.landing.closing{animation:landUnlock .58s cubic-bezier(.32,.72,0,1) forwards}
+@keyframes landUnlock{
+  from{opacity:1;transform:translateY(0) scale(1)}
+  to{opacity:0;transform:translateY(-9%) scale(.955);visibility:hidden}
+}
+@keyframes landPanelIn{
+  from{opacity:0;transform:scale(1.035);filter:blur(5px)}
+  to{opacity:1;transform:scale(1);filter:blur(0)}
+}
 .landing-inner{
   width:100%;max-width:430px;display:flex;flex-direction:column;align-items:center;
-  animation:landIn .5s ease;
 }
-@keyframes landIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+/* เนื้อหาไล่ปรากฏนุ่ม ๆ แบบ staggered ให้ดูมีชีวิตแต่ไม่กวนตา */
+.landing-hero{animation:landIn .6s cubic-bezier(.22,1,.36,1) both;animation-delay:.06s}
+.landing-cards{animation:landIn .6s cubic-bezier(.22,1,.36,1) both;animation-delay:.15s}
+@keyframes landIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+/* เคารพผู้ใช้ที่ตั้งค่าลดการเคลื่อนไหว: เหลือเพียงการจางเบา ๆ */
+@media (prefers-reduced-motion:reduce){
+  .landing,.landing-hero,.landing-cards{animation:none!important;filter:none!important}
+  .landing.closing{animation:landFade .25s ease forwards}
+  @keyframes landFade{to{opacity:0;visibility:hidden}}
+}
 .landing-hero{width:100%;display:flex;flex-direction:column;align-items:center;container-type:inline-size}
 .landing-clock{
   font:800 clamp(3.5rem,16.5vw,5.25rem) var(--font-display);
@@ -1104,6 +1173,7 @@ html{scroll-behavior:smooth}
       <a href="#cardPlanner">วางแผนการเดินทาง</a>
       <a href="#cardTableUp">ตารางเดินรถ</a>
       <a href="#cardParking">ลานจอดรถ</a>
+      <a href="#cardCross">ต่อรถไฟฟ้า</a>
       <a href="#cardConnect">จุดเชื่อมต่อ</a>
       <a href="#cardNotes">หมายเหตุ</a>
     </div>
@@ -1196,6 +1266,27 @@ html{scroll-behavior:smooth}
     </div>
   </section>
 
+  <section class="card cross-card" id="cardCross">
+    <div class="card-head">
+      <h2>ต่อรถไฟฟ้า</h2>
+      <span class="hint">ลงแล้วต่อ BTS, MRT ไปจุดหมายจริง</span>
+    </div>
+    <div class="card-body">
+      <div class="cross-origin-bar">
+        <span class="cross-origin-now">
+          <svg class="co-ic" id="crossOriginIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          <span>ต่อจาก <b id="crossOriginLabel">สถานีปลายทาง</b></span>
+        </span>
+        <button type="button" class="cross-origin-switch" id="crossOriginSwitch">ใช้ตำแหน่งฉัน</button>
+      </div>
+      <div class="cross-row">
+        <input type="text" id="crossDest" inputmode="text" autocomplete="off" placeholder="พิมพ์จุดหมาย เช่น สยามพารากอน" aria-label="จุดหมายปลายทาง" />
+        <button type="button" class="cross-go" id="crossGo">หา</button>
+      </div>
+      <div class="cross-results" id="crossResults" aria-live="polite"></div>
+    </div>
+  </section>
+
   <section class="card" id="cardTableUp">
     <div class="card-head">
       <h2 id="ttlUp">ตารางเดินรถ เที่ยวขึ้น</h2>
@@ -1257,12 +1348,17 @@ html{scroll-behavior:smooth}
     </div>
     <div class="card-body">
       <p class="connection-intro">สถานีหลักสำหรับเชื่อมต่อระบบขนส่งอื่น จัดแสดงโดยไม่ใช้โลโก้ของหน่วยงาน</p>
-      <div class="connection-track" aria-label="จุดเชื่อมต่อ 5 แห่ง">
+      <div class="connection-track" id="connectionTrack" aria-label="จุดเชื่อมต่อ">
         <div class="connection-stop"><div class="connection-dot">BTS</div><div><div class="connection-kind">เชื่อมรถไฟฟ้า BTS</div><div class="connection-place">สถานีพญาไท</div></div></div>
         <div class="connection-stop"><div class="connection-dot">MRT</div><div><div class="connection-kind">เชื่อมรถไฟฟ้า MRT</div><div class="connection-place">สถานีมักกะสัน</div></div></div>
         <div class="connection-stop"><div class="connection-dot">เรือ</div><div><div class="connection-kind">เชื่อมท่าเรือคลองแสนแสบ</div><div class="connection-place">สถานีรามคำแหง</div></div></div>
         <div class="connection-stop"><div class="connection-dot">YL</div><div><div class="connection-kind">เชื่อมรถไฟฟ้าสายสีเหลือง</div><div class="connection-place">สถานีหัวหมาก</div></div></div>
         <div class="connection-stop"><div class="connection-dot">AIR</div><div><div class="connection-kind">เชื่อมสนามบิน</div><div class="connection-place">สถานีสุวรรณภูมิ</div></div></div>
+      </div>
+      <div class="future-lines" id="futureLines" hidden>
+        <h3>เส้นทางในอนาคต (M-MAP 2)</h3>
+        <p class="future-hint">สายในแผนพัฒนาที่จะเชื่อมโครงข่ายนี้เพิ่มเติม ยังไม่เปิดให้บริการ โปรดตรวจสอบสถานะล่าสุดจากประกาศทางการ</p>
+        <div class="future-list" id="futureList"></div>
       </div>
     </div>
   </section>
@@ -1277,7 +1373,7 @@ html{scroll-behavior:smooth}
     ข้อมูลตารางเดินรถ: เพจ ป้ายหยุดรถพระจอมเกล้า<br>
     ข้อมูลเวลา Airport Rail Link: ถอดจากตารางภาพที่ผู้ใช้จัดเตรียม<br>
     ตารางปกติปรับปรุงข้อมูลล่าสุดเมื่อวันที่ 1 กรกฎาคม 2569<br>
-    <span style="opacity:.75">PAI.DUY.NA Full build 2026-07-27 v36 Commute Direction & Speed</span>
+    <span style="opacity:.75">PAI.DUY.NA Full build 2026-07-29 v38 Cross Inline &amp; iOS Unlock</span>
   </p>
 </div>
 
@@ -1291,7 +1387,7 @@ html{scroll-behavior:smooth}
    ============================================================ */
 const STATUS_URL = "data/status.json";
 const STRAVA_LATEST_URL = "/api/strava/latest";
-const APP_VERSION = "2026-07-27-v36-commute-direction-speed";
+const APP_VERSION = "2026-07-29-v38-cross-inline-ios-unlock";
 const STORE = {
   favorites:"pdn-favorites",
   recents:"pdn-recents"
@@ -2265,6 +2361,7 @@ function refreshAll(){
 
   renderTrips();
   renderParkingStation();
+  updateCrossStation();
 }
 
 /* ============================================================
@@ -2685,6 +2782,261 @@ function appendParkingFallback(list, message, url){
 }
 
 /* ============================================================
+   17b. วางแผนข้ามระบบ + โครงข่าย M-MAP 2
+   - data/network.json: จุดเชื่อมต่อและสายอนาคต ใช้ Offline ได้
+   - /api/routes/transit: วางเส้นทางจริงด้วย Google Directions (โหมด transit)
+   - สายอนาคตเป็นข้อมูลประกอบ ไม่ถูกนำไปวางเป็นเส้นทางที่แนะนำ
+   ============================================================ */
+let NETWORK = null;
+const TRANSIT_URL = "/api/routes/transit";
+// จุดตั้งต้นของการค้นข้ามระบบ: "dest" = สถานีปลายทางที่เลือก, "me" = ตำแหน่งปัจจุบัน
+let crossOriginMode = "dest";
+
+async function loadNetwork(){
+  try{
+    const r = await fetch("data/network.json", {cache:"no-store"});
+    if(r.ok) NETWORK = await r.json();
+  }catch(e){ /* ยังคงใช้จุดเชื่อมต่อ fallback ใน HTML ได้ */ }
+  renderConnections();
+  renderFutureLines();
+}
+
+// เขียนทับการ์ดจุดเชื่อมต่อด้วยข้อมูลจากไฟล์ (ถ้าโหลดได้) มิฉะนั้นคง fallback เดิม
+function renderConnections(){
+  const track = $("connectionTrack");
+  if(!track || !NETWORK || !Array.isArray(NETWORK.interchanges) || !NETWORK.interchanges.length) return;
+  track.innerHTML = "";
+  track.setAttribute("aria-label", "จุดเชื่อมต่อ " + NETWORK.interchanges.length + " แห่ง");
+  NETWORK.interchanges.forEach(item => {
+    const stop = document.createElement("div");
+    stop.className = "connection-stop";
+    const dot = document.createElement("div");
+    dot.className = "connection-dot";
+    dot.textContent = item.badge || "•";
+    const info = document.createElement("div");
+    const kind = document.createElement("div");
+    kind.className = "connection-kind";
+    kind.textContent = item.system || "";
+    const place = document.createElement("div");
+    place.className = "connection-place";
+    place.textContent = item.atStationLabel || "";
+    info.append(kind, place);
+    if(item.note){
+      const note = document.createElement("div");
+      note.className = "connection-kind";
+      note.style.fontWeight = "500";
+      note.style.marginTop = "3px";
+      note.textContent = item.note;
+      info.append(note);
+    }
+    stop.append(dot, info);
+    track.append(stop);
+  });
+}
+
+// แสดงสายอนาคตพร้อมป้าย "ยังไม่เปิดบริการ" อย่างชัดเจน
+function renderFutureLines(){
+  const wrap = $("futureLines"), list = $("futureList");
+  if(!wrap || !list || !NETWORK || !Array.isArray(NETWORK.futureLines) || !NETWORK.futureLines.length) return;
+  const legend = NETWORK.legend || {};
+  list.innerHTML = "";
+  NETWORK.futureLines.forEach(line => {
+    const item = document.createElement("div");
+    item.className = "future-item";
+    const swatch = document.createElement("div");
+    swatch.className = "future-swatch";
+    if(line.color) swatch.style.background = line.color;
+    const info = document.createElement("div");
+    info.className = "future-info";
+
+    const nameRow = document.createElement("div");
+    nameRow.className = "future-name";
+    nameRow.textContent = line.name || "สายใหม่";
+    const status = document.createElement("span");
+    const sKey = line.status === "construction" ? "construction" : "planned";
+    status.className = "net-status s-" + sKey;
+    status.textContent = legend[sKey] || (sKey === "construction" ? "อยู่ระหว่างก่อสร้าง" : "ยังไม่เปิดบริการ");
+    status.style.marginLeft = "8px";
+    nameRow.append(status);
+
+    const seg = document.createElement("div");
+    seg.className = "future-seg";
+    seg.textContent = line.segment || "";
+    info.append(nameRow, seg);
+
+    if(line.relatedLabel){
+      const rel = document.createElement("div");
+      rel.className = "future-rel";
+      rel.textContent = "◦ " + line.relatedLabel;
+      info.append(rel);
+    }
+    if(line.needsReview){
+      const review = document.createElement("div");
+      review.className = "future-review";
+      review.textContent = "* ข้อมูลเบื้องต้น ควรตรวจสอบกับประกาศทางการ";
+      info.append(review);
+    }
+    item.append(swatch, info);
+    list.append(item);
+  });
+  wrap.hidden = false;
+}
+
+// อัปเดตชื่อสถานีต้นทางที่การ์ด cross สืบทอดจากส่วนวางแผนการเดินทาง
+function updateCrossStation(){
+  const label = $("crossOriginLabel");
+  if(!label) return;
+  if(crossOriginMode === "me"){ label.textContent = "ตำแหน่งปัจจุบัน"; return; }
+  const destId = $("selTo") && $("selTo").value;
+  label.textContent = destId ? st(destId).name : "สถานีปลายทาง";
+}
+
+// สลับจุดตั้งต้นระหว่างสถานีปลายทางกับตำแหน่งปัจจุบัน (toggle เดียว)
+function setCrossOrigin(mode){
+  crossOriginMode = mode;
+  const sw = $("crossOriginSwitch"), icon = $("crossOriginIcon");
+  if(sw) sw.textContent = mode === "me" ? "ใช้สถานีปลายทาง" : "ใช้ตำแหน่งฉัน";
+  // หมุด = สถานี, เป้าเล็ง = ตำแหน่งปัจจุบัน
+  if(icon){
+    icon.innerHTML = mode === "me"
+      ? '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>'
+      : '<path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>';
+  }
+  updateCrossStation();
+}
+
+function crossLoading(message){
+  const box = $("crossResults");
+  if(!box) return;
+  box.innerHTML = '<div class="cross-loading"><span class="cross-spin" aria-hidden="true"></span><span>' + message + "</span></div>";
+}
+function crossMessage(message){
+  const box = $("crossResults");
+  if(box) box.innerHTML = '<div class="cross-msg">' + message + "</div>";
+}
+
+// เรียก API และแปลง route เป็น DOM
+function renderCrossRoutes(routes){
+  const box = $("crossResults");
+  if(!box) return;
+  box.innerHTML = "";
+  routes.forEach((route, index) => {
+    const card = document.createElement("div");
+    card.className = "cross-route";
+
+    const head = document.createElement("div");
+    head.className = "cross-route-head";
+    const dur = document.createElement("span");
+    dur.className = "cross-route-dur";
+    dur.textContent = route.durationText || "";
+    head.append(dur);
+    if(route.departureTime && route.arrivalTime){
+      const meta = document.createElement("span");
+      meta.className = "cross-route-meta";
+      meta.textContent = route.departureTime + " - " + route.arrivalTime;
+      head.append(meta);
+    }
+    const chip = document.createElement("span");
+    chip.className = "cross-route-chip";
+    chip.textContent = route.transfers > 0 ? ("ต่อ " + route.transfers + " ครั้ง") : "ตรง";
+    head.append(chip);
+    card.append(head);
+
+    const steps = document.createElement("ol");
+    steps.className = "cross-steps";
+    (route.steps || []).forEach(step => {
+      // ข้ามการเดินสั้นมากเพื่อไม่ให้รก
+      if(step.kind === "walk" && !step.durationText) return;
+      const li = document.createElement("li");
+      li.className = "cross-step k-" + step.kind;
+      const ic = document.createElement("div");
+      ic.className = "cross-step-ic";
+      ic.textContent = step.kind === "walk" ? "เดิน" : (step.lineName || "รถ").slice(0, 4);
+      if(step.kind !== "walk" && step.lineColor) ic.style.background = step.lineColor;
+      const body = document.createElement("div");
+      body.className = "cross-step-body";
+
+      if(step.kind === "walk"){
+        const line = document.createElement("div");
+        line.className = "cross-step-line";
+        line.textContent = "เดิน " + (step.durationText || "");
+        if(step.distanceText) line.textContent += " (" + step.distanceText + ")";
+        body.append(line);
+      }else{
+        const line = document.createElement("div");
+        line.className = "cross-step-line";
+        line.textContent = (step.vehicle || "รถ") + " " + (step.lineName || "");
+        const sub = document.createElement("div");
+        sub.className = "cross-step-sub";
+        const parts = [];
+        if(step.departureStop) parts.push("ขึ้น " + step.departureStop);
+        if(step.arrivalStop) parts.push("ลง " + step.arrivalStop);
+        if(step.numStops) parts.push(step.numStops + " สถานี");
+        sub.textContent = parts.join(" · ");
+        body.append(line, sub);
+      }
+      li.append(ic, body);
+      steps.append(li);
+    });
+    card.append(steps);
+    box.append(card);
+  });
+}
+
+async function findCrossRoute(){
+  const destText = ($("crossDest").value || "").trim();
+  if(!destText) return showToast("กรุณาพิมพ์จุดหมายปลายทางก่อน");
+
+  const params = { d: destText };
+
+  // เตรียมต้นทางตามโหมดที่เลือก
+  if(crossOriginMode === "me"){
+    if(!("geolocation" in navigator)) return showToast("อุปกรณ์นี้ไม่รองรับการอ่านตำแหน่ง");
+    crossLoading("กำลังอ่านตำแหน่งปัจจุบัน");
+    navigator.geolocation.getCurrentPosition(
+      pos => runCrossRoute(Object.assign(params, { olat: pos.coords.latitude.toFixed(6), olng: pos.coords.longitude.toFixed(6) })),
+      () => crossMessage("อ่านตำแหน่งไม่สำเร็จ กรุณาอนุญาต Location หรือเลือกจากสถานีปลายทางแทน"),
+      { enableHighAccuracy:true, timeout:10000, maximumAge:15000 }
+    );
+    return;
+  }
+
+  // ใช้ชื่อสถานีปลายทางที่เลือกในตารางเป็นต้นทาง แล้วให้ Google geocode เอง
+  const destStationId = $("selTo") && $("selTo").value;
+  const stationName = destStationId ? st(destStationId).name : "";
+  if(!stationName) return showToast("กรุณาเลือกสถานีปลายทางในส่วนวางแผนการเดินทางก่อน");
+  params.o = "สถานีรถไฟ " + stationName + " กรุงเทพ";
+  crossLoading("กำลังหาเส้นทางจาก" + stationName + "ไป" + destText);
+  runCrossRoute(params);
+}
+
+async function runCrossRoute(params){
+  // โหมดพรีวิวในเครื่องเรียก API ไม่ได้ แจ้งให้ชัด
+  if(location.protocol === "file:"){
+    return crossMessage("โหมดพรีวิวในเครื่องยังเรียกเส้นทางไม่ได้ ฟีเจอร์นี้ทำงานเมื่อ Deploy บน Vercel");
+  }
+  try{
+    const url = new URL(TRANSIT_URL, location.origin);
+    Object.entries(params).forEach(([k,v]) => { if(v) url.searchParams.set(k, String(v)); });
+    const r = await fetch(url, {cache:"no-store"});
+    const data = await r.json().catch(() => ({}));
+    if(!r.ok || data.status !== "ok"){
+      throw new Error(data.message || "หาเส้นทางไม่สำเร็จ");
+    }
+    if(!data.routes || !data.routes.length){
+      return crossMessage(data.message || "ไม่พบเส้นทางขนส่งสาธารณะระหว่างสองจุดนี้");
+    }
+    renderCrossRoutes(data.routes);
+  }catch(error){
+    crossMessage(
+      location.protocol === "https:"
+        ? "ยังหาเส้นทางไม่ได้ กรุณาตรวจสอบ GOOGLE_DIRECTIONS_API_KEY บน Vercel หรือลองใหม่อีกครั้ง"
+        : "ต้องเปิดผ่าน HTTPS บนโดเมนที่ Deploy บน Vercel จึงจะใช้ฟีเจอร์นี้ได้"
+    );
+  }
+}
+
+/* ============================================================
    18. หน้า Dashboard (Landing) รอบถัดไปตามช่วงเวลา + ความเร็วผู้ใช้
    ============================================================ */
 let LANDING_SPEED_WATCH = null;
@@ -2967,7 +3319,7 @@ function enterApp(){
   const land = $("landing");
   if(!land) return;
   land.classList.add("closing");
-  setTimeout(() => { land.hidden = true; document.body.style.overflow = ""; }, 450);
+  setTimeout(() => { land.hidden = true; document.body.style.overflow = ""; }, 600);
   if(LANDING_SPEED_WATCH != null){
     try{ navigator.geolocation.clearWatch(LANDING_SPEED_WATCH); }catch(e){}
     LANDING_SPEED_WATCH = null;
@@ -3051,6 +3403,9 @@ function init(){
   $("btnReminder").addEventListener("click", setReminder);
   $("btnParkStation").addEventListener("click", findParkingNearStation);
   $("btnParkNearMe").addEventListener("click", findParkingNearMe);
+  $("crossOriginSwitch").addEventListener("click", () => setCrossOrigin(crossOriginMode === "me" ? "dest" : "me"));
+  $("crossGo").addEventListener("click", findCrossRoute);
+  $("crossDest").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); findCrossRoute(); } });
   $("btnTables").addEventListener("click", () => {
     const hidden = !$("cardTableUp").classList.contains("tables-hidden");
     ["cardTableUp","cardTableDown"].forEach(id => $(id).classList.toggle("tables-hidden",hidden));
@@ -3070,7 +3425,7 @@ function init(){
     if(navigator.serviceWorker) navigator.serviceWorker.register("sw.js").catch(() => {});
   }catch(e){ /* บางเบราว์เซอร์บล็อก Service Worker เมื่อเปิดจากไฟล์ในเครื่อง */ }
 
-  loadWeather(); loadAirQuality(); loadStatus(); loadParking();
+  loadWeather(); loadAirQuality(); loadStatus(); loadParking(); loadNetwork();
   setInterval(() => { loadWeather(); loadAirQuality(); loadStatus(); loadStravaRun(); }, 600000);
 }
 

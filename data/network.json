@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "29/07/2569",
+  "disclaimer": "ข้อมูลจุดเชื่อมต่อและสายอนาคตเป็นข้อมูลอ้างอิงเพื่อการวางแผน ไม่ใช่ตารางเดินรถ สายที่ทำเครื่องหมาย needsReview ควรตรวจสอบกับประกาศทางการก่อนเผยแพร่ เส้นทางในแผน M-MAP 2 หลายสายยังไม่เปิดให้บริการจริง",
+  "legend": {
+    "open": "เปิดให้บริการแล้ว",
+    "construction": "อยู่ระหว่างก่อสร้าง",
+    "planned": "อยู่ในแผน ยังไม่เปิดบริการ"
+  },
+  "interchangeSchema": {
+    "atStation": "id สถานีในแอป (ต้องตรงกับ LINE หรือ ARL_LINE ใน index.html)",
+    "atStationLabel": "ชื่อสถานีที่แสดง (บังคับ)",
+    "system": "ระบบที่เชื่อม เช่น BTS สายสุขุมวิท (บังคับ)",
+    "badge": "อักษรย่อบนวงกลม สั้น 2-4 ตัว (บังคับ)",
+    "status": "open | construction | planned",
+    "note": "หมายเหตุการเดินเชื่อม (ไม่บังคับ)"
+  },
+  "interchanges": [
+    {
+      "atStation": "phayathai",
+      "atStationLabel": "สถานีพญาไท",
+      "system": "BTS สายสุขุมวิท",
+      "badge": "BTS",
+      "status": "open",
+      "note": "เดินเชื่อมจากสถานีรถไฟพญาไทไปสถานี BTS พญาไท"
+    },
+    {
+      "atStation": "makkasan",
+      "atStationLabel": "สถานีมักกะสัน",
+      "system": "MRT สายสีน้ำเงิน",
+      "badge": "MRT",
+      "status": "open",
+      "note": "เชื่อม MRT สถานีเพชรบุรี ผ่าน ARL มักกะสัน"
+    },
+    {
+      "atStation": "huamak",
+      "atStationLabel": "สถานีหัวหมาก",
+      "system": "MRT สายสีเหลือง",
+      "badge": "YL",
+      "status": "open",
+      "note": "เชื่อมสายสีเหลือง สถานีหัวหมาก"
+    },
+    {
+      "atStation": "sukhumvit71",
+      "atStationLabel": "สถานีรามคำแหง",
+      "system": "ท่าเรือคลองแสนแสบ",
+      "badge": "เรือ",
+      "status": "open",
+      "note": "เชื่อมท่าเรือคลองแสนแสบบริเวณรามคำแหง"
+    },
+    {
+      "atStation": "arl_suvarnabhumi",
+      "atStationLabel": "สถานีสุวรรณภูมิ",
+      "system": "ท่าอากาศยานสุวรรณภูมิ",
+      "badge": "AIR",
+      "status": "open",
+      "note": "เชื่อมอาคารผู้โดยสารสนามบินสุวรรณภูมิ"
+    }
+  ],
+  "futureLineSchema": {
+    "id": "รหัสสายภายใน",
+    "name": "ชื่อสาย (บังคับ)",
+    "segment": "ช่วงเส้นทาง (บังคับ)",
+    "color": "สีแสดงผล hex (ไม่บังคับ)",
+    "status": "construction | planned (บังคับ)",
+    "relatedStation": "id สถานีในแอปที่เกี่ยวข้อง (ไม่บังคับ)",
+    "relatedLabel": "จุดเชื่อมโยงกับแนวเส้นทางนี้ (ไม่บังคับ)",
+    "needsReview": "true หากยังไม่ได้ยืนยันรายละเอียดกับประกาศทางการ",
+    "source": "ที่มาของข้อมูล (ไม่บังคับ)"
+  },
+  "futureLines": [
+    {
+      "id": "silver",
+      "name": "สายสีเงิน",
+      "segment": "บางนา - ท่าอากาศยานสุวรรณภูมิ",
+      "color": "#9AA3AD",
+      "status": "planned",
+      "relatedStation": "arl_suvarnabhumi",
+      "relatedLabel": "เชื่อมโซนสนามบินสุวรรณภูมิในอนาคต",
+      "needsReview": true,
+      "source": "อยู่ในกลุ่มเร่งพัฒนา M-MAP 2 โปรดตรวจสอบสถานะล่าสุด"
+    },
+    {
+      "id": "brown",
+      "name": "สายสีน้ำตาล",
+      "segment": "แคราย - ลำสาลี",
+      "color": "#8B5E3C",
+      "status": "planned",
+      "relatedStation": "huamak",
+      "relatedLabel": "แนวเส้นทางผ่านโซนลำสาลีใกล้หัวหมาก",
+      "needsReview": true,
+      "source": "อยู่ในแผน M-MAP 2 โปรดตรวจสอบสถานะล่าสุด"
+    }
+  ]
+}
