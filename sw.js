@@ -1,4 +1,4 @@
-const CACHE = "paiduyna-full-2026-07-31-v41-landing-live-badge";
+const CACHE = "paiduyna-full-2026-07-31-v43-ui-hierarchy-route-cards";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -72,4 +72,19 @@ self.addEventListener("notificationclick", event => {
     if(list.length) return list[0].focus();
     return clients.openWindow("./");
   }));
+});
+
+// รับ Push จาก Server (ระบบแจ้งเตือนขบวนล่วงหน้าที่ทำงานได้แม้ปิดแอป)
+self.addEventListener("push", event => {
+  let data = {};
+  try{ data = event.data ? event.data.json() : {}; }catch(e){ data = {}; }
+  const title = data.title || "รถไฟใกล้ออกแล้ว";
+  const options = {
+    body: data.body || "",
+    icon: "icon.svg",
+    badge: "icon.svg",
+    tag: data.tag || "train-push",
+    renotify: true
+  };
+  event.waitUntil(self.registration.showNotification(title, options));
 });

@@ -214,12 +214,17 @@ body{
 .quick-label{font-size:.72rem;font-weight:700;color:var(--ink-mute);letter-spacing:.4px}
 .quick-chip{border:1px solid var(--blue-200);background:#fff;color:var(--navy-700);border-radius:999px;padding:6px 10px;font:600 .76rem var(--font-body);cursor:pointer}
 .quick-chip:hover{background:var(--blue-100);border-color:var(--blue-500)}
-.planner-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
-.action-btn{border:1.5px solid var(--blue-200);background:#fff;color:var(--navy-700);border-radius:8px;padding:8px 12px;font:700 .79rem var(--font-body);cursor:pointer}
+.planner-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px;align-items:center}
+.action-btn{display:inline-flex;align-items:center;border:1.5px solid var(--blue-200);background:#fff;color:var(--navy-700);border-radius:8px;padding:8px 12px;font:700 .79rem var(--font-body);cursor:pointer}
+.ab-ic{width:15px;height:15px;flex:none;margin-right:6px}
+.action-btn.group-start{margin-left:12px}
 .action-btn.primary{background:var(--navy-700);border-color:var(--navy-700);color:#fff}
+/* ปุ่มระดับรอง: สีจางลง น้ำหนักสายตาต่ำกว่าปุ่มหลักและปุ่มอันตราย ให้เห็นลำดับความสำคัญชัดโดยไม่ต้องมีเส้นแบ่ง */
+.action-btn.ghost{border-color:#E5E1E0;color:var(--ink-mute);background:#fff;font-weight:600}
+.action-btn.ghost:hover{border-color:var(--blue-500);color:var(--navy-700);background:var(--blue-100)}
 .action-btn:hover{border-color:var(--blue-500);background:var(--blue-100)}
 .action-btn.primary:hover{background:var(--navy-900)}
-.action-btn.danger{color:#9D1B12;border-color:#E9B9B5;background:#FFF8F7}
+.action-btn.danger{color:#9D1B12;border-color:#E9B9B5;background:#FFF8F7;margin-left:auto}
 .action-btn.danger:hover{background:#FDECEA;border-color:#D92D20}
 .next-panel{margin-top:14px;border:1px solid var(--blue-200);border-radius:10px;background:linear-gradient(135deg,#fff,var(--blue-100));padding:13px}
 .next-panel-head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px}
@@ -520,6 +525,26 @@ html{scroll-behavior:smooth}
 .ld-cd{font:800 .79rem var(--font-body);color:#F7D7DC}
 .ld-time{font:800 2.25rem var(--font-display);letter-spacing:-1.3px;line-height:1.02;margin-top:6px;color:#FFF8F4}
 .ld-sub{font-size:.82rem;color:#E9CFD3;margin-top:4px;line-height:1.4}
+/* ---------- การ์ดเที่ยวถัดไปแบบเส้นทาง (สไตล์ Flighty): เวลา-เส้นประ-เวลา พร้อมไอคอนรถไฟ ---------- */
+.ld-route{display:flex;align-items:center;gap:8px;margin-top:9px}
+.ld-route-time{font:800 clamp(1.4rem,6vw,1.7rem) var(--font-display);letter-spacing:-.8px;line-height:1;color:#FFF8F4;flex:none;font-variant-numeric:tabular-nums}
+.ld-route-time.arr{color:#F0D8DB}
+.ld-route-mid{flex:1;min-width:34px;position:relative;height:20px}
+.ld-route-line{position:absolute;left:1px;right:1px;top:50%;border-top:2px dashed rgba(255,255,255,.3)}
+.ld-route-train{position:absolute;top:50%;left:50%;width:23px;height:15px;color:#FFF6F1;
+  transform:translate(-50%,-50%);animation:trainBob 2.4s ease-in-out infinite}
+.ld-route-train svg{width:100%;height:100%;display:block}
+@keyframes trainBob{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 2px))}}
+/* จุดไหลบนเส้นประ จำลองทิศทางเคลื่อนที่จากต้นทางไปปลายทาง */
+.ld-route-flow{position:absolute;top:50%;left:0;font:700 .68rem/1 var(--font-body);color:rgba(255,255,255,.62);
+  transform:translate(-50%,-50%);animation:flowAcross 2.6s linear infinite}
+.ld-route-flow.f2{animation-delay:.87s}
+.ld-route-flow.f3{animation-delay:1.74s}
+@keyframes flowAcross{0%{left:2%;opacity:0}14%{opacity:1}82%{opacity:1}100%{left:98%;opacity:0}}
+.ld-route-labels{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-top:6px}
+.ld-route-label{font-size:.81rem;color:#E9CFD3;line-height:1.32;min-width:0}
+.ld-route-label.arr{text-align:right}
+.ld-route-trainno{display:block;font-size:.71rem;color:#F3DDE0;opacity:.85;margin-top:1px}
 /* badge LIVE บนการ์ด Landing กดเปิดหน้าติดตามขบวน TTS ต่อขบวน */
 .ld-live{display:inline-flex;align-items:center;gap:7px;margin-top:11px;text-decoration:none;
   border:1px solid rgba(255,255,255,.26);border-radius:999px;padding:5px 12px 5px 10px;width:fit-content;
@@ -978,16 +1003,46 @@ html{scroll-behavior:smooth}
     <div class="landing-cards">
       <div class="ld-card">
         <div class="ld-kind"><span class="ld-cd" id="lSrtCd">กำลังคำนวณ</span><span class="ld-kind-txt"> | รถไฟชานเมือง &bull; เที่ยวถัดไป</span></div>
-        <div class="ld-time" id="lSrtTime">--:--</div>
-        <div class="ld-sub" id="lSrtSub">กำลังคำนวณ</div>
+        <div class="ld-route">
+          <div class="ld-route-time dep" id="lSrtDepTime">--:--</div>
+          <div class="ld-route-mid">
+            <span class="ld-route-line" aria-hidden="true"></span>
+            <span class="ld-route-flow f1" aria-hidden="true">&rsaquo;</span>
+            <span class="ld-route-flow f2" aria-hidden="true">&rsaquo;</span>
+            <span class="ld-route-flow f3" aria-hidden="true">&rsaquo;</span>
+            <span class="ld-route-train" aria-hidden="true">
+              <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="26" height="11" rx="4" fill="currentColor"/><rect x="27" y="8" width="8" height="8" rx="3" fill="currentColor"/><circle cx="10" cy="19" r="2.4" fill="currentColor"/><circle cx="24" cy="19" r="2.4" fill="currentColor"/></svg>
+            </span>
+          </div>
+          <div class="ld-route-time arr" id="lSrtArrTime">--:--</div>
+        </div>
+        <div class="ld-route-labels">
+          <div class="ld-route-label dep"><span id="lSrtFrom">-</span><span class="ld-route-trainno" id="lSrtNo"></span></div>
+          <div class="ld-route-label arr" id="lSrtTo">-</div>
+        </div>
         <a class="ld-live" id="lSrtLive" href="https://ttsview.railway.co.th/v3/" target="_blank" rel="noopener noreferrer" hidden>
           <span class="ld-live-dot" aria-hidden="true"></span><span class="ld-live-txt">LIVE</span><span class="ld-live-sub">ตำแหน่งขบวน</span>
         </a>
       </div>
       <div class="ld-card">
         <div class="ld-kind"><span class="ld-cd" id="lArlCd">กำลังคำนวณ</span><span class="ld-kind-txt"> | Airport Rail Link &bull; เที่ยวถัดไป</span></div>
-        <div class="ld-time" id="lArlTime">--:--</div>
-        <div class="ld-sub" id="lArlSub">กำลังคำนวณ</div>
+        <div class="ld-route">
+          <div class="ld-route-time dep" id="lArlDepTime">--:--</div>
+          <div class="ld-route-mid">
+            <span class="ld-route-line" aria-hidden="true"></span>
+            <span class="ld-route-flow f1" aria-hidden="true">&rsaquo;</span>
+            <span class="ld-route-flow f2" aria-hidden="true">&rsaquo;</span>
+            <span class="ld-route-flow f3" aria-hidden="true">&rsaquo;</span>
+            <span class="ld-route-train" aria-hidden="true">
+              <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="26" height="11" rx="4" fill="currentColor"/><rect x="27" y="8" width="8" height="8" rx="3" fill="currentColor"/><circle cx="10" cy="19" r="2.4" fill="currentColor"/><circle cx="24" cy="19" r="2.4" fill="currentColor"/></svg>
+            </span>
+          </div>
+          <div class="ld-route-time arr" id="lArlArrTime">--:--</div>
+        </div>
+        <div class="ld-route-labels">
+          <div class="ld-route-label dep" id="lArlFrom">-</div>
+          <div class="ld-route-label arr" id="lArlTo">-</div>
+        </div>
       </div>
     </div>
 
@@ -1281,12 +1336,34 @@ html{scroll-behavior:smooth}
       </div>
 
       <div class="planner-actions">
-        <button class="action-btn primary" id="btnFavorite" type="button">บันทึกเส้นทางนี้</button>
-        <button class="action-btn" id="btnShare" type="button">แชร์แผนการเดินทาง</button>
-        <button class="action-btn" id="btnShareLocation" type="button">แชร์ตำแหน่งปัจจุบัน</button>
-        <button class="action-btn" id="btnReminder" type="button">แจ้งเตือนก่อนออก</button>
-        <button class="action-btn" id="btnTables" type="button" aria-expanded="true">ซ่อนตารางเต็ม</button>
-        <button class="action-btn danger" id="btnClearPlanner" type="button">ล้างข้อมูล</button>
+        <button class="action-btn primary" id="btnFavorite" type="button">
+          <svg class="ab-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>
+          บันทึกเส้นทางนี้
+        </button>
+        <button class="action-btn ghost group-start" id="btnShare" type="button">
+          <svg class="ab-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.6l6.8-3.7M8.6 13.4l6.8 3.7"/></svg>
+          แชร์แผนการเดินทาง
+        </button>
+        <button class="action-btn ghost" id="btnShareLocation" type="button">
+          <svg class="ab-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          แชร์ตำแหน่งปัจจุบัน
+        </button>
+        <button class="action-btn ghost group-start" id="btnReminder" type="button">
+          <svg class="ab-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+          แจ้งเตือนก่อนออก
+        </button>
+        <button class="action-btn ghost" id="btnPushReminder" type="button" hidden>
+          <svg class="ab-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 20a2 2 0 0 0 4 0"/><circle cx="18" cy="6" r="4" fill="currentColor" stroke="none"/></svg>
+          แจ้งเตือนแม้ปิดแอป
+        </button>
+        <button class="action-btn ghost group-start" id="btnTables" type="button" aria-expanded="true">
+          <svg class="ab-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></svg>
+          ซ่อนตารางเต็ม
+        </button>
+        <button class="action-btn danger" id="btnClearPlanner" type="button">
+          <svg class="ab-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2m-8 0 1 13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1l1-13"/></svg>
+          ล้างข้อมูล
+        </button>
       </div>
 
       <div class="route-sum" id="routeSum"></div>
@@ -1388,6 +1465,7 @@ html{scroll-behavior:smooth}
     <div class="card-body">
       <p class="connection-intro">สถานีหลักสำหรับเชื่อมต่อระบบขนส่งอื่น จัดแสดงโดยไม่ใช้โลโก้ของหน่วยงาน</p>
       <div class="connection-track" id="connectionTrack" aria-label="จุดเชื่อมต่อ">
+        <div class="connection-stop"><div class="connection-dot">MRT</div><div><div class="connection-kind">เชื่อมรถไฟฟ้า MRT สายสีน้ำเงิน</div><div class="connection-place">สถานีกรุงเทพ (หัวลำโพง)</div></div></div>
         <div class="connection-stop"><div class="connection-dot">BTS</div><div><div class="connection-kind">เชื่อมรถไฟฟ้า BTS</div><div class="connection-place">สถานีพญาไท</div></div></div>
         <div class="connection-stop"><div class="connection-dot">MRT</div><div><div class="connection-kind">เชื่อมรถไฟฟ้า MRT</div><div class="connection-place">สถานีมักกะสัน</div></div></div>
         <div class="connection-stop"><div class="connection-dot">เรือ</div><div><div class="connection-kind">เชื่อมท่าเรือคลองแสนแสบ</div><div class="connection-place">สถานีรามคำแหง</div></div></div>
@@ -1412,7 +1490,7 @@ html{scroll-behavior:smooth}
     ข้อมูลตารางเดินรถ: เพจ ป้ายหยุดรถพระจอมเกล้า<br>
     ข้อมูลเวลา Airport Rail Link: ถอดจากตารางภาพที่ผู้ใช้จัดเตรียม<br>
     ตารางปกติปรับปรุงข้อมูลล่าสุดเมื่อวันที่ 1 กรกฎาคม 2569<br>
-    <span style="opacity:.75">PAI.DUY.NA Full build 2026-07-31 v41 Landing Live Badge</span>
+    <span style="opacity:.75">PAI.DUY.NA Full build 2026-07-31 v43 UI Hierarchy & Route Cards</span>
   </p>
 </div>
 
@@ -1426,7 +1504,7 @@ html{scroll-behavior:smooth}
    ============================================================ */
 const STATUS_URL = "data/status.json";
 const STRAVA_LATEST_URL = "/api/strava/latest";
-const APP_VERSION = "2026-07-31-v41-landing-live-badge";
+const APP_VERSION = "2026-07-31-v43-ui-hierarchy-route-cards";
 const STORE = {
   favorites:"pdn-favorites",
   recents:"pdn-recents"
@@ -2566,6 +2644,66 @@ async function setReminder(){
   showToast("ตั้งแจ้งเตือน "+(trip.arl ? "Airport Rail Link" : "ขบวน "+trip.no)+" ก่อนออก 10 นาทีแล้ว กรุณาเปิดแอพค้างไว้");
 }
 
+// แปลง VAPID Public Key จาก Base64URL เป็น Uint8Array ตามที่ PushManager.subscribe ต้องการ
+function urlBase64ToUint8Array(base64String){
+  const padding = "=".repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+  const raw = atob(base64);
+  return Uint8Array.from([...raw].map(c => c.charCodeAt(0)));
+}
+
+// ตั้งแจ้งเตือนแบบ Push จริง ทำงานได้แม้ปิดแอปหรือปิดแท็บ (ต่างจาก setReminder ที่ต้องเปิดแอปค้างไว้)
+async function setPushReminder(){
+  if(!("serviceWorker" in navigator) || !("PushManager" in window))
+    return showToast("อุปกรณ์หรือเบราว์เซอร์นี้ไม่รองรับการแจ้งเตือนแบบปิดแอปได้");
+
+  const now = Date.now();
+  const trip = state.currentTrips.find(t => {
+    const delay = Math.max(0,Number(getTrainStatus(t.no)?.delayMinutes) || 0);
+    return new Date(state.date+"T00:00:00+07:00").getTime() + (t.depMin+delay)*60000 > now;
+  });
+  if(!trip) return showToast("ไม่พบขบวนในอนาคตสำหรับตั้งแจ้งเตือน");
+
+  const permission = Notification.permission === "granted" ? "granted" : await Notification.requestPermission();
+  if(permission !== "granted") return showToast("ยังไม่ได้รับอนุญาตให้แจ้งเตือน");
+
+  try{
+    const keyRes = await fetch("/api/push/vapid-public-key", {cache:"no-store"});
+    const keyData = await keyRes.json().catch(() => ({}));
+    if(!keyRes.ok || !keyData.publicKey){
+      return showToast(location.protocol === "https:"
+        ? "ระบบแจ้งเตือนแบบปิดแอปยังไม่พร้อมใช้งาน (ยังไม่ได้ตั้งค่า VAPID บน Vercel)"
+        : "ฟีเจอร์นี้ทำงานเมื่อ Deploy บน Vercel เท่านั้น");
+    }
+
+    const reg = await navigator.serviceWorker.ready;
+    let sub = await reg.pushManager.getSubscription();
+    if(!sub){
+      sub = await reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(keyData.publicKey)
+      });
+    }
+
+    const delay = Math.max(0,Number(getTrainStatus(trip.no)?.delayMinutes) || 0);
+    const departAt = new Date(state.date+"T00:00:00+07:00").getTime() + (trip.depMin+delay)*60000;
+    const from = stLabel(SCHEDULES[state.schedId], $("selFrom").value);
+    const to = stLabel(SCHEDULES[state.schedId], $("selTo").value);
+
+    const res = await fetch("/api/push/subscribe", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({ subscription: sub.toJSON(), trainNo: trip.no, departAt, from, to, arl: Boolean(trip.arl) })
+    });
+    const data = await res.json().catch(() => ({}));
+    if(!res.ok || data.status !== "ok") throw new Error(data.message || "สมัครแจ้งเตือนไม่สำเร็จ");
+
+    showToast("ตั้งแจ้งเตือน "+(trip.arl ? "Airport Rail Link" : "ขบวน "+trip.no)+" ก่อนออก 10 นาทีแล้ว ปิดแอปได้เลย");
+  }catch(error){
+    showToast("ตั้งแจ้งเตือนแบบปิดแอปไม่สำเร็จ: " + String(error?.message || error));
+  }
+}
+
 /* ============================================================
    17. PWA, การติดตั้ง และสถานะเครือข่าย
    ============================================================ */
@@ -3272,29 +3410,42 @@ function updateLanding(dateObj, partsObj, todayIso, millis){
   $("lDate").textContent = thaiLandingDate(today);
   try{
     const profile = landingCommuteProfile(nowMin);
+    // แยกชื่อต้นทาง/ปลายทางจาก label เดิม "X → Y" ไว้ใช้กับโครงสร้างการ์ดแบบเส้นทาง
+    const [srtFromLabel, srtToLabel] = profile.srtLabel.split(" → ");
+    const [arlFromLabel, arlToLabel] = profile.arlLabel.split(" → ");
     const srt = nextSrtDeparture(nowMin, profile);
     if(srt){
-      $("lSrtTime").textContent = srt.dep;
-      $("lSrtSub").textContent = "ขบวน " + srt.no + " · " + profile.srtLabel + " · ถึง " + srt.arr;
+      $("lSrtDepTime").textContent = srt.dep;
+      $("lSrtArrTime").textContent = srt.arr;
+      $("lSrtFrom").textContent = srtFromLabel;
+      $("lSrtTo").textContent = srtToLabel;
+      $("lSrtNo").textContent = "ขบวน " + srt.no;
       setLandingCountdown("lSrtCd", srt.diff);
       // เปิด badge LIVE พร้อม Deep Link ต่อขบวนนั้นไปหน้า TTS
       const live = $("lSrtLive");
       if(live){ live.href = srt.no ? ttsTrackUrl(srt.no) : "https://ttsview.railway.co.th/v3/"; live.hidden = false; }
     }else{
-      $("lSrtTime").textContent = "--:--";
-      $("lSrtSub").textContent = profile.srtLabel + " · ยังไม่พบเที่ยวที่จอดครบ";
+      $("lSrtDepTime").textContent = "--:--";
+      $("lSrtArrTime").textContent = "--:--";
+      $("lSrtFrom").textContent = srtFromLabel;
+      $("lSrtTo").textContent = srtToLabel;
+      $("lSrtNo").textContent = "ยังไม่พบเที่ยวที่จอดครบ";
       $("lSrtCd").textContent = profile.period;
       const live = $("lSrtLive");
       if(live) live.hidden = true;
     }
     const arl = nextArlDeparture(nowMin, profile, today);
     if(arl){
-      $("lArlTime").textContent = arl.dep;
-      $("lArlSub").textContent = profile.arlLabel + " · ถึง " + arl.arr;
+      $("lArlDepTime").textContent = arl.dep;
+      $("lArlArrTime").textContent = arl.arr;
+      $("lArlFrom").textContent = arlFromLabel;
+      $("lArlTo").textContent = arlToLabel;
       setLandingCountdown("lArlCd", arl.diff);
     }else{
-      $("lArlTime").textContent = "--:--";
-      $("lArlSub").textContent = profile.arlLabel + " · ยังไม่พบเที่ยวถัดไป";
+      $("lArlDepTime").textContent = "--:--";
+      $("lArlArrTime").textContent = "--:--";
+      $("lArlFrom").textContent = arlFromLabel;
+      $("lArlTo").textContent = arlToLabel;
       $("lArlCd").textContent = profile.period;
     }
   }catch(e){ /* ถ้าคำนวณรอบถัดไปพลาด ก็ยังแสดงนาฬิกาได้ */ }
@@ -3472,6 +3623,12 @@ function init(){
   $("btnUseNow").addEventListener("click", useCurrentTime);
   $("btnClearPlanner").addEventListener("click", clearPlannerData);
   $("btnReminder").addEventListener("click", setReminder);
+  const pushBtn = $("btnPushReminder");
+  if(pushBtn){
+    pushBtn.addEventListener("click", setPushReminder);
+    // แสดงปุ่มเฉพาะอุปกรณ์ที่รองรับ Push จริง (บาง iOS เวอร์ชันเก่า/เบราว์เซอร์บางตัวไม่รองรับ)
+    if("serviceWorker" in navigator && "PushManager" in window) pushBtn.hidden = false;
+  }
   $("btnParkStation").addEventListener("click", findParkingNearStation);
   $("btnParkNearMe").addEventListener("click", findParkingNearMe);
   $("crossOriginSwitch").addEventListener("click", () => setCrossOrigin(crossOriginMode === "me" ? "dest" : "me"));

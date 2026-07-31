@@ -17,6 +17,14 @@
   },
   "interchanges": [
     {
+      "atStation": "krungthep",
+      "atStationLabel": "สถานีกรุงเทพ (หัวลำโพง)",
+      "system": "MRT สายสีน้ำเงิน",
+      "badge": "MRT",
+      "status": "open",
+      "note": "เชื่อม MRT สถานีหัวลำโพง ต้นทางสายสีน้ำเงิน"
+    },
+    {
       "atStation": "phayathai",
       "atStationLabel": "สถานีพญาไท",
       "system": "BTS สายสุขุมวิท",
