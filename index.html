@@ -78,6 +78,9 @@ body{
 .theme-toggle::before{content:attr(data-icon);font-size:1rem;line-height:1}
 .theme-toggle:hover,.theme-toggle:focus-visible{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.34);outline:none;box-shadow:0 10px 22px rgba(0,0,0,.16)}
 .theme-toggle:active{transform:translateY(1px)}
+.landing-action-btn{display:inline-grid;place-items:center;flex:none;border-radius:50%;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.08);color:#FFF8F4;backdrop-filter:blur(10px);box-shadow:0 8px 22px rgba(32,2,8,.18);cursor:pointer;transition:transform .12s ease,box-shadow .18s ease,background .18s ease,border-color .18s ease}
+.landing-action-btn:hover,.landing-action-btn:focus-visible{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.3);box-shadow:0 10px 24px rgba(32,2,8,.22);outline:none}
+.landing-action-btn:active{transform:translateY(1px)}
 .net-state{display:flex;align-items:center;gap:6px;color:var(--blue-200);font-size:.7rem;font-weight:700}
 .net-state::before{content:"";width:8px;height:8px;border-radius:50%;background:#4ADE80}
 .net-state.offline::before{background:var(--amber)}
@@ -486,8 +489,12 @@ html{scroll-behavior:smooth}
   @keyframes landFade{to{opacity:0;visibility:hidden}}
 }
 .landing-hero{position:relative;width:100%;display:flex;flex-direction:column;align-items:center;container-type:inline-size}
-.landing-tools{position:absolute;top:0;right:0;display:flex;gap:8px;z-index:3}
-.landing-theme-toggle{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);padding:8px 13px;backdrop-filter:blur(8px)}
+.landing-tools{position:absolute;top:2px;right:2px;display:flex;gap:8px;z-index:3}
+.landing-theme-toggle{
+  width:38px;height:38px;padding:0;gap:0;font-size:0;color:transparent;
+  background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16)
+}
+.landing-theme-toggle::before{font-size:1.02rem;color:#FFF8F4}
 .landing-clock{
   font:800 clamp(3.5rem,16.5vw,5.25rem) var(--font-display);
   line-height:.9;margin-top:8px;width:100%;max-width:100%;
@@ -518,16 +525,12 @@ html{scroll-behavior:smooth}
 .landing-logo{display:block;width:100%;max-width:154px;height:auto;opacity:1;justify-self:start}
 .landing-date{font-size:.96rem;line-height:1.35;color:#EBCFD4;font-weight:500;min-width:0}
 .ld-enter-quick{
-  width:50px;height:50px;border-radius:50%;border:0;background:#FFF9F6;color:#54101D;
-  display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 20px rgba(32,2,8,.18);
-  transition:transform .12s ease,box-shadow .18s ease;
+  width:38px;height:38px;color:#FFF8F4;
 }
 .ld-enter-quick::before{
-  content:"";width:13px;height:13px;border-top:2.5px solid currentColor;border-right:2.5px solid currentColor;
+  content:"";width:10px;height:10px;border-top:2px solid currentColor;border-right:2px solid currentColor;
   transform:rotate(45deg) translate(-1px,1px);border-radius:1px;
 }
-.ld-enter-quick:hover,.ld-enter-quick:focus-visible{box-shadow:0 10px 24px rgba(32,2,8,.24);outline:3px solid rgba(255,255,255,.18);outline-offset:3px}
-.ld-enter-quick:active{transform:translateY(1px)}
 
 /* การ์ดรอบถัดไป เรียงลงตามภาพอ้างอิง */
 .landing-cards{width:100%;display:grid;grid-template-columns:1fr;gap:10px;margin-top:18px}
@@ -706,6 +709,12 @@ html{scroll-behavior:smooth}
 .ld-speed-reading{display:flex;align-items:baseline;gap:4px;margin-top:auto;padding-top:10px;white-space:nowrap}
 .ld-speed-val{font:800 1.48rem var(--font-display);color:#fff;line-height:1}
 .ld-speed-unit{font:700 .62rem var(--font-body);color:#EAD3D7}
+@media (min-width:768px){
+  .landing-tools{top:2px;right:2px}
+  .landing-theme-toggle,.ld-enter-quick{width:40px;height:40px}
+  .landing-theme-toggle::before{font-size:1.06rem}
+  .ld-enter-quick::before{width:11px;height:11px}
+}
 
 @media (max-width:380px){
   .landing{padding-left:13px;padding-right:13px}
@@ -713,7 +722,7 @@ html{scroll-behavior:smooth}
   .landing-meta{grid-template-columns:minmax(104px,.9fr) minmax(0,1.2fr) 51px;gap:9px;margin-top:18px}
   .landing-logo{max-width:132px}
   .landing-date{font-size:.86rem}
-  .ld-enter-quick{width:51px;height:51px}
+  .landing-theme-toggle,.ld-enter-quick{width:36px;height:36px}
   .ld-wellness{grid-template-columns:minmax(126px,.78fr) minmax(0,1.22fr);gap:8px}
   .ld-cond{gap:8px}
   .ld-wx,.ld-aqi{padding-left:10px;padding-right:10px}
@@ -849,6 +858,9 @@ html[data-theme="light"]{color-scheme:light}
 [data-theme="dark"] .ld-run{background:linear-gradient(145deg,rgba(252,82,0,.22),rgba(255,255,255,.035));border-color:rgba(252,82,0,.48)}
 [data-theme="dark"] .theme-toggle{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
 [data-theme="dark"] .theme-toggle:hover,[data-theme="dark"] .theme-toggle:focus-visible{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24)}
+[data-theme="dark"] .landing-action-btn{background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.12);color:#FFFFFF;box-shadow:0 10px 24px rgba(0,0,0,.28)}
+[data-theme="dark"] .landing-action-btn:hover,[data-theme="dark"] .landing-action-btn:focus-visible{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.22)}
+[data-theme="dark"] .landing-theme-toggle::before,[data-theme="dark"] .ld-enter-quick::before{color:#FFFFFF;border-color:#FFFFFF}
 
 @media print{body{background:#fff}.planner,.btn-refresh,.livebar,.sched-tabs{display:none}.card{box-shadow:none;border:1px solid #ccc}}
 
@@ -958,7 +970,7 @@ html[data-theme="light"]{color-scheme:light}
   }
   .landing-logo{max-width:162px}
   .landing-date{font-size:1rem;line-height:1.45}
-  .ld-enter-quick{width:48px;height:48px}
+  .landing-theme-toggle,.ld-enter-quick{width:40px;height:40px}
   .landing-cards{
     grid-area:cards;
     grid-template-columns:repeat(2,minmax(0,1fr));
@@ -1073,13 +1085,13 @@ html[data-theme="light"]{color-scheme:light}
   <div class="landing-inner">
     <header class="landing-hero">
       <div class="landing-tools">
-        <button class="theme-toggle landing-theme-toggle" id="btnThemeLanding" type="button" aria-label="สลับโหมดสี"></button>
+        <button class="theme-toggle landing-theme-toggle landing-action-btn" id="btnThemeLanding" type="button" data-theme-toggle="landing" aria-label="สลับโหมดสี"></button>
       </div>
       <div class="landing-clock" id="lClock">--:--:--</div>
       <div class="landing-meta">
         <img class="landing-logo" src="brand-logo-v4.svg" alt="PAI.DUY.NA">
         <div class="landing-date" id="lDate">กำลังโหลด</div>
-        <button class="ld-enter-quick" id="btnEnterQuick" type="button" aria-label="เข้าสู่หน้าหลัก" title="เข้าสู่หน้าหลัก"></button>
+        <button class="ld-enter-quick landing-action-btn" id="btnEnterQuick" type="button" aria-label="เข้าสู่หน้าหลัก" title="เข้าสู่หน้าหลัก"></button>
       </div>
     </header>
 
@@ -1286,7 +1298,7 @@ html[data-theme="light"]{color-scheme:light}
       </div>
       <div class="brand-actions">
         <span class="brand-live"><span class="dot"></span>LIVE ASSIST</span>
-        <button class="theme-toggle" id="btnTheme" type="button" aria-label="สลับโหมดสี"></button>
+        <button class="theme-toggle" id="btnTheme" type="button" data-theme-toggle="app" aria-label="สลับโหมดสี"></button>
         <button class="top-btn" id="btnInstall" type="button" hidden>ติดตั้งแอพ</button>
       </div>
     </div>
@@ -1839,12 +1851,20 @@ function currentTheme(){
 }
 function updateThemeButtons(theme){
   const isDark = theme === "dark";
-  [$("btnTheme"), $("btnThemeLanding")].forEach(btn => {
-    if(!btn) return;
+  const nextLabel = isDark ? "Normal Mode" : "Dark Mode";
+  const nextTitle = isDark ? "สลับเป็น Normal Mode" : "สลับเป็น Dark Mode";
+  const nextAria = isDark ? "กำลังใช้ Dark Mode กดเพื่อสลับเป็น Normal Mode" : "กำลังใช้ Normal Mode กดเพื่อสลับเป็น Dark Mode";
+  document.querySelectorAll("[data-theme-toggle]").forEach(btn => {
     btn.dataset.icon = isDark ? "🌙" : "☀️";
-    btn.textContent = isDark ? "Dark Mode" : "Normal Mode";
-    btn.setAttribute("title", isDark ? "สลับเป็น Normal Mode" : "สลับเป็น Dark Mode");
-    btn.setAttribute("aria-label", isDark ? "กำลังใช้ Dark Mode กดเพื่อสลับเป็น Normal Mode" : "กำลังใช้ Normal Mode กดเพื่อสลับเป็น Dark Mode");
+    btn.dataset.mode = theme;
+    btn.setAttribute("aria-pressed", String(isDark));
+    btn.setAttribute("title", nextTitle);
+    btn.setAttribute("aria-label", nextAria);
+    if(btn.dataset.themeToggle === "landing"){
+      btn.textContent = "";
+    }else{
+      btn.textContent = nextLabel;
+    }
   });
 }
 function setTheme(theme, persist=true){
@@ -3759,7 +3779,7 @@ function init(){
   }
   const runRefresh = $("btnRunRefresh");
   if(runRefresh) runRefresh.addEventListener("click", loadStravaRun);
-  [$("btnTheme"), $("btnThemeLanding")].forEach(btn => { if(btn) btn.addEventListener("click", toggleTheme); });
+  document.querySelectorAll("[data-theme-toggle]").forEach(btn => btn.addEventListener("click", toggleTheme));
   loadStravaRun();
   // นาฬิกาเริ่มก่อนเสมอ เพื่อให้ยังเดินได้แม้ส่วนอื่นมีปัญหา
   tickClock();
