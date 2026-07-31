@@ -6,7 +6,16 @@
 <title>PAI.DUY.NA | ตารางเดินรถและวางแผนการเดินทาง สายตะวันออก</title>
 <meta name="description" content="PAI.DUY.NA ตารางเดินรถไฟชานเมืองสายตะวันออก กรุงเทพ ฉะเชิงเทรา พร้อมระบบวางแผนการเดินทาง เลือกต้นทาง ปลายทาง และวันเดินทางได้">
 <meta name="theme-color" content="#6B1E2B">
-<meta name="color-scheme" content="light">
+<meta name="color-scheme" content="light dark">
+<script>
+(function(){
+  try{
+    var theme = localStorage.getItem("paiduyna-theme") || "";
+    if(theme !== "dark" && theme !== "light") theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", theme);
+  }catch(e){}
+})();
+</script>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 
@@ -65,6 +74,10 @@ body{
 .brand-actions{grid-column:3;justify-self:end;display:flex;align-items:center;gap:8px}
 .top-btn{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.08);color:#fff;border-radius:8px;padding:7px 10px;font:600 .75rem var(--font-body);cursor:pointer}
 .top-btn:hover{background:rgba(255,255,255,.16)}
+.theme-toggle{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;border-radius:999px;padding:7px 12px;font:700 .76rem var(--font-body);cursor:pointer;transition:background .18s,border-color .18s,transform .1s,box-shadow .18s;box-shadow:0 8px 18px rgba(0,0,0,.12)}
+.theme-toggle::before{content:attr(data-icon);font-size:1rem;line-height:1}
+.theme-toggle:hover,.theme-toggle:focus-visible{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.34);outline:none;box-shadow:0 10px 22px rgba(0,0,0,.16)}
+.theme-toggle:active{transform:translateY(1px)}
 .net-state{display:flex;align-items:center;gap:6px;color:var(--blue-200);font-size:.7rem;font-weight:700}
 .net-state::before{content:"";width:8px;height:8px;border-radius:50%;background:#4ADE80}
 .net-state.offline::before{background:var(--amber)}
@@ -472,7 +485,9 @@ html{scroll-behavior:smooth}
   .landing.closing{animation:landFade .3s ease forwards}
   @keyframes landFade{to{opacity:0;visibility:hidden}}
 }
-.landing-hero{width:100%;display:flex;flex-direction:column;align-items:center;container-type:inline-size}
+.landing-hero{position:relative;width:100%;display:flex;flex-direction:column;align-items:center;container-type:inline-size}
+.landing-tools{position:absolute;top:0;right:0;display:flex;gap:8px;z-index:3}
+.landing-theme-toggle{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);padding:8px 13px;backdrop-filter:blur(8px)}
 .landing-clock{
   font:800 clamp(3.5rem,16.5vw,5.25rem) var(--font-display);
   line-height:.9;margin-top:8px;width:100%;max-width:100%;
@@ -517,32 +532,39 @@ html{scroll-behavior:smooth}
 /* การ์ดรอบถัดไป เรียงลงตามภาพอ้างอิง */
 .landing-cards{width:100%;display:grid;grid-template-columns:1fr;gap:10px;margin-top:18px}
 .ld-card{
+  position:relative;
   background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.045));
   border:1px solid rgba(255,255,255,.16);border-radius:17px;padding:14px 16px 15px;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
 }
-.ld-kind{font:600 .79rem var(--font-body);color:#F0D5D9;line-height:1.35}
+.ld-kind{font:600 .79rem var(--font-body);color:#F0D5D9;line-height:1.35;padding-right:124px}
 .ld-cd{font:800 .79rem var(--font-body);color:#F7D7DC}
 .ld-time{font:800 2.25rem var(--font-display);letter-spacing:-1.3px;line-height:1.02;margin-top:6px;color:#FFF8F4}
 .ld-sub{font-size:.82rem;color:#E9CFD3;margin-top:4px;line-height:1.4}
+.ld-card-badge{position:absolute;top:13px;right:14px;display:inline-flex;align-items:center;justify-content:center;min-height:34px;max-width:calc(100% - 28px);padding:8px 14px;border-radius:12px;background:rgba(255,249,246,.12);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(8px);box-shadow:0 10px 18px rgba(0,0,0,.12);font:800 1rem var(--font-display);line-height:1;color:#FFF4EF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ld-card-badge:empty{display:none}
 /* ---------- การ์ดเที่ยวถัดไปแบบเส้นทาง (สไตล์ Flighty): เวลา-เส้นประ-เวลา พร้อมไอคอนรถไฟ ---------- */
-.ld-route{display:flex;align-items:center;gap:8px;margin-top:9px}
-.ld-route-time{font:800 clamp(1.4rem,6vw,1.7rem) var(--font-display);letter-spacing:-.8px;line-height:1;color:#FFF8F4;flex:none;font-variant-numeric:tabular-nums}
+.ld-route{display:flex;align-items:center;gap:10px;margin-top:10px}
+.ld-route-time{font:800 clamp(1.42rem,6vw,1.82rem) var(--font-display);letter-spacing:-.8px;line-height:1;color:#FFF8F4;flex:none;font-variant-numeric:tabular-nums}
 .ld-route-time.arr{color:#F0D8DB}
-.ld-route-mid{flex:1;min-width:34px;position:relative;height:20px}
-.ld-route-line{position:absolute;left:1px;right:1px;top:50%;border-top:2px dashed rgba(255,255,255,.3)}
-.ld-route-train{position:absolute;top:50%;left:50%;width:23px;height:15px;color:#FFF6F1;
+.ld-route-mid{flex:1;min-width:40px;position:relative;height:28px}
+.ld-route-line{position:absolute;top:50%;border-top:2px dashed rgba(255,255,255,.3)}
+.ld-route-line.left{left:1px;right:calc(50% + 38px)}
+.ld-route-line.right{left:calc(50% + 38px);right:1px}
+.ld-route-train{position:absolute;z-index:2;top:50%;left:50%;width:62px;height:24px;color:#FFF6F1;filter:drop-shadow(0 5px 12px rgba(0,0,0,.16));
   transform:translate(-50%,-50%);animation:trainBob 2.4s ease-in-out infinite}
 .ld-route-train svg{width:100%;height:100%;display:block}
-@keyframes trainBob{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 2px))}}
-/* จุดไหลบนเส้นประ จำลองทิศทางเคลื่อนที่จากต้นทางไปปลายทาง */
-.ld-route-flow{position:absolute;top:50%;left:0;font:700 .68rem/1 var(--font-body);color:rgba(255,255,255,.62);
-  transform:translate(-50%,-50%);animation:flowAcross 2.6s linear infinite}
-.ld-route-flow.f2{animation-delay:.87s}
-.ld-route-flow.f3{animation-delay:1.74s}
-@keyframes flowAcross{0%{left:2%;opacity:0}14%{opacity:1}82%{opacity:1}100%{left:98%;opacity:0}}
-.ld-route-labels{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-top:6px}
-.ld-route-label{font-size:.81rem;color:#E9CFD3;line-height:1.32;min-width:0}
+@keyframes trainBob{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 3px))}}
+/* ลูกศรไหลแยกซ้าย/ขวา เพื่อไม่ทับไอคอนรถไฟ */
+.ld-route-flow{position:absolute;z-index:1;top:50%;left:0;font:900 1rem/1 var(--font-body);color:rgba(255,255,255,.84);text-shadow:0 0 10px rgba(255,255,255,.16);
+  transform:translate(-50%,-50%);animation-duration:1.9s;animation-timing-function:linear;animation-iteration-count:infinite}
+.ld-route-flow.left{animation-name:flowLeft}
+.ld-route-flow.right{animation-name:flowRight}
+.ld-route-flow.f2{animation-delay:.62s}
+@keyframes flowLeft{0%{left:5%;opacity:0}16%{opacity:1}84%{opacity:1}100%{left:calc(50% - 41px);opacity:0}}
+@keyframes flowRight{0%{left:calc(50% + 41px);opacity:0}16%{opacity:1}84%{opacity:1}100%{left:95%;opacity:0}}
+.ld-route-labels{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-top:7px}
+.ld-route-label{font-size:.82rem;color:#E9CFD3;line-height:1.32;min-width:0}
 .ld-route-label.arr{text-align:right}
 .ld-route-trainno{display:block;font-size:.71rem;color:#F3DDE0;opacity:.85;margin-top:1px}
 /* badge LIVE บนการ์ด Landing กดเปิดหน้าติดตามขบวน TTS ต่อขบวน */
@@ -681,6 +703,8 @@ html{scroll-behavior:smooth}
 .ld-speed-wrap{display:flex;flex-direction:column;min-width:0;flex:1}
 .ld-speed-cap{font:700 .64rem var(--font-body);color:#E4C3C8;line-height:1.25}
 .ld-speed-hint{font:600 .52rem var(--font-body);color:#B98D94;margin-top:1px}
+.ld-speed-avg{font:700 .53rem var(--font-body);color:#E7CDD1;margin-top:7px;line-height:1.35;opacity:.95}
+.ld-speed-avg strong{color:#fff;font-weight:800}
 .ld-speed-reading{display:flex;align-items:baseline;gap:4px;margin-top:auto;padding-top:10px;white-space:nowrap}
 .ld-speed-val{font:800 1.48rem var(--font-display);color:#fff;line-height:1}
 .ld-speed-unit{font:700 .62rem var(--font-body);color:#EAD3D7}
@@ -780,6 +804,51 @@ html{scroll-behavior:smooth}
   .density-chart{height:68px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+html[data-theme="dark"]{color-scheme:dark}
+html[data-theme="light"]{color-scheme:light}
+[data-theme="dark"]{
+  --navy-900:#120b0e;
+  --burgundy:#2A1018;
+  --navy-800:#5B2433;
+  --navy-700:#874559;
+  --blue-500:#D98793;
+  --blue-200:#563E48;
+  --blue-100:#20171B;
+  --paper:#110D0F;
+  --ink:#F6ECED;
+  --ink-mute:#C8B0B5;
+  --line:#3A2A31;
+  --green:#38C285;
+  --amber:#F0B54D;
+  --shadow:0 14px 36px rgba(0,0,0,.34);
+}
+[data-theme="dark"] body{background:linear-gradient(180deg,#090708 0,#171115 100%);color:var(--ink)}
+[data-theme="dark"] .brandbar,[data-theme="dark"] .masthead{background:#120b0e}
+[data-theme="dark"] .card,[data-theme="dark"] .notes-card,[data-theme="dark"] .status,[data-theme="dark"] .trip,[data-theme="dark"] .park-method,[data-theme="dark"] .parking-item,[data-theme="dark"] .future-item,[data-theme="dark"] .cross-route,[data-theme="dark"] .livecard{background:#181216;border-color:#3E2F36;color:var(--ink)}
+[data-theme="dark"] .status.is-stale{background:#251d13}
+[data-theme="dark"] .transport-picker,[data-theme="dark"] .route-sum,[data-theme="dark"] .empty,[data-theme="dark"] .js-error{background:#171115;color:var(--ink);border-color:#3E2F36}
+[data-theme="dark"] .transport-btn,[data-theme="dark"] .sched-tab,[data-theme="dark"] .quick-chip,[data-theme="dark"] .action-btn,[data-theme="dark"] .action-btn.ghost,[data-theme="dark"] .live-toggle,[data-theme="dark"] .cross-origin-switch,[data-theme="dark"] .cross-route-chip,[data-theme="dark"] .quicknav a,[data-theme="dark"] .trip-live,[data-theme="dark"] .top-btn{background:#1B1418;color:var(--ink);border-color:#4E3943}
+[data-theme="dark"] .transport-btn:hover,[data-theme="dark"] .sched-tab:hover,[data-theme="dark"] .quick-chip:hover,[data-theme="dark"] .action-btn:hover,[data-theme="dark"] .live-toggle:hover,[data-theme="dark"] .cross-origin-switch:hover,[data-theme="dark"] .quicknav a:hover,[data-theme="dark"] .trip-live:hover,[data-theme="dark"] .top-btn:hover{background:#251B20;border-color:#6D4E5A}
+[data-theme="dark"] .transport-btn[aria-pressed="true"],[data-theme="dark"] .sched-tab[aria-pressed="true"],[data-theme="dark"] .trip.is-next{background:#23181D}
+[data-theme="dark"] .sched-tab:first-child{background:#24181D;border-color:#6D4E5A}
+[data-theme="dark"] .field select,[data-theme="dark"] .field input,[data-theme="dark"] .cross-row input{background:#140F12;color:var(--ink);border-color:#4C3942}
+[data-theme="dark"] .field select:focus,[data-theme="dark"] .field input:focus,[data-theme="dark"] .cross-row input:focus{outline-color:rgba(217,135,147,.3)}
+[data-theme="dark"] table,[data-theme="dark"] thead th,[data-theme="dark"] tbody td{border-color:#36272E}
+[data-theme="dark"] thead th{background:#2B1A21;color:#FBEFF1}
+[data-theme="dark"] tbody tr:nth-child(odd) td{background:#141014}
+[data-theme="dark"] tbody tr:hover td{background:#20161B}
+[data-theme="dark"] .badge-next{background:#C86F7E}
+[data-theme="dark"] .badge-warn,[data-theme="dark"] .route-status.warn{background:#352612;border-color:#7A5C26;color:#F3C770}
+[data-theme="dark"] .route-status.ok{background:#12291D;color:#7DE0B0}
+[data-theme="dark"] .route-status.alert,[data-theme="dark"] .action-btn.danger{background:#32161A;border-color:#8D3D4C;color:#FFB4BE}
+[data-theme="dark"] .park-p,[data-theme="dark"] .cross-step.k-walk .cross-step-ic{background:#110D0F;color:var(--ink);box-shadow:inset 0 0 0 1.5px #4C3942}
+[data-theme="dark"] .landing{background:radial-gradient(circle at 50% 0%,rgba(217,135,147,.18),transparent 42%),linear-gradient(180deg,#090708 0,#171115 100%)}
+[data-theme="dark"] .landing::before{background:linear-gradient(180deg,rgba(217,135,147,.16),rgba(217,135,147,0))}
+[data-theme="dark"] .ld-card,[data-theme="dark"] .ld-density,[data-theme="dark"] .ld-speed{background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.03));border-color:rgba(255,255,255,.11)}
+[data-theme="dark"] .ld-run{background:linear-gradient(145deg,rgba(252,82,0,.22),rgba(255,255,255,.035));border-color:rgba(252,82,0,.48)}
+[data-theme="dark"] .theme-toggle{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
+[data-theme="dark"] .theme-toggle:hover,[data-theme="dark"] .theme-toggle:focus-visible{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24)}
+
 @media print{body{background:#fff}.planner,.btn-refresh,.livebar,.sched-tabs{display:none}.card{box-shadow:none;border:1px solid #ccc}}
 
 
@@ -947,7 +1016,7 @@ html{scroll-behavior:smooth}
     align-items:stretch;background:linear-gradient(155deg,rgba(255,255,255,.09),rgba(255,255,255,.035));
   }
   .ld-speed-dot{position:absolute;top:22px;left:22px;width:9px;height:9px;margin:0}
-  .ld-speed-wrap{display:grid;grid-template-rows:auto auto minmax(112px,1fr);padding-left:20px;height:100%}
+  .ld-speed-wrap{display:grid;grid-template-rows:auto auto auto minmax(100px,1fr);padding-left:20px;height:100%}
   .ld-speed-cap{font-size:.8rem;line-height:1.25}
   .ld-speed-hint{font-size:.62rem;margin-top:3px}
   .ld-speed-reading{
@@ -980,18 +1049,27 @@ html{scroll-behavior:smooth}
   .ld-density-chart{height:auto}
   .ld-density-notes{margin-top:6px}
   .ld-density-note{padding:6px 8px}
-  .ld-speed-wrap{grid-template-rows:auto auto minmax(86px,1fr)}
+  .ld-speed-wrap{grid-template-rows:auto auto auto minmax(76px,1fr)}
   .ld-speed-val{font-size:3.8rem}
 }
 
 </style>
 </head>
 <body>
+<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+  <symbol id="pdn-train-mark" viewBox="0 0 595.28 231.43">
+    <path fill="currentColor" d="M53.22,178.56c.68-.6.53-1.39,1.07-2.2.39-.58,2.57-2.16,3.14-2.16h38.21l-3.66-5.23-2.47-6.33c-.86-.62-5.95-.18-7.46-.27-23.23-1.47-34.86-22.03-24.59-42.95,10.76-21.91,36.16-50.14,57.82-61.55,15.23-8.03,27.43-9.98,44.44-10.1,76.34-.55,152.72-.04,229.3,0,16.51,0,33.33-.51,49.89-.35,37.49.35,66.3,23.99,87.32,52.99,10.28,14.18,22.67,32.45,11.04,49.59-7.22,10.64-18.57,12.87-30.83,12.51l-2.75,6.29-3.8,5.4h38.21c.47,0,2.61,1.35,2.97,1.79,2.95,3.66-.17,7.4-4.2,7.88H58.66c-1.33-.13-3.98-1.33-4.64-2.53-.32-.57-.13-1.44-.8-1.85v-.93ZM110.61,72.37h26.05c3.26,0,6.4,1.08,8.89,3.27s3.85,5.44,3.67,8.65c-.2,3.38-8.39,21.07-10.48,24.73-3.79,6.66-10.22,10.34-17.67,11.63l-53.49.16c-6.07,9-6.55,21.31,2.83,28.31,1.87,1.4,6.26,3.61,8.55,3.61h79.85l.48-1.07c.19-10.05-.22-20.13-.21-30.17.01-11.57-.61-25.18.18-36.5.4-5.69,4.16-10.88,9.86-12.27,3.45-.84,19-.67,22.61.12,4.44.97,9.1,6.32,9.35,10.91.48,20.44.09,41.05,0,61.36-.01,2.27.08,4.54.03,6.8l.49.47c1.77-.18,3.57.3,5.24.37,28.97,1.24,59.75-.04,88.93-.03,2.88,0,6.02.34,9.04.34,27.8-.01,57.18.7,84.84-.31,1.53-.06,3.26-.34,4.82-.33v-69.29c0-.15.82-2.45.97-2.77,2.52-5.84,7.59-7.7,13.52-7.99,4.81-.23,12.85-.41,17.46.34s9.45,6.33,9.86,11.03c1.14,13.17-.51,28.19.31,41.42l-.34,27.05c.1.44,1.33.51,1.71.53,6.32.43,13.04-.61,19.34.31h4.39c17.58-1.78,37.12,1.28,54.53-.36,5.1-.48,10.41-3.71,13.24-7.96,4.95-7.44,3.24-16.67-1.26-23.87-8.36-.43-16.67.14-25.05.12-6.29-.02-12.68-.37-19.03-.34-9.25.04-16.88.31-23.86-6.98-3.69-3.86-10.69-19.38-12.55-24.84-1.92-5.6-1.7-10.46,3.54-14.08,3.61-2.49,5.5-1.81,9.51-2.03,7.79-.43,15.69-.48,23.51-.15.41.11.73-.27.65-.63-.22-1.02-12.92-7.52-14.76-8.31-8.74-3.78-18-5.69-27.49-6.5H152.24c-11.98.65-31.37,6.44-40.8,14.08-.41.33-.95.53-.83,1.19ZM139.61,82.35c-.92-.55-1.72.04-2.6-.03-1.37-.11-3.04-.56-4.4-.62-11.18-.47-22.73.32-33.95.08-9.9,8.24-17.33,18.93-25.17,29.05.36.54.49.41,1,.39,12.8-.45,25.93-.1,38.76.09,5.07.08,9.41.39,13.59-2.97s8.34-14.15,10.6-19.62c.35-.85,2.44-6.01,2.17-6.37ZM169.72,152.72h21.52c.31-.2.4-.43.47-.78.44-2.41-.09-6.94-.01-9.67.51-19.06-.23-38.17.02-57.3-.4-2.53-2.56-3.11-4.83-3.28-3.45-.26-11.38-.42-14.65.04-1.72.24-2.94,1.44-3.55,3l.09,67.36c.09.14.78.59.94.62ZM404.29,152.72h21.83c.11,0,.5-.32.73-.36.2-16.11-.09-32.26.03-48.39.04-5.09,1.21-14.09.13-18.78-.39-1.67-1.75-3.08-3.46-3.4-2.85-.52-11.45-.32-14.6-.09-1.81.13-3.68.52-4.64,2.22-.89,1.58-.19,2.13-.17,3.54.25,20.58-.05,41.39.01,61.99,0,.83-.8,2.98.13,3.26ZM522.05,111.3c.04-.61-.5-1.04-.82-1.52-6.85-10.13-15.16-19.67-24.15-27.9-12.81-.23-25.73-.55-38.51.48-.7.06-2.05-.54-2.5.27-.22.38,2.49,7,2.92,8.01,2.21,5.21,5.83,14.88,10.25,18.11.83.61,4.76,2.54,5.56,2.54h47.26ZM118.41,162.37c-6.07-.47-12.18-.43-18.26,0-.46.07-.5-.18-.47.47.08,1.67,2.19,3.95,3.53,4.89,5.77,4.09,13.24,1.05,15.2-5.36ZM159.27,162.37c-2.04-.13-4.03-.36-6.09-.33-3.38.05-7.23.39-10.63.61-.49.03-1.82-.64-2,.19s3.54,4.69,4.39,5.27c5.4,3.68,12.63.02,14.33-5.74ZM214.17,174.2c-1.93-2.29-3.75-4.6-4.92-7.39-.43-1.03-.93-4.11-1.85-4.38-.6-.18-3.75-.24-4.67-.25-10.14-.14-20.36.41-30.53.21-.9-.02-1.77-.58-2.64-.18-.58.29-1.82,4.43-2.32,5.47-1.1,2.28-2.94,4.25-3.91,6.53h50.84ZM236.63,162.37c-2.62-.42-5.31-.37-7.97-.33-.74.01-1.42.31-2.16.34-2.39.07-5.58-.33-7.82-.01-1.1.15.03,1.59.35,2.15,4.54,8.12,14.89,6.1,17.6-2.15ZM240.37,174.2h13.88c.09,0,.24.43.47.16.41-.3.31-.4.18-.81-.2-.66-2.8-3.68-3.47-4.95-.82-1.56-1.54-4.57-2.31-5.71-.44-.66-2.07-1.26-2.67-.54-.77.92-1.48,5.81-2.84,7.12l-3.23,4.71ZM259.09,162.37c-.79.8,2.81,4.7,3.59,5.29,5.72,4.41,12.52,1.29,15.15-4.82l-.54-.74-18.2.26ZM290.85,162.13c-.49,0-2.67.28-2.92.54s-1.79,4.6-2.27,5.52c-1.06,2.03-2.45,3.99-4.11,5.55l.48.76,32.26-.45c-.51-1.11-1.62-1.73-2.3-2.68-2.04-2.79-2.99-5.89-4.55-8.85-2.22-.31-4.48-.11-6.71-.15-3.24-.07-6.62-.3-9.88-.24ZM317.74,162.38c-.55.78,2.3,4.06,2.96,4.65,5.05,4.51,11.23,3.1,14.94-2.2.72-1.03,1.95-2.26.04-2.48-4.16-.48-9.69.13-14.06.03-1.31-.03-2.49-.72-3.88,0ZM341.28,174.2c4.62-.07,9.26.05,13.88,0,.09-1-1.12-1.7-1.69-2.52-1.43-2.06-2.3-3.8-3.22-6.12-.38-.97-.55-2.32-.93-3.12-.14-.3-.08-.48-.56-.41-.47,0-.9.08-1.33.27-1.13.49-2.65,5.35-3.46,6.82-.92,1.69-2.07,3.3-3.48,4.62l.47.74c.12,0,.23-.27.31-.27ZM377.31,162.37c-3.17-.05-6.35.06-9.53.01-2.57-.04-5.52-.87-8.1-.02-.41.13-.49-.24-.47.47.07,2.2,4.17,5.58,6.16,6.32,5.17,1.9,10.93-1.54,11.94-6.78ZM381.68,174.2h50.53c-.05-1.34-1.3-2.31-2-3.45s-1.43-2.36-2.01-3.6c-.38-.83-1.51-4.51-1.68-4.71-.67-.79-2.32-.08-3.19-.06-11.73.27-23.49-.26-35.22.03l-2.52,6.2-3.91,5.59ZM122.15,174.2h13.26c.16,0,.65.5,1.09.31.01-.24.03-.49-.05-.73-.29-.84-2.84-3.76-3.55-5.18-.55-1.1-1.1-2.58-1.54-3.76-.29-.77-.09-2.37-1.25-2.49-2.87-.31-2.88,3.03-3.78,4.95-.43.92-1.2,2.41-1.74,3.25-.41.64-2.91,3.18-2.44,3.64ZM454.98,162.37h-18.25c-.38.05-.59-.16-.47.47.22,1.18,3.37,4.46,4.46,5.21,3.46,2.36,7.82,1.91,10.98-.7.71-.58,4.01-4.2,3.28-4.97ZM460.44,174.2c4.41-.16,8.85.12,13.26,0l-3.59-5.29-2.38-6.19c-1.04.05-2.28-.85-2.9.29-1.21,3.9-2.79,7.87-5.79,10.73.23,1.34,1.02.48,1.4.46ZM495.69,162.37h-18.09l-.33.63c4.04,8.64,14.83,8.9,18.85.09l-.42-.72Z"/>
+    <path fill="currentColor" d="M214.28,116.79c-1.96-1.96-3.58-5.37-3.85-8.15-.54-5.56-.32-14.85-.02-20.56.44-8.19,2.89-13.72,11.48-15.63,41.23-.48,82.32.32,123.46.25,8.87-.02,18.24-1.06,27.12-.32,5.81.49,11.19,4.62,12.25,10.51,1.2,6.65.95,17.05.72,23.92-.19,5.58-3.11,10.63-8.31,12.88-3.35,1.45-5.86.81-9.34.95-12.91.55-25.73-.06-38.68,0-35.58.15-71.33-.08-106.99.03-2.49-.23-6.07-2.1-7.83-3.86ZM223.37,81.71c-1.79.6-3.05,1.96-3.28,3.89-.84,6.87.65,15.39,0,22.44.38,2,1.54,3.08,3.58,3.28,9.97.96,21.41-.77,31.54,0l1.08-.48v-28.65l-.47-.47h-32.44ZM330.05,81.71h-64.41v29.87h64.41v-29.87ZM372.16,81.71h-32.13c-.51,0-.8,1.22-.81,1.71-.05,1.52.34,3.7.36,5.28.07,4.9-.25,9.81-.33,14.65-.02,1.02-.08,7.62.35,7.9,10.01-.04,20.05.2,30.07.03,1.55-.03,2,.47,3.7-.33,1.86-.87,2.22-2.22,2.38-4.16.39-4.52.57-16.55-.1-20.79-.3-1.92-1.4-3.94-3.5-4.29Z"/>
+  </symbol>
+</svg>
 
 <noscript><style>#landing{display:none!important}</style></noscript>
 <div class="landing" id="landing">
   <div class="landing-inner">
     <header class="landing-hero">
+      <div class="landing-tools">
+        <button class="theme-toggle landing-theme-toggle" id="btnThemeLanding" type="button" aria-label="สลับโหมดสี"></button>
+      </div>
       <div class="landing-clock" id="lClock">--:--:--</div>
       <div class="landing-meta">
         <img class="landing-logo" src="brand-logo-v4.svg" alt="PAI.DUY.NA">
@@ -1002,22 +1080,25 @@ html{scroll-behavior:smooth}
 
     <div class="landing-cards">
       <div class="ld-card">
+        <span class="ld-card-badge" id="lSrtNo"></span>
         <div class="ld-kind"><span class="ld-cd" id="lSrtCd">กำลังคำนวณ</span><span class="ld-kind-txt"> | รถไฟชานเมือง &bull; เที่ยวถัดไป</span></div>
         <div class="ld-route">
           <div class="ld-route-time dep" id="lSrtDepTime">--:--</div>
           <div class="ld-route-mid">
-            <span class="ld-route-line" aria-hidden="true"></span>
-            <span class="ld-route-flow f1" aria-hidden="true">&rsaquo;</span>
-            <span class="ld-route-flow f2" aria-hidden="true">&rsaquo;</span>
-            <span class="ld-route-flow f3" aria-hidden="true">&rsaquo;</span>
+            <span class="ld-route-line left" aria-hidden="true"></span>
+            <span class="ld-route-line right" aria-hidden="true"></span>
+            <span class="ld-route-flow left f1" aria-hidden="true">➜</span>
+            <span class="ld-route-flow left f2" aria-hidden="true">➜</span>
+            <span class="ld-route-flow right f1" aria-hidden="true">➜</span>
+            <span class="ld-route-flow right f2" aria-hidden="true">➜</span>
             <span class="ld-route-train" aria-hidden="true">
-              <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="26" height="11" rx="4" fill="currentColor"/><rect x="27" y="8" width="8" height="8" rx="3" fill="currentColor"/><circle cx="10" cy="19" r="2.4" fill="currentColor"/><circle cx="24" cy="19" r="2.4" fill="currentColor"/></svg>
+              <svg viewBox="0 0 595.28 231.43" xmlns="http://www.w3.org/2000/svg"><use href="#pdn-train-mark"></use></svg>
             </span>
           </div>
           <div class="ld-route-time arr" id="lSrtArrTime">--:--</div>
         </div>
         <div class="ld-route-labels">
-          <div class="ld-route-label dep"><span id="lSrtFrom">-</span><span class="ld-route-trainno" id="lSrtNo"></span></div>
+          <div class="ld-route-label dep"><span id="lSrtFrom">-</span></div>
           <div class="ld-route-label arr" id="lSrtTo">-</div>
         </div>
         <a class="ld-live" id="lSrtLive" href="https://ttsview.railway.co.th/v3/" target="_blank" rel="noopener noreferrer" hidden>
@@ -1025,16 +1106,19 @@ html{scroll-behavior:smooth}
         </a>
       </div>
       <div class="ld-card">
+        <span class="ld-card-badge" id="lArlNo"></span>
         <div class="ld-kind"><span class="ld-cd" id="lArlCd">กำลังคำนวณ</span><span class="ld-kind-txt"> | Airport Rail Link &bull; เที่ยวถัดไป</span></div>
         <div class="ld-route">
           <div class="ld-route-time dep" id="lArlDepTime">--:--</div>
           <div class="ld-route-mid">
-            <span class="ld-route-line" aria-hidden="true"></span>
-            <span class="ld-route-flow f1" aria-hidden="true">&rsaquo;</span>
-            <span class="ld-route-flow f2" aria-hidden="true">&rsaquo;</span>
-            <span class="ld-route-flow f3" aria-hidden="true">&rsaquo;</span>
+            <span class="ld-route-line left" aria-hidden="true"></span>
+            <span class="ld-route-line right" aria-hidden="true"></span>
+            <span class="ld-route-flow left f1" aria-hidden="true">➜</span>
+            <span class="ld-route-flow left f2" aria-hidden="true">➜</span>
+            <span class="ld-route-flow right f1" aria-hidden="true">➜</span>
+            <span class="ld-route-flow right f2" aria-hidden="true">➜</span>
             <span class="ld-route-train" aria-hidden="true">
-              <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="26" height="11" rx="4" fill="currentColor"/><rect x="27" y="8" width="8" height="8" rx="3" fill="currentColor"/><circle cx="10" cy="19" r="2.4" fill="currentColor"/><circle cx="24" cy="19" r="2.4" fill="currentColor"/></svg>
+              <svg viewBox="0 0 595.28 231.43" xmlns="http://www.w3.org/2000/svg"><use href="#pdn-train-mark"></use></svg>
             </span>
           </div>
           <div class="ld-route-time arr" id="lArlArrTime">--:--</div>
@@ -1144,6 +1228,7 @@ html{scroll-behavior:smooth}
         <div class="ld-speed-wrap">
           <span class="ld-speed-cap" id="lSpeedCap">ความเร็วปัจจุบัน</span>
           <span class="ld-speed-hint" id="lSpeedHint">แตะเพื่อเปิด</span>
+          <span class="ld-speed-avg" id="lSpeedAvg">ความเร็วเฉลี่ย 15 นาทีล่าสุด <strong>--</strong></span>
           <span class="ld-speed-reading"><span class="ld-speed-val" id="lSpeedVal">–</span><span class="ld-speed-unit">กม./ชม.</span></span>
         </div>
       </div>
@@ -1177,6 +1262,7 @@ html{scroll-behavior:smooth}
       </div>
       <div class="brand-actions">
         <span class="brand-live"><span class="dot"></span>LIVE ASSIST</span>
+        <button class="theme-toggle" id="btnTheme" type="button" aria-label="สลับโหมดสี"></button>
         <button class="top-btn" id="btnInstall" type="button" hidden>ติดตั้งแอพ</button>
       </div>
     </div>
@@ -1720,8 +1806,43 @@ const fromStore = (key, fallback=[]) => {
   try{ return JSON.parse(localStorage.getItem(key)) ?? fallback; }catch(e){ return fallback; }
 };
 const toStore = (key, value) => localStorage.setItem(key, JSON.stringify(value));
+const THEME_KEY = "paiduyna-theme";
+const LIGHT_THEME_COLOR = "#6B1E2B";
+const DARK_THEME_COLOR = "#120B0E";
+function currentTheme(){
+  const theme = document.documentElement.getAttribute("data-theme");
+  return theme === "dark" ? "dark" : "light";
+}
+function updateThemeButtons(theme){
+  const isDark = theme === "dark";
+  [$("btnTheme"), $("btnThemeLanding")].forEach(btn => {
+    if(!btn) return;
+    btn.dataset.icon = isDark ? "🌙" : "☀️";
+    btn.textContent = isDark ? "Dark Mode" : "Normal Mode";
+    btn.setAttribute("title", isDark ? "สลับเป็น Normal Mode" : "สลับเป็น Dark Mode");
+    btn.setAttribute("aria-label", isDark ? "กำลังใช้ Dark Mode กดเพื่อสลับเป็น Normal Mode" : "กำลังใช้ Normal Mode กดเพื่อสลับเป็น Dark Mode");
+  });
+}
+function setTheme(theme, persist=true){
+  const next = theme === "dark" ? "dark" : "light";
+  document.documentElement.setAttribute("data-theme", next);
+  const metaTheme = document.querySelector('meta[name="theme-color"]');
+  if(metaTheme) metaTheme.setAttribute("content", next === "dark" ? DARK_THEME_COLOR : LIGHT_THEME_COLOR);
+  updateThemeButtons(next);
+  if(persist){ try{ localStorage.setItem(THEME_KEY, next); }catch(e){} }
+}
+function toggleTheme(){
+  setTheme(currentTheme() === "dark" ? "light" : "dark");
+}
+function initTheme(){
+  let theme = "";
+  try{ theme = localStorage.getItem(THEME_KEY) || ""; }catch(e){}
+  if(theme !== "dark" && theme !== "light") theme = document.documentElement.getAttribute("data-theme") || "light";
+  setTheme(theme, false);
+}
 
 function bangkokParts(date=new Date()){
+
   const parts = new Intl.DateTimeFormat("en-CA",{
     timeZone:"Asia/Bangkok",year:"numeric",month:"2-digit",day:"2-digit",
     hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"
@@ -3246,6 +3367,8 @@ async function runCrossRoute(params){
 let LANDING_SPEED_WATCH = null;
 let LANDING_SPEED_ANCHOR = null;
 let LANDING_SPEED_SAMPLES = [];
+let LANDING_SPEED_HISTORY = [];
+const LANDING_SPEED_AVG_WINDOW_MS = 15 * 60 * 1000;
 
 // หาเวลาออกรอบถัดไปจากรายการเวลา (คืนค่าที่ใกล้ที่สุดที่ยังไม่ผ่าน วนข้ามเที่ยงคืนได้)
 function nextByTimes(times, nowMin){
@@ -3429,7 +3552,7 @@ function updateLanding(dateObj, partsObj, todayIso, millis){
       $("lSrtArrTime").textContent = "--:--";
       $("lSrtFrom").textContent = srtFromLabel;
       $("lSrtTo").textContent = srtToLabel;
-      $("lSrtNo").textContent = "ยังไม่พบเที่ยวที่จอดครบ";
+      $("lSrtNo").textContent = "";
       $("lSrtCd").textContent = profile.period;
       const live = $("lSrtLive");
       if(live) live.hidden = true;
@@ -3440,12 +3563,14 @@ function updateLanding(dateObj, partsObj, todayIso, millis){
       $("lArlArrTime").textContent = arl.arr;
       $("lArlFrom").textContent = arlFromLabel;
       $("lArlTo").textContent = arlToLabel;
+      if($("lArlNo")) $("lArlNo").textContent = arl.no;
       setLandingCountdown("lArlCd", arl.diff);
     }else{
       $("lArlDepTime").textContent = "--:--";
       $("lArlArrTime").textContent = "--:--";
       $("lArlFrom").textContent = arlFromLabel;
       $("lArlTo").textContent = arlToLabel;
+      if($("lArlNo")) $("lArlNo").textContent = "";
       $("lArlCd").textContent = profile.period;
     }
   }catch(e){ /* ถ้าคำนวณรอบถัดไปพลาด ก็ยังแสดงนาฬิกาได้ */ }
@@ -3466,6 +3591,51 @@ function median(values){
 function resetLandingSpeed(){
   LANDING_SPEED_ANCHOR = null;
   LANDING_SPEED_SAMPLES = [];
+  LANDING_SPEED_HISTORY = [];
+  const avg = $("lSpeedAvg");
+  if(avg) avg.innerHTML = "ความเร็วเฉลี่ย 15 นาทีล่าสุด <strong>--</strong>";
+}
+function pushLandingSpeedHistory(kmh, ts=Date.now()){
+  LANDING_SPEED_HISTORY.push({kmh, ts});
+  const cutoff = ts - LANDING_SPEED_AVG_WINDOW_MS - 120000;
+  while(LANDING_SPEED_HISTORY.length > 1 && LANDING_SPEED_HISTORY[1].ts < cutoff) LANDING_SPEED_HISTORY.shift();
+}
+function getLandingSpeedAverage(now=Date.now()){
+  if(!LANDING_SPEED_HISTORY.length) return null;
+  const cutoff = now - LANDING_SPEED_AVG_WINDOW_MS;
+  const points = LANDING_SPEED_HISTORY.slice().sort((a,b) => a.ts - b.ts);
+  let totalWeighted = 0;
+  let totalMs = 0;
+  let prev = points[0];
+  for(let i=1;i<points.length;i++){
+    const curr = points[i];
+    const segStart = Math.max(prev.ts, cutoff);
+    const segEnd = Math.min(curr.ts, now);
+    if(segEnd > segStart){
+      totalWeighted += prev.kmh * (segEnd - segStart);
+      totalMs += (segEnd - segStart);
+    }
+    prev = curr;
+  }
+  const tailStart = Math.max(prev.ts, cutoff);
+  if(now > tailStart){
+    totalWeighted += prev.kmh * (now - tailStart);
+    totalMs += (now - tailStart);
+  }
+  if(totalMs <= 0) return null;
+  return { kmh: totalWeighted / totalMs, coveredMs: totalMs };
+}
+function updateLandingSpeedAverage(now=Date.now()){
+  const avgEl = $("lSpeedAvg");
+  if(!avgEl) return;
+  const info = getLandingSpeedAverage(now);
+  if(!info){
+    avgEl.innerHTML = "ความเร็วเฉลี่ย 15 นาทีล่าสุด <strong>--</strong>";
+    return;
+  }
+  const mins = Math.max(1, Math.round(info.coveredMs / 60000));
+  const label = mins >= 15 ? "ความเร็วเฉลี่ย 15 นาทีล่าสุด" : "ความเร็วเฉลี่ย " + mins + " นาทีล่าสุด";
+  avgEl.innerHTML = label + " <strong>" + info.kmh.toFixed(1) + " กม./ชม.</strong>";
 }
 function resolveLandingSpeed(position){
   const c=position.coords || {}, timestamp=Number(position.timestamp)||Date.now();
@@ -3508,13 +3678,16 @@ function resolveLandingSpeed(position){
   if(kmh<1.2) kmh=0;
   LANDING_SPEED_SAMPLES.push(kmh);
   if(LANDING_SPEED_SAMPLES.length>5) LANDING_SPEED_SAMPLES.shift();
-  return {kmh:median(LANDING_SPEED_SAMPLES),source,accuracy:current.accuracy};
+  const smoothed = median(LANDING_SPEED_SAMPLES);
+  pushLandingSpeedHistory(smoothed, current.ts);
+  updateLandingSpeedAverage(current.ts);
+  return {kmh:smoothed,source,accuracy:current.accuracy};
 }
 
 // เริ่มวัดความเร็วปัจจุบัน: ใช้ค่า speed จาก GPS และสำรองด้วยระยะทางระหว่างพิกัด
 function startLandingSpeed(){
   const val = $("lSpeedVal"), hint = $("lSpeedHint");
-  if(!("geolocation" in navigator)){ if(hint) hint.textContent = "อุปกรณ์ไม่รองรับ"; return; }
+  if(!("geolocation" in navigator)){ if(hint) hint.textContent = "อุปกรณ์ไม่รองรับ"; const avg=$("lSpeedAvg"); if(avg) avg.innerHTML="ความเร็วเฉลี่ย 15 นาทีล่าสุด <strong>--</strong>"; return; }
   if(LANDING_SPEED_WATCH != null) return; // เปิดอยู่แล้ว
   resetLandingSpeed();
   if(hint) hint.textContent = "กำลังจับสัญญาณ GPS";
@@ -3529,6 +3702,7 @@ function startLandingSpeed(){
     }else{
       if(val) val.textContent="0.0";
       if(hint) hint.textContent="กำลังเทียบตำแหน่งครั้งถัดไป";
+      updateLandingSpeedAverage(Date.now());
     }
   }, err => {
     if(hint) hint.textContent = err.code === 1 ? "กรุณาเปิดตำแหน่งแบบแม่นยำ" : "รับสัญญาณ GPS ไม่ได้";
@@ -3549,6 +3723,7 @@ function enterApp(){
 }
 
 function init(){
+  initTheme();
   validateSchedules();
   // แสดงหน้า Dashboard (Landing) ก่อนเข้าแอป และเริ่มอัปเดตทันที
   document.body.style.overflow = "hidden";
@@ -3560,6 +3735,7 @@ function init(){
   }
   const runRefresh = $("btnRunRefresh");
   if(runRefresh) runRefresh.addEventListener("click", loadStravaRun);
+  [$("btnTheme"), $("btnThemeLanding")].forEach(btn => { if(btn) btn.addEventListener("click", toggleTheme); });
   loadStravaRun();
   // นาฬิกาเริ่มก่อนเสมอ เพื่อให้ยังเดินได้แม้ส่วนอื่นมีปัญหา
   tickClock();
