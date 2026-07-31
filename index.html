@@ -74,9 +74,9 @@ body{
 .brand-actions{grid-column:3;justify-self:end;display:flex;align-items:center;gap:8px}
 .top-btn{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.08);color:#fff;border-radius:8px;padding:7px 10px;font:600 .75rem var(--font-body);cursor:pointer}
 .top-btn:hover{background:rgba(255,255,255,.16)}
-.theme-toggle{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:28px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.065);color:#fff;border-radius:999px;padding:4px 8px;font:700 .62rem var(--font-body);line-height:1;cursor:pointer;transition:background .18s,border-color .18s,transform .1s;box-shadow:none;white-space:nowrap}
-.theme-toggle::before{content:attr(data-icon);font-size:.78rem;line-height:1}
-.theme-toggle:hover,.theme-toggle:focus-visible{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.3);outline:none}
+.theme-toggle{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;border-radius:999px;padding:7px 12px;font:700 .76rem var(--font-body);cursor:pointer;transition:background .18s,border-color .18s,transform .1s,box-shadow .18s;box-shadow:0 8px 18px rgba(0,0,0,.12)}
+.theme-toggle::before{content:attr(data-icon);font-size:1rem;line-height:1}
+.theme-toggle:hover,.theme-toggle:focus-visible{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.34);outline:none;box-shadow:0 10px 22px rgba(0,0,0,.16)}
 .theme-toggle:active{transform:translateY(1px)}
 .net-state{display:flex;align-items:center;gap:6px;color:var(--blue-200);font-size:.7rem;font-weight:700}
 .net-state::before{content:"";width:8px;height:8px;border-radius:50%;background:#4ADE80}
@@ -485,10 +485,9 @@ html{scroll-behavior:smooth}
   .landing.closing{animation:landFade .3s ease forwards}
   @keyframes landFade{to{opacity:0;visibility:hidden}}
 }
-.landing-hero{position:relative;width:100%;display:flex;flex-direction:column;align-items:center;container-type:inline-size;padding-top:34px}
-.landing-tools{position:absolute;top:8px;right:8px;display:flex;gap:6px;z-index:3}
-.landing-theme-toggle{width:28px;min-width:28px;min-height:26px;padding:0;background:rgba(0,0,0,.18);border-color:rgba(255,255,255,.14);backdrop-filter:blur(6px);font-size:0}
-.landing-theme-toggle::before{font-size:.8rem}
+.landing-hero{position:relative;width:100%;display:flex;flex-direction:column;align-items:center;container-type:inline-size}
+.landing-tools{position:absolute;top:0;right:0;display:flex;gap:8px;z-index:3}
+.landing-theme-toggle{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);padding:8px 13px;backdrop-filter:blur(8px)}
 .landing-clock{
   font:800 clamp(3.5rem,16.5vw,5.25rem) var(--font-display);
   line-height:.9;margin-top:8px;width:100%;max-width:100%;
@@ -496,8 +495,8 @@ html{scroll-behavior:smooth}
   font-feature-settings:"tnum" 1;text-shadow:0 5px 24px rgba(45,4,12,.16);
 }
 .landing-clock,.clock-time{
-  display:grid;grid-template-columns:1.12em .2em 1.12em .2em 1.12em .15em .68em;
-  column-gap:.025em;align-items:end;justify-content:center;
+  display:grid;grid-template-columns:1.1em .18em 1.1em .18em 1.1em .12em .56em;
+  column-gap:.02em;align-items:end;justify-content:center;
 }
 .landing-clock .clock-unit,.clock-time .clock-unit{
   display:block;min-width:0;text-align:center;font-weight:800;letter-spacing:-.045em;
@@ -508,8 +507,8 @@ html{scroll-behavior:smooth}
   letter-spacing:0;line-height:.92;padding-bottom:.015em;
 }
 .landing-clock .clock-ms,.clock-time .clock-ms{
-  display:block;min-width:0;text-align:left;font-weight:400;font-size:.32em;
-  letter-spacing:.015em;line-height:1;padding-bottom:.16em;
+  display:block;min-width:0;text-align:left;font-weight:400;font-size:.26em;
+  letter-spacing:.01em;line-height:1;padding-bottom:.18em;padding-left:.02em;
   font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;opacity:.94;
 }
 .landing-meta{
@@ -538,45 +537,45 @@ html{scroll-behavior:smooth}
   border:1px solid rgba(255,255,255,.16);border-radius:17px;padding:14px 16px 15px;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
 }
-.ld-kind{font:600 .79rem var(--font-body);color:#F0D5D9;line-height:1.35;padding-right:78px}
+.ld-kind{font:600 .79rem var(--font-body);color:#F0D5D9;line-height:1.35;padding-right:108px}
 .ld-cd{font:800 .79rem var(--font-body);color:#F7D7DC}
 .ld-time{font:800 2.25rem var(--font-display);letter-spacing:-1.3px;line-height:1.02;margin-top:6px;color:#FFF8F4}
 .ld-sub{font-size:.82rem;color:#E9CFD3;margin-top:4px;line-height:1.4}
-.ld-card-badge{position:absolute;top:14px;right:16px;display:block;max-width:calc(100% - 32px);padding:0;background:none;border:0;box-shadow:none;font:700 .72rem var(--font-body);line-height:1.2;color:#F1D9DE;opacity:.92;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ld-card-top{position:absolute;top:13px;right:14px;display:flex;align-items:center;justify-content:flex-end;gap:8px;max-width:calc(100% - 28px)}
+.ld-card-badge{display:inline-flex;align-items:center;justify-content:flex-end;min-height:0;max-width:100%;padding:0;background:none;border:0;box-shadow:none;font:800 .84rem var(--font-display);letter-spacing:-.015em;line-height:1;color:#FFF4EF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ld-card-badge:empty{display:none}
-/* ---------- การ์ดเที่ยวถัดไปแบบเส้นทาง (สไตล์ Flighty): เวลา-เส้นประ-เวลา พร้อมไอคอนรถไฟ ---------- */
+/* ---------- การ์ดเที่ยวถัดไปแบบเส้นทาง (สไตล์ Flighty): เวลา-เส้นสาย-เวลา พร้อมไอคอนรถไฟแบบมินิมอล ---------- */
 .ld-route{display:flex;align-items:center;gap:10px;margin-top:10px}
 .ld-route-time{font:800 clamp(1.42rem,6vw,1.82rem) var(--font-display);letter-spacing:-.8px;line-height:1;color:#FFF8F4;flex:none;font-variant-numeric:tabular-nums}
 .ld-route-time.arr{color:#F0D8DB}
 .ld-route-mid{flex:1;min-width:40px;position:relative;height:28px}
-.ld-route-line{display:none}
-.ld-route-train{position:absolute;z-index:2;top:50%;left:50%;width:62px;height:24px;color:#FFF6F1;filter:drop-shadow(0 5px 12px rgba(0,0,0,.16));
-  transform:translate(-50%,-50%);animation:trainBob 2.4s ease-in-out infinite}
+.ld-route-line{position:absolute;top:50%;height:2px;border-radius:999px;background:linear-gradient(90deg,rgba(255,255,255,.12),rgba(255,255,255,.42));transform:translateY(-50%)}
+.ld-route-line.left{left:2px;right:calc(50% + 34px)}
+.ld-route-line.right{left:calc(50% + 34px);right:2px}
+.ld-route-train{position:absolute;z-index:2;top:50%;left:50%;width:60px;height:20px;color:#FFF8F5;filter:drop-shadow(0 4px 10px rgba(0,0,0,.14));
+  transform:translate(-50%,-50%);animation:trainBob 3s ease-in-out infinite}
 .ld-route-train svg{width:100%;height:100%;display:block}
-@keyframes trainBob{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 3px))}}
-/* ลูกศรไหลแยกซ้าย/ขวา เพื่อไม่ทับไอคอนรถไฟ */
-.ld-route-flow{position:absolute;z-index:1;top:50%;left:0;font:900 1rem/1 var(--font-body);color:rgba(255,255,255,.84);text-shadow:0 0 10px rgba(255,255,255,.16);
-  transform:translate(-50%,-50%);animation-duration:1.9s;animation-timing-function:linear;animation-iteration-count:infinite}
+@keyframes trainBob{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 2px))}}
+/* เชฟรอนบาง ๆ วิ่งแยกซ้าย/ขวา ให้ลุคทันสมัยและไม่ทับไอคอนรถไฟ */
+.ld-route-flow{position:absolute;z-index:1;top:50%;left:0;width:11px;height:11px;font-size:0;
+  transform:translate(-50%,-50%) rotate(45deg);animation-duration:2.25s;animation-timing-function:linear;animation-iteration-count:infinite}
+.ld-route-flow::before{content:"";display:block;width:100%;height:100%;border-top:1.8px solid rgba(255,255,255,.88);border-right:1.8px solid rgba(255,255,255,.88);opacity:.88;filter:drop-shadow(0 0 8px rgba(255,255,255,.1))}
 .ld-route-flow.left{animation-name:flowLeft}
 .ld-route-flow.right{animation-name:flowRight}
-.ld-route-flow.f2{animation-delay:.62s}
-@keyframes flowLeft{0%{left:5%;opacity:0}16%{opacity:1}84%{opacity:1}100%{left:calc(50% - 41px);opacity:0}}
-@keyframes flowRight{0%{left:calc(50% + 41px);opacity:0}16%{opacity:1}84%{opacity:1}100%{left:95%;opacity:0}}
+.ld-route-flow.f2{animation-delay:.82s}
+@keyframes flowLeft{0%{left:7%;opacity:0}18%{opacity:.42}55%{opacity:1}100%{left:calc(50% - 36px);opacity:0}}
+@keyframes flowRight{0%{left:calc(50% + 36px);opacity:0}18%{opacity:.42}55%{opacity:1}100%{left:93%;opacity:0}}
 .ld-route-labels{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-top:7px}
 .ld-route-label{font-size:.82rem;color:#E9CFD3;line-height:1.32;min-width:0}
 .ld-route-label.arr{text-align:right}
 .ld-route-trainno{display:block;font-size:.71rem;color:#F3DDE0;opacity:.85;margin-top:1px}
-/* badge LIVE บนการ์ด Landing กดเปิดหน้าติดตามขบวน TTS ต่อขบวน */
-.ld-live{display:inline-flex;align-items:center;gap:7px;margin-top:11px;text-decoration:none;
-  border:1px solid rgba(255,255,255,.26);border-radius:999px;padding:5px 12px 5px 10px;width:fit-content;
-  background:rgba(255,255,255,.08);transition:background .15s,border-color .15s,transform .1s}
-.ld-live:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.44)}
-.ld-live:active{transform:translateY(1px)}
-.ld-live[hidden]{display:none}
-.ld-live-dot{width:8px;height:8px;border-radius:50%;background:#3AD07E;flex:none;
-  box-shadow:0 0 0 0 rgba(58,208,126,.6);animation:livePulse 1.6s ease-out infinite}
-.ld-live-txt{font:800 .72rem var(--font-body);letter-spacing:.06em;color:#FFF3F3}
-.ld-live-sub{font:600 .74rem var(--font-body);color:#E9CFD3}
+/* จุด LIVE แบบมินิมอล วางต่อจากชื่อขบวน */
+.ld-live-inline{display:inline-flex;align-items:center;justify-content:center;width:12px;height:12px;text-decoration:none;flex:none}
+.ld-live-inline:hover .ld-live-dot,.ld-live-inline:focus-visible .ld-live-dot{transform:scale(1.05);box-shadow:0 0 0 4px rgba(74,222,128,.12),0 0 14px rgba(74,222,128,.34)}
+.ld-live-inline[hidden]{display:none}
+.ld-live-dot{width:8px;height:8px;border-radius:50%;background:#4ADE80;flex:none;
+  box-shadow:0 0 0 0 rgba(74,222,128,.35),0 0 10px rgba(74,222,128,.24);animation:liveGlow 2.8s ease-in-out infinite;transition:transform .18s,box-shadow .18s}
+@keyframes liveGlow{0%,100%{transform:scale(1);opacity:.94;box-shadow:0 0 0 0 rgba(74,222,128,.24),0 0 10px rgba(74,222,128,.16)}45%{transform:scale(1.08);opacity:1;box-shadow:0 0 0 4px rgba(74,222,128,.10),0 0 13px rgba(74,222,128,.32)}}
 
 /* กลุ่มข้อมูลระหว่างเดินทาง: ซ้ายอากาศและ AQI ขวากิจกรรม */
 .ld-wellness{
@@ -700,14 +699,11 @@ html{scroll-behavior:smooth}
 .ld-speed:active{transform:translateY(1px)}
 .ld-speed-dot{width:7px;height:7px;border-radius:50%;background:#E98D9A;box-shadow:0 0 0 4px rgba(233,141,154,.12);margin-top:4px;flex:none}
 .ld-speed-wrap{display:flex;flex-direction:column;min-width:0;flex:1}
-.ld-speed-top{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:5px}
-.ld-speed-copy{display:flex;flex-direction:column;min-width:0}
-.ld-speed-cap{font:700 .64rem var(--font-body);color:#F5E9EB;line-height:1.25}
-.ld-speed-hint{font:600 .52rem var(--font-body);color:#C7AEB3;margin-top:1px}
-.ld-speed-avg{flex:none;display:inline-flex;align-items:baseline;gap:3px;padding:4px 7px;border-radius:999px;background:rgba(255,255,255,.08);font:700 .52rem var(--font-body);color:#DCC3C8;line-height:1;white-space:nowrap}
-.ld-speed-avg strong{color:#fff;font:800 .7rem var(--font-display)}
-.ld-speed-avg small{font:700 .47rem var(--font-body);color:#D7C2C6}
-.ld-speed-reading{display:flex;align-items:baseline;gap:4px;margin-top:auto;padding-top:12px;white-space:nowrap}
+.ld-speed-cap{font:700 .64rem var(--font-body);color:#E4C3C8;line-height:1.25}
+.ld-speed-hint{font:600 .52rem var(--font-body);color:#B98D94;margin-top:1px}
+.ld-speed-avg{font:700 .53rem var(--font-body);color:#E7CDD1;margin-top:7px;line-height:1.35;opacity:.95}
+.ld-speed-avg strong{color:#fff;font-weight:800}
+.ld-speed-reading{display:flex;align-items:baseline;gap:4px;margin-top:auto;padding-top:10px;white-space:nowrap}
 .ld-speed-val{font:800 1.48rem var(--font-display);color:#fff;line-height:1}
 .ld-speed-unit{font:700 .62rem var(--font-body);color:#EAD3D7}
 
@@ -809,55 +805,51 @@ html{scroll-behavior:smooth}
 html[data-theme="dark"]{color-scheme:dark}
 html[data-theme="light"]{color-scheme:light}
 [data-theme="dark"]{
-  --navy-900:#000000;
-  --burgundy:#070707;
-  --navy-800:#181818;
-  --navy-700:#2A2A2A;
-  --blue-500:#FFFFFF;
-  --blue-200:#3A3A3A;
-  --blue-100:#0B0B0B;
-  --paper:#000000;
-  --ink:#FFFFFF;
-  --ink-mute:#D7D7D7;
-  --line:#242424;
-  --green:#43D391;
-  --amber:#F3C969;
-  --shadow:0 14px 34px rgba(0,0,0,.58);
+  --navy-900:#120b0e;
+  --burgundy:#2A1018;
+  --navy-800:#5B2433;
+  --navy-700:#874559;
+  --blue-500:#D98793;
+  --blue-200:#563E48;
+  --blue-100:#20171B;
+  --paper:#110D0F;
+  --ink:#F6ECED;
+  --ink-mute:#C8B0B5;
+  --line:#3A2A31;
+  --green:#38C285;
+  --amber:#F0B54D;
+  --shadow:0 14px 36px rgba(0,0,0,.34);
 }
-[data-theme="dark"] body{background:#000;color:#fff}
-[data-theme="dark"] .brandbar,[data-theme="dark"] .masthead{background:#000;border-color:#222}
-[data-theme="dark"] .brand-logo-frame{background:#050505}
-[data-theme="dark"] .masthead h1,[data-theme="dark"] .masthead .sub,[data-theme="dark"] .brand-live,[data-theme="dark"] .net-state,[data-theme="dark"] .clock-date,[data-theme="dark"] .clock-zone,[data-theme="dark"] .livecard .lbl,[data-theme="dark"] .wx-desc,[data-theme="dark"] .wx-meta,[data-theme="dark"] .aqi-pm{color:#fff}
-[data-theme="dark"] .card,[data-theme="dark"] .notes-card,[data-theme="dark"] .status,[data-theme="dark"] .trip,[data-theme="dark"] .park-method,[data-theme="dark"] .parking-item,[data-theme="dark"] .future-item,[data-theme="dark"] .cross-route,[data-theme="dark"] .livecard{background:#050505;border-color:#242424;color:#fff}
-[data-theme="dark"] .status.is-stale{background:#0A0A0A}
-[data-theme="dark"] .transport-picker,[data-theme="dark"] .route-sum,[data-theme="dark"] .empty,[data-theme="dark"] .js-error{background:#050505;color:#fff;border-color:#242424}
-[data-theme="dark"] .transport-btn,[data-theme="dark"] .sched-tab,[data-theme="dark"] .quick-chip,[data-theme="dark"] .action-btn,[data-theme="dark"] .action-btn.ghost,[data-theme="dark"] .live-toggle,[data-theme="dark"] .cross-origin-switch,[data-theme="dark"] .cross-route-chip,[data-theme="dark"] .quicknav a,[data-theme="dark"] .trip-live,[data-theme="dark"] .top-btn{background:#080808;color:#fff;border-color:#303030}
-[data-theme="dark"] .transport-btn:hover,[data-theme="dark"] .sched-tab:hover,[data-theme="dark"] .quick-chip:hover,[data-theme="dark"] .action-btn:hover,[data-theme="dark"] .live-toggle:hover,[data-theme="dark"] .cross-origin-switch:hover,[data-theme="dark"] .quicknav a:hover,[data-theme="dark"] .trip-live:hover,[data-theme="dark"] .top-btn:hover{background:#121212;border-color:#555;color:#fff}
-[data-theme="dark"] .transport-btn[aria-pressed="true"],[data-theme="dark"] .sched-tab[aria-pressed="true"],[data-theme="dark"] .trip.is-next{background:#101010;border-color:#fff;color:#fff}
-[data-theme="dark"] .sched-tab:first-child{background:#0C0C0C;border-color:#3A3A3A}
-[data-theme="dark"] .field select,[data-theme="dark"] .field input,[data-theme="dark"] .cross-row input{background:#050505;color:#fff;border-color:#303030}
-[data-theme="dark"] .field select:focus,[data-theme="dark"] .field input:focus,[data-theme="dark"] .cross-row input:focus{outline-color:rgba(255,255,255,.26)}
-[data-theme="dark"] input::placeholder{color:#9F9F9F}
-[data-theme="dark"] table,[data-theme="dark"] thead th,[data-theme="dark"] tbody td{border-color:#242424;color:#fff}
-[data-theme="dark"] thead th{background:#0B0B0B;color:#fff}
-[data-theme="dark"] tbody tr:nth-child(odd) td{background:#020202}
-[data-theme="dark"] tbody tr:nth-child(even) td{background:#070707}
-[data-theme="dark"] tbody tr:hover td{background:#101010}
-[data-theme="dark"] .trip-no,[data-theme="dark"] .trip-type,[data-theme="dark"] .trip-times,[data-theme="dark"] .trip-meta,[data-theme="dark"] .trip-cd,[data-theme="dark"] .cd-lbl,[data-theme="dark"] .status-head,[data-theme="dark"] .status-msg,[data-theme="dark"] .status-list,[data-theme="dark"] .status-foot,[data-theme="dark"] .transport-picker-label,[data-theme="dark"] .card-body,[data-theme="dark"] .notes-card,[data-theme="dark"] label{color:#fff}
-[data-theme="dark"] .card-body :where(h1,h2,h3,h4,p,li,label,a,span,div),[data-theme="dark"] .notes-card :where(h1,h2,h3,h4,p,li,label,a,span,div){color:#fff}
-[data-theme="dark"] .badge-next{background:#fff;color:#000}
-[data-theme="dark"] .badge-warn,[data-theme="dark"] .route-status.warn{background:#17120A;border-color:#5C4B22;color:#FFD97D}
-[data-theme="dark"] .route-status.ok{background:#07140E;color:#7FF0B8}
-[data-theme="dark"] .route-status.alert,[data-theme="dark"] .action-btn.danger{background:#16090B;border-color:#5F262E;color:#FFB4BE}
-[data-theme="dark"] .park-p,[data-theme="dark"] .cross-step.k-walk .cross-step-ic{background:#000;color:#fff;box-shadow:inset 0 0 0 1.5px #333}
-[data-theme="dark"] .landing{background:#000;color:#fff}
-[data-theme="dark"] .landing::before{background:radial-gradient(circle at 50% 0%,rgba(255,255,255,.07),transparent 52%)}
-[data-theme="dark"] .landing-hero,[data-theme="dark"] .ld-card,[data-theme="dark"] .ld-density,[data-theme="dark"] .ld-speed{background:#050505;border-color:#202020;color:#fff}
-[data-theme="dark"] .ld-run{background:#070707;border-color:#4B2415;color:#fff}
-[data-theme="dark"] .landing-clock,[data-theme="dark"] .landing-date,[data-theme="dark"] .ld-kind,[data-theme="dark"] .ld-cd,[data-theme="dark"] .ld-route-time,[data-theme="dark"] .ld-route-label,[data-theme="dark"] .ld-card-badge,[data-theme="dark"] .ld-density-title,[data-theme="dark"] .ld-density-sub,[data-theme="dark"] .ld-density-note,[data-theme="dark"] .ld-density-note strong,[data-theme="dark"] .ld-speed-cap,[data-theme="dark"] .ld-speed-hint,[data-theme="dark"] .ld-speed-val,[data-theme="dark"] .ld-speed-unit,[data-theme="dark"] .ld-speed-avg,[data-theme="dark"] .ld-speed-avg strong,[data-theme="dark"] .ld-speed-avg small,[data-theme="dark"] .ld-run-state,[data-theme="dark"] .ld-run-stat-label,[data-theme="dark"] .ld-run-stat-value,[data-theme="dark"] .ld-run-stat-sub,[data-theme="dark"] .ld-run-extra,[data-theme="dark"] .ld-run-extra strong,[data-theme="dark"] .ld-run-foot{color:#fff}
-[data-theme="dark"] .ld-speed-avg{background:#101010;border:1px solid #252525}
-[data-theme="dark"] .theme-toggle{background:#070707;border-color:#2A2A2A;color:#fff}
-[data-theme="dark"] .theme-toggle:hover,[data-theme="dark"] .theme-toggle:focus-visible{background:#121212;border-color:#4A4A4A}
+[data-theme="dark"] body{background:linear-gradient(180deg,#090708 0,#171115 100%);color:var(--ink)}
+[data-theme="dark"] .brandbar,[data-theme="dark"] .masthead{background:#120b0e}
+[data-theme="dark"] .card,[data-theme="dark"] .notes-card,[data-theme="dark"] .status,[data-theme="dark"] .trip,[data-theme="dark"] .park-method,[data-theme="dark"] .parking-item,[data-theme="dark"] .future-item,[data-theme="dark"] .cross-route,[data-theme="dark"] .livecard{background:#181216;border-color:#3E2F36;color:var(--ink)}
+[data-theme="dark"] .status.is-stale{background:#251d13}
+[data-theme="dark"] .transport-picker,[data-theme="dark"] .route-sum,[data-theme="dark"] .empty,[data-theme="dark"] .js-error{background:#171115;color:var(--ink);border-color:#3E2F36}
+[data-theme="dark"] .transport-btn,[data-theme="dark"] .sched-tab,[data-theme="dark"] .quick-chip,[data-theme="dark"] .action-btn,[data-theme="dark"] .action-btn.ghost,[data-theme="dark"] .live-toggle,[data-theme="dark"] .cross-origin-switch,[data-theme="dark"] .cross-route-chip,[data-theme="dark"] .quicknav a,[data-theme="dark"] .trip-live,[data-theme="dark"] .top-btn{background:#1B1418;color:var(--ink);border-color:#4E3943}
+[data-theme="dark"] .transport-btn:hover,[data-theme="dark"] .sched-tab:hover,[data-theme="dark"] .quick-chip:hover,[data-theme="dark"] .action-btn:hover,[data-theme="dark"] .live-toggle:hover,[data-theme="dark"] .cross-origin-switch:hover,[data-theme="dark"] .quicknav a:hover,[data-theme="dark"] .trip-live:hover,[data-theme="dark"] .top-btn:hover{background:#251B20;border-color:#6D4E5A}
+[data-theme="dark"] .transport-btn[aria-pressed="true"],[data-theme="dark"] .sched-tab[aria-pressed="true"],[data-theme="dark"] .trip.is-next{background:#23181D}
+[data-theme="dark"] .sched-tab:first-child{background:#24181D;border-color:#6D4E5A}
+[data-theme="dark"] .field select,[data-theme="dark"] .field input,[data-theme="dark"] .cross-row input{background:#140F12;color:var(--ink);border-color:#4C3942}
+[data-theme="dark"] .field select:focus,[data-theme="dark"] .field input:focus,[data-theme="dark"] .cross-row input:focus{outline-color:rgba(217,135,147,.3)}
+[data-theme="dark"] table,[data-theme="dark"] thead th,[data-theme="dark"] tbody td{border-color:#36272E}
+[data-theme="dark"] thead th{background:#2B1A21;color:#FBEFF1}
+[data-theme="dark"] tbody tr:nth-child(odd) td{background:#141014}
+[data-theme="dark"] tbody tr:hover td{background:#20161B}
+[data-theme="dark"] .badge-next{background:#C86F7E}
+[data-theme="dark"] .badge-warn,[data-theme="dark"] .route-status.warn{background:#352612;border-color:#7A5C26;color:#F3C770}
+[data-theme="dark"] .route-status.ok{background:#12291D;color:#7DE0B0}
+[data-theme="dark"] .route-status.alert,[data-theme="dark"] .action-btn.danger{background:#32161A;border-color:#8D3D4C;color:#FFB4BE}
+[data-theme="dark"] .park-p,[data-theme="dark"] .cross-step.k-walk .cross-step-ic{background:#110D0F;color:var(--ink);box-shadow:inset 0 0 0 1.5px #4C3942}
+[data-theme="dark"] .landing{background:radial-gradient(circle at 50% 0%,rgba(217,135,147,.18),transparent 42%),linear-gradient(180deg,#090708 0,#171115 100%)}
+[data-theme="dark"] .landing::before{background:linear-gradient(180deg,rgba(217,135,147,.16),rgba(217,135,147,0))}
+[data-theme="dark"] .ld-card,[data-theme="dark"] .ld-density,[data-theme="dark"] .ld-speed{background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.03));border-color:rgba(255,255,255,.11)}
+[data-theme="dark"] .ld-card-badge{color:#FFFFFF}
+[data-theme="dark"] .ld-route-line{background:linear-gradient(90deg,rgba(255,255,255,.10),rgba(255,255,255,.36))}
+[data-theme="dark"] .ld-route-flow::before{border-top-color:rgba(255,255,255,.96);border-right-color:rgba(255,255,255,.96)}
+[data-theme="dark"] .ld-run{background:linear-gradient(145deg,rgba(252,82,0,.22),rgba(255,255,255,.035));border-color:rgba(252,82,0,.48)}
+[data-theme="dark"] .theme-toggle{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
+[data-theme="dark"] .theme-toggle:hover,[data-theme="dark"] .theme-toggle:focus-visible{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24)}
+
 @media print{body{background:#fff}.planner,.btn-refresh,.livebar,.sched-tabs{display:none}.card{box-shadow:none;border:1px solid #ccc}}
 
 
@@ -875,18 +867,20 @@ html[data-theme="light"]{color-scheme:light}
     box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 18px 48px rgba(29,2,8,.1);
   }
   .landing-clock{
-    display:flex;width:100%;justify-content:center;align-items:flex-end;
-    font-size:clamp(4.6rem,14.2cqw,7.6rem);margin:auto 0;align-self:center;
-    column-gap:0;overflow:visible;
+    display:grid;
+    grid-template-columns:1.06em .16em 1.06em .16em 1.06em .12em .44em;
+    column-gap:.022em;justify-content:center;align-items:end;
+    width:auto;max-width:100%;font-size:clamp(4rem,12.6cqw,6.6rem);
+    margin:auto 0;align-self:center;overflow:visible;
   }
   .landing-clock .clock-unit{
-    flex:0 0 1.48em;width:1.48em;letter-spacing:-.035em;text-align:center;
+    min-width:0;letter-spacing:-.05em;text-align:center;
   }
   .landing-clock .clock-sep{
-    flex:0 0 .23em;width:.23em;font-weight:400;opacity:.88;text-align:center;
+    min-width:0;font-weight:400;opacity:.88;text-align:center;line-height:.9;
   }
   .landing-clock .clock-ms{
-    flex:0 0 .55em;width:.55em;font-size:.29em;padding-bottom:.11em;text-align:left;
+    min-width:0;font-size:.22em;letter-spacing:.01em;padding-bottom:.18em;padding-left:.02em;text-align:left;
   }
   .landing-meta{grid-template-columns:minmax(150px,.9fr) minmax(0,1.25fr) 50px;gap:18px;margin-top:0}
   .landing-logo{max-width:172px}
@@ -941,18 +935,20 @@ html[data-theme="light"]{color-scheme:light}
     box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 18px 48px rgba(29,2,8,.12);
   }
   .landing-clock{
-    display:flex;width:100%;justify-content:center;align-items:flex-end;
-    font-size:clamp(4.55rem,14.4cqw,8rem);
-    margin:auto 0;align-self:center;column-gap:0;overflow:visible;
+    display:grid;
+    grid-template-columns:1.08em .16em 1.08em .16em 1.08em .13em .46em;
+    column-gap:.024em;justify-content:center;align-items:end;
+    width:auto;max-width:100%;font-size:clamp(4.15rem,11.8cqw,7rem);
+    margin:auto 0;align-self:center;overflow:visible;
   }
   .landing-clock .clock-unit{
-    flex:0 0 1.48em;width:1.48em;letter-spacing:-.035em;text-align:center;
+    min-width:0;letter-spacing:-.052em;text-align:center;
   }
   .landing-clock .clock-sep{
-    flex:0 0 .23em;width:.23em;font-weight:400;opacity:.88;text-align:center;
+    min-width:0;font-weight:400;opacity:.88;text-align:center;line-height:.9;
   }
   .landing-clock .clock-ms{
-    flex:0 0 .55em;width:.55em;font-size:.29em;padding-bottom:.11em;text-align:left;
+    min-width:0;font-size:.225em;letter-spacing:.01em;padding-bottom:.18em;padding-left:.024em;text-align:left;
   }
   .landing-meta{
     grid-template-columns:minmax(150px,.98fr) minmax(0,1.12fr) 50px;
@@ -1025,8 +1021,7 @@ html[data-theme="light"]{color-scheme:light}
     align-items:stretch;background:linear-gradient(155deg,rgba(255,255,255,.09),rgba(255,255,255,.035));
   }
   .ld-speed-dot{position:absolute;top:22px;left:22px;width:9px;height:9px;margin:0}
-  .ld-speed-wrap{display:grid;grid-template-rows:auto minmax(100px,1fr);padding-left:20px;height:100%}
-  .ld-speed-top{flex-direction:row;justify-content:space-between;gap:10px}
+  .ld-speed-wrap{display:grid;grid-template-rows:auto auto auto minmax(100px,1fr);padding-left:20px;height:100%}
   .ld-speed-cap{font-size:.8rem;line-height:1.25}
   .ld-speed-hint{font-size:.62rem;margin-top:3px}
   .ld-speed-reading{
@@ -1039,7 +1034,7 @@ html[data-theme="light"]{color-scheme:light}
 
 @media (min-width:1280px){
   .landing-inner{max-width:1320px;grid-template-columns:minmax(500px,.96fr) minmax(680px,1.04fr)}
-  .landing-clock{font-size:clamp(5rem,14.6cqw,8rem)}
+  .landing-clock{font-size:clamp(4.5rem,11.2cqw,7.2rem)}
   .landing-hero{min-height:500px;padding:38px 32px 30px}
   .ld-speed-val{font-size:5rem}
 }
@@ -1048,7 +1043,7 @@ html[data-theme="light"]{color-scheme:light}
   .landing{align-items:flex-start;padding-top:22px;padding-bottom:22px}
   .landing-inner{gap:13px 18px}
   .landing-hero{min-height:410px;padding:24px 22px 20px}
-  .landing-clock{font-size:clamp(4.4rem,13.8cqw,6.25rem)}
+  .landing-clock{font-size:clamp(3.95rem,11.2cqw,5.9rem)}
   .landing-meta{margin-top:0}
   .ld-card{min-height:134px;padding-top:14px;padding-bottom:14px}
   .ld-time{font-size:2.35rem;margin-top:6px}
@@ -1059,7 +1054,7 @@ html[data-theme="light"]{color-scheme:light}
   .ld-density-chart{height:auto}
   .ld-density-notes{margin-top:6px}
   .ld-density-note{padding:6px 8px}
-  .ld-speed-wrap{grid-template-rows:auto minmax(76px,1fr)}
+  .ld-speed-wrap{grid-template-rows:auto auto auto minmax(76px,1fr)}
   .ld-speed-val{font-size:3.8rem}
 }
 
@@ -1090,17 +1085,30 @@ html[data-theme="light"]{color-scheme:light}
 
     <div class="landing-cards">
       <div class="ld-card">
-        <span class="ld-card-badge" id="lSrtNo"></span>
+        <div class="ld-card-top"><span class="ld-card-badge" id="lSrtNo"></span><a class="ld-live-inline" id="lSrtLive" href="https://ttsview.railway.co.th/v3/" target="_blank" rel="noopener noreferrer" hidden aria-label="ติดตามตำแหน่งขบวนแบบสด" title="ติดตามตำแหน่งขบวนแบบสด"><span class="ld-live-dot" aria-hidden="true"></span></a></div>
         <div class="ld-kind"><span class="ld-cd" id="lSrtCd">กำลังคำนวณ</span><span class="ld-kind-txt"> | รถไฟชานเมือง &bull; เที่ยวถัดไป</span></div>
         <div class="ld-route">
           <div class="ld-route-time dep" id="lSrtDepTime">--:--</div>
           <div class="ld-route-mid">
+            <span class="ld-route-line left" aria-hidden="true"></span>
+            <span class="ld-route-line right" aria-hidden="true"></span>
             <span class="ld-route-flow left f1" aria-hidden="true">➜</span>
             <span class="ld-route-flow left f2" aria-hidden="true">➜</span>
             <span class="ld-route-flow right f1" aria-hidden="true">➜</span>
             <span class="ld-route-flow right f2" aria-hidden="true">➜</span>
             <span class="ld-route-train" aria-hidden="true">
-              <svg viewBox="0 0 595.28 231.43" xmlns="http://www.w3.org/2000/svg"><use href="#pdn-train-mark"></use></svg>
+              <svg viewBox="0 0 72 24" xmlns="http://www.w3.org/2000/svg" fill="none">
+                <path d="M12 16V8.8C12 6.15 14.15 4 16.8 4H39.2C41.05 4 42.8 4.84 43.94 6.28L46.4 9.4H52.6C56.69 9.4 60 12.71 60 16.8V17H18C14.69 17 12 14.31 12 11V16Z" fill="currentColor" fill-opacity="0.12"/>
+                <path d="M12.9 15.5V9.2C12.9 6.88 14.78 5 17.1 5H39.1C40.57 5 41.95 5.67 42.87 6.81L45.2 9.7H52.2C55.4 9.7 58 12.3 58 15.5V16.1H18C15.18 16.1 12.9 13.82 12.9 11Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                <rect x="18.2" y="8" width="6.8" height="3.8" rx="1.4" fill="currentColor" fill-opacity="0.92"/>
+                <rect x="27.3" y="8" width="6.8" height="3.8" rx="1.4" fill="currentColor" fill-opacity="0.92"/>
+                <rect x="36.4" y="8" width="4.9" height="3.8" rx="1.2" fill="currentColor" fill-opacity="0.92"/>
+                <path d="M46.9 11.4H52" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M20.5 18.3H49.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.92"/>
+                <path d="M20.2 17.9L18.4 20M47.6 17.9L45.8 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <circle cx="24.4" cy="19.2" r="1.7" fill="currentColor"/>
+                <circle cx="42.2" cy="19.2" r="1.7" fill="currentColor"/>
+              </svg>
             </span>
           </div>
           <div class="ld-route-time arr" id="lSrtArrTime">--:--</div>
@@ -1109,22 +1117,32 @@ html[data-theme="light"]{color-scheme:light}
           <div class="ld-route-label dep"><span id="lSrtFrom">-</span></div>
           <div class="ld-route-label arr" id="lSrtTo">-</div>
         </div>
-        <a class="ld-live" id="lSrtLive" href="https://ttsview.railway.co.th/v3/" target="_blank" rel="noopener noreferrer" hidden>
-          <span class="ld-live-dot" aria-hidden="true"></span><span class="ld-live-txt">LIVE</span><span class="ld-live-sub">ตำแหน่งขบวน</span>
-        </a>
-      </div>
+              </div>
       <div class="ld-card">
-        <span class="ld-card-badge" id="lArlNo"></span>
+        <div class="ld-card-top"><span class="ld-card-badge" id="lArlNo"></span></div>
         <div class="ld-kind"><span class="ld-cd" id="lArlCd">กำลังคำนวณ</span><span class="ld-kind-txt"> | Airport Rail Link &bull; เที่ยวถัดไป</span></div>
         <div class="ld-route">
           <div class="ld-route-time dep" id="lArlDepTime">--:--</div>
           <div class="ld-route-mid">
+            <span class="ld-route-line left" aria-hidden="true"></span>
+            <span class="ld-route-line right" aria-hidden="true"></span>
             <span class="ld-route-flow left f1" aria-hidden="true">➜</span>
             <span class="ld-route-flow left f2" aria-hidden="true">➜</span>
             <span class="ld-route-flow right f1" aria-hidden="true">➜</span>
             <span class="ld-route-flow right f2" aria-hidden="true">➜</span>
             <span class="ld-route-train" aria-hidden="true">
-              <svg viewBox="0 0 595.28 231.43" xmlns="http://www.w3.org/2000/svg"><use href="#pdn-train-mark"></use></svg>
+              <svg viewBox="0 0 72 24" xmlns="http://www.w3.org/2000/svg" fill="none">
+                <path d="M12 16V8.8C12 6.15 14.15 4 16.8 4H39.2C41.05 4 42.8 4.84 43.94 6.28L46.4 9.4H52.6C56.69 9.4 60 12.71 60 16.8V17H18C14.69 17 12 14.31 12 11V16Z" fill="currentColor" fill-opacity="0.12"/>
+                <path d="M12.9 15.5V9.2C12.9 6.88 14.78 5 17.1 5H39.1C40.57 5 41.95 5.67 42.87 6.81L45.2 9.7H52.2C55.4 9.7 58 12.3 58 15.5V16.1H18C15.18 16.1 12.9 13.82 12.9 11Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                <rect x="18.2" y="8" width="6.8" height="3.8" rx="1.4" fill="currentColor" fill-opacity="0.92"/>
+                <rect x="27.3" y="8" width="6.8" height="3.8" rx="1.4" fill="currentColor" fill-opacity="0.92"/>
+                <rect x="36.4" y="8" width="4.9" height="3.8" rx="1.2" fill="currentColor" fill-opacity="0.92"/>
+                <path d="M46.9 11.4H52" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M20.5 18.3H49.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.92"/>
+                <path d="M20.2 17.9L18.4 20M47.6 17.9L45.8 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <circle cx="24.4" cy="19.2" r="1.7" fill="currentColor"/>
+                <circle cx="42.2" cy="19.2" r="1.7" fill="currentColor"/>
+              </svg>
             </span>
           </div>
           <div class="ld-route-time arr" id="lArlArrTime">--:--</div>
@@ -1232,13 +1250,9 @@ html[data-theme="light"]{color-scheme:light}
       <div class="ld-speed" id="lSpeed" role="button" tabindex="0" title="แตะเพื่อวัดความเร็ว" aria-label="แตะเพื่อวัดความเร็วปัจจุบัน">
         <span class="ld-speed-dot" aria-hidden="true"></span>
         <div class="ld-speed-wrap">
-          <div class="ld-speed-top">
-            <span class="ld-speed-copy">
-              <span class="ld-speed-cap" id="lSpeedCap">ความเร็วปัจจุบัน</span>
-              <span class="ld-speed-hint" id="lSpeedHint">แตะเพื่อเปิด</span>
-            </span>
-            <span class="ld-speed-avg" id="lSpeedAvg">Avg : <strong>--</strong> <small>km/hr</small></span>
-          </div>
+          <span class="ld-speed-cap" id="lSpeedCap">ความเร็วปัจจุบัน</span>
+          <span class="ld-speed-hint" id="lSpeedHint">แตะเพื่อเปิด</span>
+          <span class="ld-speed-avg" id="lSpeedAvg">ความเร็วเฉลี่ย 15 นาทีล่าสุด <strong>--</strong></span>
           <span class="ld-speed-reading"><span class="ld-speed-val" id="lSpeedVal">–</span><span class="ld-speed-unit">กม./ชม.</span></span>
         </div>
       </div>
@@ -1818,7 +1832,7 @@ const fromStore = (key, fallback=[]) => {
 const toStore = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 const THEME_KEY = "paiduyna-theme";
 const LIGHT_THEME_COLOR = "#6B1E2B";
-const DARK_THEME_COLOR = "#000000";
+const DARK_THEME_COLOR = "#120B0E";
 function currentTheme(){
   const theme = document.documentElement.getAttribute("data-theme");
   return theme === "dark" ? "dark" : "light";
@@ -1828,7 +1842,7 @@ function updateThemeButtons(theme){
   [$("btnTheme"), $("btnThemeLanding")].forEach(btn => {
     if(!btn) return;
     btn.dataset.icon = isDark ? "🌙" : "☀️";
-    btn.textContent = isDark ? "Dark" : "Normal";
+    btn.textContent = isDark ? "Dark Mode" : "Normal Mode";
     btn.setAttribute("title", isDark ? "สลับเป็น Normal Mode" : "สลับเป็น Dark Mode");
     btn.setAttribute("aria-label", isDark ? "กำลังใช้ Dark Mode กดเพื่อสลับเป็น Normal Mode" : "กำลังใช้ Normal Mode กดเพื่อสลับเป็น Dark Mode");
   });
@@ -3603,7 +3617,7 @@ function resetLandingSpeed(){
   LANDING_SPEED_SAMPLES = [];
   LANDING_SPEED_HISTORY = [];
   const avg = $("lSpeedAvg");
-  if(avg) avg.innerHTML = "Avg : <strong>--</strong> <small>km/hr</small>";
+  if(avg) avg.innerHTML = "ความเร็วเฉลี่ย 15 นาทีล่าสุด <strong>--</strong>";
 }
 function pushLandingSpeedHistory(kmh, ts=Date.now()){
   LANDING_SPEED_HISTORY.push({kmh, ts});
@@ -3640,10 +3654,12 @@ function updateLandingSpeedAverage(now=Date.now()){
   if(!avgEl) return;
   const info = getLandingSpeedAverage(now);
   if(!info){
-    avgEl.innerHTML = "Avg : <strong>--</strong> <small>km/hr</small>";
+    avgEl.innerHTML = "ความเร็วเฉลี่ย 15 นาทีล่าสุด <strong>--</strong>";
     return;
   }
-  avgEl.innerHTML = "Avg : <strong>" + info.kmh.toFixed(1) + "</strong> <small>km/hr</small>";
+  const mins = Math.max(1, Math.round(info.coveredMs / 60000));
+  const label = mins >= 15 ? "ความเร็วเฉลี่ย 15 นาทีล่าสุด" : "ความเร็วเฉลี่ย " + mins + " นาทีล่าสุด";
+  avgEl.innerHTML = label + " <strong>" + info.kmh.toFixed(1) + " กม./ชม.</strong>";
 }
 function resolveLandingSpeed(position){
   const c=position.coords || {}, timestamp=Number(position.timestamp)||Date.now();
@@ -3695,7 +3711,7 @@ function resolveLandingSpeed(position){
 // เริ่มวัดความเร็วปัจจุบัน: ใช้ค่า speed จาก GPS และสำรองด้วยระยะทางระหว่างพิกัด
 function startLandingSpeed(){
   const val = $("lSpeedVal"), hint = $("lSpeedHint");
-  if(!("geolocation" in navigator)){ if(hint) hint.textContent = "อุปกรณ์ไม่รองรับ"; const avg=$("lSpeedAvg"); if(avg) avg.innerHTML="Avg : <strong>--</strong> <small>km/hr</small>"; return; }
+  if(!("geolocation" in navigator)){ if(hint) hint.textContent = "อุปกรณ์ไม่รองรับ"; const avg=$("lSpeedAvg"); if(avg) avg.innerHTML="ความเร็วเฉลี่ย 15 นาทีล่าสุด <strong>--</strong>"; return; }
   if(LANDING_SPEED_WATCH != null) return; // เปิดอยู่แล้ว
   resetLandingSpeed();
   if(hint) hint.textContent = "กำลังจับสัญญาณ GPS";
