@@ -1,4 +1,4 @@
-const CACHE = "paiduyna-full-2026-07-31-v43-ui-hierarchy-route-cards";
+const CACHE = "paiduyna-full-2026-07-31-v44-hobby-cron-fix";
 const APP_SHELL = [
   "./",
   "./index.html",

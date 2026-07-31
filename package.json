@@ -1,14 +1,14 @@
 {
   "name": "paiduyna-strava-landing",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "private": true,
   "type": "module",
   "engines": {
     "node": "22.x"
   },
   "dependencies": {
+    "@upstash/redis": "^1.38.0",
     "@vercel/blob": "^2.6.1",
-    "@vercel/kv": "^3.0.0",
     "web-push": "^3.6.7"
   }
 }

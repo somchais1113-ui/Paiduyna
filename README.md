@@ -4,7 +4,7 @@
 
 เว็บตารางเดินรถและผู้ช่วยวางแผนการเดินทาง รถไฟชานเมืองสายตะวันออก ช่วงกรุงเทพ ถึง ฉะเชิงเทรา
 
-Build: `2026-07-31-v43-ui-hierarchy-route-cards`
+Build: `2026-07-31-v44-hobby-cron-fix`
 
 Full Version รวมงานจาก Version 1.1, 1.5 และ 2.0 ไว้ในชุดเดียว โดยยังเปิดผ่าน GitHub Pages ได้
 
@@ -40,18 +40,28 @@ Full Version รวมงานจาก Version 1.1, 1.5 และ 2.0 ไว�
 
 ```text
 paiduyna/
-├── index.html
-├── manifest.webmanifest
-├── sw.js
-├── icon.svg
-├── brand-logo-v4.svg
-├── .nojekyll
-├── README.md
+├── .github/workflows/push-reminder-cron.yml
+├── api/
+│   ├── parking/search.js
+│   ├── push/
+│   │   ├── cron.js
+│   │   ├── subscribe.js
+│   │   ├── unsubscribe.js
+│   │   └── vapid-public-key.js
+│   ├── routes/transit.js
+│   └── strava/
+├── lib/
+│   ├── push.js
+│   ├── redis.js
+│   └── strava.js
 ├── admin/
-│   ├── index.html
-│   └── brand-logo-v4.svg
-└── data/
-    └── status.json
+├── data/
+├── index.html
+├── sw.js
+├── manifest.webmanifest
+├── package.json
+├── vercel.json
+└── README.md
 ```
 
 ข้อมูลตารางเดินรถยังอยู่ใน `index.html` เพื่อให้เปิดได้ทันทีและใช้ Offline ได้ ส่วนข้อมูลที่ผู้ดูแลต้องแก้บ่อยแยกไว้ในโฟลเดอร์ `data/`
@@ -66,7 +76,7 @@ paiduyna/
 
 ```bash
 git add .
-git commit -m "PAI.DUY.NA Full build 2026-07-22 v4"
+git commit -m "PAI.DUY.NA v44 Hobby cron fix"
 git push
 ```
 
@@ -462,45 +472,86 @@ Build นี้เพิ่มการวางแผนเดินทาง�
 2. **วางแผนข้ามระบบ** เปิดการ์ด "ต่อรถไฟฟ้า" เลือกสถานีปลายทาง พิมพ์จุดหมาย กด "หา" ควรเห็นผลลัพธ์เส้นทางจริง ถ้าขึ้นข้อความ "ยังหาเส้นทางไม่ได้" ให้กลับไปตรวจข้อ 1
 3. **ตำแหน่งขบวนสด** ค้นหาเที่ยวรถไฟ SRT กดปุ่ม Toggle "ตำแหน่งสด" ที่หัวข้อเที่ยวถัดไป กดลิงก์ "ดูตำแหน่งสด ขบวน [เลข]" ที่การ์ดขบวนใดขบวนหนึ่ง ควรเปิดหน้า TTS ตรงขบวนนั้นในแท็บใหม่ ถ้าไม่ตรงขบวนหรือ Error ให้แจ้งกลับมาเพื่อแก้ที่ฟังก์ชัน `ttsTrackUrl`
 4. **badge LIVE บน Landing** เปิดหน้าแรก รอจนการ์ด "รถไฟชานเมือง" ขึ้นเวลาและเลขขบวน ควรเห็น badge LIVE ใต้ข้อมูล กดแล้วเปิดหน้า TTS ตรงขบวนเดียวกับข้อ 3
-5. **Service Worker แคชใหม่** เปิด DevTools > Application > Service Workers ยืนยันว่า Cache ชื่อ `paiduyna-full-2026-07-31-v41-landing-live-badge` ทำงานอยู่ (ถ้ายังเห็นเวอร์ชันเก่าค้าง ให้ Unregister แล้วรีเฟรชอีกครั้ง)
+5. **Service Worker แคชใหม่** เปิด DevTools > Application > Service Workers ยืนยันว่า Cache ชื่อ `paiduyna-full-2026-07-31-v44-hobby-cron-fix` ทำงานอยู่ (ถ้ายังเห็นเวอร์ชันเก่าค้าง ให้ Unregister แล้วรีเฟรชอีกครั้ง)
 
 
-## v42 แจ้งเตือนแบบ Push ทำงานได้แม้ปิดแอป
+## v42–v44 แจ้งเตือนแบบ Push ทำงานได้แม้ปิดแอป (รองรับ Vercel Hobby)
 
-เพิ่มระบบแจ้งเตือนขบวนล่วงหน้า 10 นาทีแบบ Push Notification จริง ต่างจากปุ่ม "แจ้งเตือนก่อนออก" เดิมที่ต้องเปิดแท็บแอปค้างไว้ ปุ่มใหม่ "แจ้งเตือนแม้ปิดแอป" จะยังแจ้งเตือนได้แม้ปิดแท็บหรือปิดแอปไปแล้ว
+ระบบนี้แจ้งเตือนขบวนล่วงหน้า 10 นาทีผ่าน Web Push จริง ต่างจากปุ่ม "แจ้งเตือนก่อนออก" เดิมที่ต้องเปิดแท็บแอปค้างไว้ ปุ่ม "แจ้งเตือนแม้ปิดแอป" ยังทำงานได้เมื่อปิดแท็บหรือปิดแอปแล้ว ตราบใดที่ตั้งค่า Redis, VAPID และ GitHub Actions ครบ
+
+### เหตุผลที่ v44 เปลี่ยน Scheduler
+
+Vercel Hobby อนุญาต Cron Job ได้เพียงวันละครั้ง ดังนั้น schedule เดิม `*/5 * * * *` ใน `vercel.json` จะทำให้ Deploy ล้มเหลว เวอร์ชัน v44 จึงเอา Vercel Cron ออก และใช้ GitHub Actions เรียก API ทุกประมาณ 5 นาทีแทน
 
 ### สถาปัตยกรรม
 
-- **`api/push/vapid-public-key.js`** คืน VAPID Public Key ให้หน้าเว็บใช้ตอน Subscribe (Public Key เปิดเผยได้ ไม่ใช่ความลับ)
-- **`api/push/subscribe.js`** รับ Subscription + ข้อมูลขบวน บันทึกลง Vercel KV มี TTL หมดอายุอัตโนมัติ 1 ชั่วโมงหลังขบวนออก
+- **`api/push/vapid-public-key.js`** คืน VAPID Public Key ให้หน้าเว็บใช้ตอน Subscribe
+- **`api/push/subscribe.js`** รับ Subscription + ข้อมูลขบวน แล้วบันทึกลง Upstash Redis พร้อม TTL
 - **`api/push/unsubscribe.js`** ลบการแจ้งเตือนทั้งหมดที่ผูกกับอุปกรณ์นั้น
-- **`api/push/cron.js`** ถูกเรียกโดย Vercel Cron ทุก 5 นาที (ตั้งค่าใน `vercel.json`) ไล่เช็คว่าถึงเวลาแจ้งเตือนขบวนไหนแล้วส่ง Push ให้ ผ่าน `web-push`
-- **`lib/push.js`** utility กลางสำหรับตั้งค่า VAPID และฟังก์ชันช่วยที่ใช้ร่วมกันทุก endpoint
-- **`sw.js`** เพิ่ม `push` event listener รับข้อความจาก Server มาแสดงเป็น Notification
+- **`api/push/cron.js`** ตรวจรายการที่ถึงเวลา ส่ง Push ผ่าน `web-push` และรองรับ retry สำหรับข้อผิดพลาดชั่วคราว
+- **`lib/redis.js`** สร้าง Redis client กลาง รองรับทั้ง `UPSTASH_REDIS_REST_*` และ `KV_REST_API_*`
+- **`.github/workflows/push-reminder-cron.yml`** เรียก `/api/push/cron` ทุก 5 นาที โดยส่ง `Authorization: Bearer ...`
+- **`sw.js`** รับ push event แล้วแสดง Notification
+- **`vercel.json`** ไม่มี `crons` แล้ว จึง Deploy บน Hobby ได้
 
-### ตั้งค่าก่อนใช้งานจริง (ต้องทำครบทุกข้อ)
+### ตั้งค่าบน Vercel
 
-1. **สร้าง Vercel KV** ใน Vercel Dashboard > Storage > Create Database > KV (หรือเชื่อม Upstash Redis) แล้วเชื่อมกับโปรเจกต์นี้ Vercel จะเติม Environment Variable `KV_REST_API_URL` และ `KV_REST_API_TOKEN` ให้อัตโนมัติ ไม่ต้องตั้งเอง
-2. **สร้าง VAPID Keys** รันคำสั่งนี้ในเครื่อง (ต้องมี Node ติดตั้งแล้ว)
-   ```
+1. ไปที่ Vercel Marketplace แล้วติดตั้ง **Upstash for Redis** เชื่อมกับโปรเจกต์ จากนั้น Redeploy หนึ่งครั้ง ระบบรองรับตัวแปรทั้งสองรูปแบบต่อไปนี้โดยอัตโนมัติ
+   - `UPSTASH_REDIS_REST_URL` และ `UPSTASH_REDIS_REST_TOKEN`
+   - หรือ `KV_REST_API_URL` และ `KV_REST_API_TOKEN` สำหรับฐานเดิมที่ถูกย้ายมา Upstash
+2. สร้าง VAPID Keys ในเครื่องที่มี Node.js
+   ```bash
    npx web-push generate-vapid-keys
    ```
-   จะได้ Public Key และ Private Key คู่หนึ่ง
-3. ใน Vercel Project Settings > Environment Variables เพิ่ม 3 ตัวแปร
-   - `VAPID_PUBLIC_KEY` = Public Key ที่ได้จากข้อ 2
-   - `VAPID_PRIVATE_KEY` = Private Key ที่ได้จากข้อ 2 (เปิด Sensitive)
-   - `VAPID_SUBJECT` = `mailto:` ตามด้วยอีเมลติดต่อของคุณ เช่น `mailto:you@example.com`
-4. **ตั้ง `CRON_SECRET`** (แนะนำอย่างยิ่ง) เพิ่ม Environment Variable ชื่อ `CRON_SECRET` เป็นค่าสุ่มยาวๆ Vercel จะแนบ Header `Authorization: Bearer <ค่านี้>` มากับการเรียก Cron อัตโนมัติเอง ไม่ต้องตั้งค่าเพิ่มที่ไหน ถ้าไม่ตั้งตัวแปรนี้ Endpoint `/api/push/cron` จะเปิดให้เรียกจากภายนอกได้โดยไม่ต้องยืนยันตัวตน
-5. Redeploy แล้วทดสอบกดปุ่ม "แจ้งเตือนแม้ปิดแอป" ที่การ์ดวางแผนการเดินทาง
+3. ใน Vercel Project Settings > Environment Variables เพิ่ม
+   - `VAPID_PUBLIC_KEY` = Public Key
+   - `VAPID_PRIVATE_KEY` = Private Key และเปิด Sensitive
+   - `VAPID_SUBJECT` = อีเมลติดต่อ เช่น `mailto:you@example.com`
+   - `CRON_SECRET` = ค่าสุ่มยาวอย่างน้อย 32 ตัวอักษร
+4. Redeploy โปรเจกต์หลังเพิ่ม Environment Variables
+
+ตัวอย่างสร้าง secret ใน Terminal:
+
+```bash
+openssl rand -hex 32
+```
+
+### ตั้งค่าบน GitHub
+
+เข้า Repository > **Settings > Secrets and variables > Actions > New repository secret** แล้วเพิ่ม 2 ค่า
+
+- `CRON_URL` = URL Production เต็ม เช่น `https://ชื่อโปรเจกต์.vercel.app/api/push/cron`
+- `CRON_SECRET` = ค่าเดียวกับ `CRON_SECRET` บน Vercel แบบตรงทุกตัวอักษร
+
+จากนั้นตรวจว่าไฟล์ `.github/workflows/push-reminder-cron.yml` อยู่บน default branch แล้วไปที่แท็บ **Actions > Push reminder scheduler > Run workflow** เพื่อทดสอบด้วยตนเอง ผลที่ถูกต้องควรเป็น JSON ที่มี `"status":"ok"`
+
+### เช็กลิสต์ทดสอบ
+
+1. Vercel Deploy ต้องผ่านโดยไม่ขึ้นข้อความ Hobby cron limit
+2. เปิด `https://โดเมนของคุณ/api/push/cron` ตรงๆ ต้องได้ `401 Unauthorized`
+3. Run workflow จาก GitHub Actions ต้องสำเร็จ
+4. ตั้งแจ้งเตือนขบวนที่ออกมากกว่า 10 นาที แล้วปิดเว็บ
+5. ตรวจ Upstash ว่ามี key ชื่อขึ้นต้น `reminder:` และรอ Push Notification
 
 ### ข้อจำกัดที่ควรทราบ
 
-- **iOS ต้อง Add to Home Screen ก่อน** Push Notification บน Safari/iOS ใช้งานได้เฉพาะเมื่อเพิ่มแอปเข้าหน้าจอโฮมแล้วเปิดจากไอคอนนั้น (เป็นข้อจำกัดของ iOS เอง ไม่ใช่ของแอปนี้) ปุ่มจะซ่อนอัตโนมัติถ้าเบราว์เซอร์ไม่รองรับ
-- **Cron ทำงานทุก 5 นาที** ความแม่นยำของเวลาแจ้งเตือนอยู่ที่ ±5 นาที ไม่ใช่เป๊ะวินาที
-- **รับสมัครล่วงหน้าได้ไม่เกิน 48 ชั่วโมง** และต้องตั้งก่อนขบวนออกอย่างน้อย 10 นาที กันข้อมูลค้างใน KV โดยไม่จำเป็น
+- **iOS ต้อง Add to Home Screen ก่อน** Safari/iOS รองรับ Web Push สำหรับเว็บแอปที่เพิ่มเข้าหน้าจอโฮมและเปิดจากไอคอนนั้น
+- **เวลาไม่เป๊ะวินาที** GitHub Actions ตั้งรอบสั้นสุดได้ 5 นาทีและอาจเริ่มช้ากว่ากำหนดได้ จึงควรคาดหวังความคลาดเคลื่อนประมาณ 5 นาทีหรือมากกว่าเล็กน้อย
+- **Scheduled workflow ต้องอยู่บน default branch** และ repository สาธารณะที่ไม่มีความเคลื่อนไหวนานอาจถูก GitHub ปิด schedule อัตโนมัติ ให้เปิดกลับจากแท็บ Actions
+- **Repository ส่วนตัวมีโควตา Actions** งานทุก 5 นาทีใช้จำนวน workflow runs สูง ควรตรวจโควตาของบัญชี
+- รับสมัครแจ้งเตือนล่วงหน้าไม่เกิน 48 ชั่วโมง และต้องตั้งก่อนเวลาแจ้งอย่างน้อย 10 นาที
 
 ## v43 จัดลำดับความสำคัญปุ่ม Action และการ์ด Landing สไตล์เส้นทาง
 
 - ปุ่ม Action ในส่วนวางแผนการเดินทางเพิ่มไอคอน SVG ขั้นต่ำและแบ่งระดับความสำคัญด้วยสี ไม่ใช่เส้นแบ่ง: "บันทึกเส้นทางนี้" เป็นปุ่มหลัก (Primary สีทึบ) กลุ่มแชร์/แจ้งเตือน/ซ่อนตารางเป็นปุ่มรอง (Ghost สีจาง) และ "ล้างข้อมูล" แยกไปทางขวาสุดด้วยสีแดงเตือน (Danger)
 - การ์ดเที่ยวถัดไปในหน้า Landing (SRT และ ARL) ปรับเป็นรูปแบบเส้นทางสไตล์ Flighty: เวลาออก-เส้นประ-เวลาถึง พร้อมไอคอนรถไฟด้านข้างมินิมอล Animate ขึ้นลงเบาๆ และจุดลูกศรไหลจากต้นทางไปปลายทางบนเส้นประ
 - ทั้งหมดเคารพ prefers-reduced-motion ผ่านกฎ global ที่มีอยู่แล้ว
+
+## v44 แก้ Deploy บน Vercel Hobby และปรับ Push backend
+
+- ย้าย scheduler จาก Vercel Cron ไป GitHub Actions เพราะ Hobby รัน Vercel Cron ได้เพียงวันละครั้ง
+- ย้ายจากแพ็กเกจ `@vercel/kv` ไป `@upstash/redis` สำหรับโปรเจกต์ใหม่
+- บังคับให้ `/api/push/cron` ต้องมี `CRON_SECRET`; ถ้าไม่ตั้งค่าจะตอบ 503 แทนการเปิด endpoint สาธารณะ
+- เพิ่ม retry สูงสุด 3 ครั้งเมื่อ Push provider ขัดข้องชั่วคราว และไม่ส่งแจ้งเตือนย้อนหลังเกิน 5 นาทีหลังขบวนออก
+- เปลี่ยน Cache/App Version เป็น `2026-07-31-v44-hobby-cron-fix`
+
