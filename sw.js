@@ -1,4 +1,4 @@
-const CACHE = "paiduyna-full-2026-07-31-v46-speed-avg";
+const CACHE = "paiduyna-full-2026-07-31-v47-deepblack-ui";
 const APP_SHELL = [
   "./",
   "./index.html",
