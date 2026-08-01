@@ -6,7 +6,7 @@
    - ฟอนต์ Google              : Cache first แล้วอัปเดตเบื้องหลัง   ออฟไลน์ยังได้ฟอนต์เดิม
    - /api/ และ /admin/         : Network only                      ห้ามแคชข้อมูลสดและหน้าผู้ดูแล
 */
-const VERSION = "2026-07-31-v47";
+const VERSION = "2026-08-02-v52";
 const SHELL_CACHE = "paiduyna-shell-" + VERSION;
 const RUNTIME_CACHE = "paiduyna-runtime-" + VERSION;
 const FONT_CACHE = "paiduyna-fonts-" + VERSION;

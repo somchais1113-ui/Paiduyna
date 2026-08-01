@@ -345,6 +345,110 @@ td.nostop{color:#D6C3C6;font-weight:400}
 .connection-kind{font-size:.72rem;color:var(--ink-mute);font-weight:700}
 .connection-place{font:700 .92rem var(--font-display);color:var(--navy-700);margin-top:2px}
 
+/* ---------- Travel mode switch + Drive Dashboard ---------- */
+.travel-mode-bar{
+  margin-top:14px;padding:10px 12px 10px 15px;border-radius:14px;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  background:linear-gradient(135deg,rgba(84,16,29,.96),rgba(107,30,43,.94));
+  border:1px solid rgba(255,255,255,.16);box-shadow:0 10px 28px rgba(84,16,29,.14);color:#fff;
+}
+.travel-mode-copy{display:flex;flex-direction:column;min-width:0}
+.travel-mode-kicker{font:800 .58rem var(--font-body);letter-spacing:.14em;color:#E7BEC5}
+.travel-mode-title{font:750 .86rem var(--font-body);margin-top:1px;color:#FFF8F4}
+.travel-mode-switch{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:999px;background:rgba(23,2,7,.3);border:1px solid rgba(255,255,255,.12);flex:none}
+.travel-mode-btn{min-width:112px;border:0;border-radius:999px;padding:8px 15px;background:transparent;color:#DDBFC4;font:750 .76rem var(--font-body);cursor:pointer;transition:background .2s,color .2s,box-shadow .2s,transform .1s}
+.travel-mode-btn:hover,.travel-mode-btn:focus-visible{color:#fff;outline:none;background:rgba(255,255,255,.08)}
+.travel-mode-btn:active{transform:translateY(1px)}
+.travel-mode-btn[aria-pressed="true"]{background:#FFF8F4;color:#641525;box-shadow:0 5px 16px rgba(21,0,5,.22)}
+.travel-mode-btn::before{content:"";display:inline-block;width:7px;height:7px;margin-right:7px;border-radius:50%;background:currentColor;opacity:.55;vertical-align:1px}
+.travel-mode-btn[aria-pressed="true"]::before{background:#D43E56;opacity:1;box-shadow:0 0 0 3px rgba(212,62,86,.13)}
+.travel-mode-panel[hidden],.drive-dashboard[hidden]{display:none!important}
+
+.drive-dashboard{
+  --drive-bg:#21050B;--drive-panel:#310A13;--drive-panel-2:#3B0D18;
+  --drive-white:#FFF8F4;--drive-mute:#D8B7BE;--drive-pink:#EB6479;
+  --drive-green:#65E7A2;--drive-amber:#FFC452;
+  position:relative;isolation:isolate;overflow:hidden;margin-top:12px;padding:14px;border-radius:18px;
+  color:var(--drive-white);background:linear-gradient(155deg,#3A0B15 0,var(--drive-bg) 54%,#160308 100%);
+  border:1px solid rgba(255,255,255,.14);box-shadow:0 18px 40px rgba(62,6,18,.2);
+}
+.drive-dashboard::before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.027) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.027) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(180deg,rgba(0,0,0,.7),transparent 78%)}
+.drive-topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:3px 4px 13px}
+.drive-route-head{min-width:0}
+.drive-kicker{font:800 .58rem var(--font-body);letter-spacing:.15em;color:#DAAAB3;text-transform:uppercase}
+.drive-route-title{display:flex;align-items:center;gap:9px;margin-top:3px;font:850 clamp(1rem,2vw,1.28rem) var(--font-display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.drive-route-arrow{color:var(--drive-pink);font-weight:500}
+.drive-session{display:flex;align-items:center;gap:8px;flex:none;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.11);font:750 .65rem var(--font-body);color:#E7CDD2}
+.drive-live-dot{width:7px;height:7px;border-radius:50%;background:#9B747C;box-shadow:0 0 0 4px rgba(155,116,124,.1)}
+.drive-dashboard.is-running .drive-live-dot{background:var(--drive-green);animation:driveLive 2.8s ease-in-out infinite}
+@keyframes driveLive{0%,100%{box-shadow:0 0 0 0 rgba(101,231,162,.18)}45%{box-shadow:0 0 0 5px rgba(101,231,162,.1)}}
+.drive-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:8px}
+.drive-tile{position:relative;overflow:hidden;min-width:0;border-radius:11px;padding:11px 12px;background:linear-gradient(145deg,rgba(255,255,255,.073),rgba(255,255,255,.038));border:1px solid rgba(255,255,255,.13);box-shadow:inset 0 1px 0 rgba(255,255,255,.025)}
+.drive-tile::after{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--tile-accent,var(--drive-pink));opacity:.92}
+.drive-tile-cap{font:800 .58rem var(--font-body);letter-spacing:.1em;color:#CFA8AF;text-transform:uppercase;line-height:1.2}
+.drive-eta{grid-column:span 3;--tile-accent:var(--drive-green);display:flex;flex-direction:column;justify-content:space-between}
+.drive-eta-time{font:850 clamp(2rem,4.2vw,3.25rem) var(--font-display);line-height:.92;margin-top:12px;font-variant-numeric:tabular-nums;letter-spacing:-.05em}
+.drive-eta-sub{font-size:.7rem;color:var(--drive-mute);margin-top:8px;line-height:1.45}
+.drive-eta-sub strong{color:#fff;font-weight:800}
+.drive-speed{grid-column:span 6;--tile-accent:var(--drive-pink);display:grid;grid-template-rows:auto 1fr auto;place-items:center;min-height:206px;text-align:center;background:radial-gradient(circle at 50% 42%,rgba(235,100,121,.12),transparent 42%),linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.03))}
+.drive-speed .drive-tile-cap{justify-self:stretch;text-align:center}
+.drive-speed-value{font:850 clamp(5rem,10vw,8.3rem) var(--font-display);line-height:.74;letter-spacing:-.075em;font-variant-numeric:tabular-nums;transform:scaleX(1.035);transform-origin:center;color:#fff;text-shadow:0 7px 26px rgba(0,0,0,.22)}
+.drive-speed-unit{font:800 .68rem var(--font-body);letter-spacing:.13em;color:#E6C9CE;margin-top:8px}
+.drive-speed-source{align-self:end;font:650 .58rem var(--font-body);color:#B88E96;margin-top:10px}
+.drive-road{grid-column:span 3;--tile-accent:var(--drive-amber);display:grid;grid-template-columns:1fr 1fr;gap:8px;align-content:start}
+.drive-road .drive-tile-cap{grid-column:1/-1}
+.drive-road-stat{margin-top:8px;padding:9px 8px;border-radius:8px;background:rgba(0,0,0,.15);border:1px solid rgba(255,255,255,.07);min-width:0}
+.drive-road-label{display:block;font:700 .52rem var(--font-body);color:#BE969E;line-height:1.25}
+.drive-road-value{display:block;margin-top:3px;font:850 1.18rem var(--font-display);line-height:1;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.drive-road-value.safe{color:var(--drive-green)}
+.drive-road-value.warn{color:var(--drive-amber)}
+.drive-next{grid-column:span 7;--tile-accent:var(--drive-pink);display:grid;grid-template-columns:62px minmax(0,1fr) auto;align-items:center;gap:13px;min-height:116px}
+.drive-turn-icon{width:62px;height:62px;border-radius:12px;display:grid;place-items:center;background:rgba(235,100,121,.13);border:1px solid rgba(235,100,121,.24);color:#fff}
+.drive-turn-icon svg{width:38px;height:38px;display:block;animation:driveArrow 2.8s ease-in-out infinite}
+@keyframes driveArrow{0%,100%{transform:translateY(1px)}50%{transform:translateY(-3px)}}
+.drive-next-copy{min-width:0}
+.drive-next-kicker{font:800 .56rem var(--font-body);letter-spacing:.1em;color:#D3AAB2}
+.drive-next-road{font:850 clamp(1rem,2.3vw,1.45rem) var(--font-display);line-height:1.25;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.drive-next-hint{font-size:.68rem;color:#C9A5AC;margin-top:3px}
+.drive-next-distance{font:850 clamp(1.5rem,3.5vw,2.6rem) var(--font-display);color:var(--drive-amber);white-space:nowrap;font-variant-numeric:tabular-nums;letter-spacing:-.04em}
+.drive-summary{grid-column:span 5;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:0;background:none;border:0;overflow:visible;box-shadow:none}
+.drive-summary::after{display:none}
+.drive-mini{min-width:0;padding:10px;border-radius:10px;background:rgba(255,255,255,.052);border:1px solid rgba(255,255,255,.1)}
+.drive-mini-label{font:750 .52rem var(--font-body);letter-spacing:.06em;color:#B98F97;line-height:1.25}
+.drive-mini-value{display:block;margin-top:5px;font:850 clamp(1.2rem,2.8vw,1.85rem) var(--font-display);line-height:1;color:#fff;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.drive-mini-value.positive{color:var(--drive-green)}
+.drive-mini-value.delay{color:var(--drive-amber)}
+.drive-progress{grid-column:1/-1;--tile-accent:#B76674;padding:12px 14px 14px}
+.drive-progress-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.drive-progress-name{font:750 .65rem var(--font-body);color:#E4C4CA;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.drive-progress-pct{font:850 .72rem var(--font-display);color:#fff;font-variant-numeric:tabular-nums}
+.drive-route-line{position:relative;height:4px;margin:16px 8px 7px;border-radius:999px;background:#79545C}
+.drive-route-fill{position:absolute;inset:0 auto 0 0;width:var(--drive-progress,0%);border-radius:inherit;background:linear-gradient(90deg,#D43E56,#F47F91);box-shadow:0 0 16px rgba(244,127,145,.26);transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.drive-route-line i{position:absolute;top:50%;width:12px;height:12px;border-radius:50%;transform:translate(-50%,-50%);background:#3D1019;border:2px solid #B58D95}
+.drive-route-line i:nth-of-type(1){left:0}.drive-route-line i:nth-of-type(2){left:33%}.drive-route-line i:nth-of-type(3){left:66%}.drive-route-line i:nth-of-type(4){left:100%}
+.drive-route-line i:first-of-type,.drive-route-line i.is-passed{background:#D43E56;border-color:#FFDCE2}
+.drive-progress-labels{display:flex;justify-content:space-between;gap:8px;font:650 .55rem var(--font-body);color:#B98F97}
+.drive-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;padding:0 2px}
+.drive-actions-main{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.drive-btn{border-radius:9px;padding:9px 13px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:#fff;font:750 .7rem var(--font-body);cursor:pointer;transition:background .18s,border-color .18s,transform .1s}
+.drive-btn:hover,.drive-btn:focus-visible{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.25);outline:none}.drive-btn:active{transform:translateY(1px)}
+.drive-btn.primary{background:#D43E56;border-color:#EB7184}.drive-btn.primary:hover{background:#E15169}
+.drive-btn.stop{color:#F3C4CB}.drive-btn[hidden]{display:none}
+.drive-note{font:600 .58rem var(--font-body);color:#A87C85;text-align:right}
+
+@media (max-width:820px){
+  .drive-eta,.drive-road{grid-column:span 6}.drive-speed{grid-column:1/-1;grid-row:1;min-height:190px}
+  .drive-next{grid-column:1/-1}.drive-summary{grid-column:1/-1}.drive-progress{grid-column:1/-1}
+}
+@media (max-width:560px){
+  .travel-mode-bar{align-items:flex-start;flex-direction:column;padding:12px}.travel-mode-switch{width:100%}.travel-mode-btn{min-width:0;width:100%;padding-left:8px;padding-right:8px}
+  .drive-dashboard{padding:10px;border-radius:15px}.drive-topbar{align-items:flex-start}.drive-session{padding:6px 8px;font-size:.58rem}
+  .drive-eta,.drive-road{grid-column:1/-1}.drive-speed{min-height:176px}.drive-speed-value{font-size:clamp(4.8rem,25vw,6.6rem)}
+  .drive-next{grid-template-columns:52px minmax(0,1fr);min-height:110px}.drive-turn-icon{width:52px;height:52px}.drive-turn-icon svg{width:32px;height:32px}.drive-next-distance{grid-column:2;font-size:1.55rem}
+  .drive-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.drive-mini-value{font-size:1.25rem}
+  .drive-actions{align-items:flex-start;flex-direction:column}.drive-note{text-align:left}
+}
+
 .fatal{
   margin-top:12px;background:#FDECEE;border:1.5px solid var(--red);
   border-left:6px solid var(--red);border-radius:var(--radius);
@@ -757,22 +861,23 @@ html{scroll-behavior:smooth}
 @keyframes ldMapLabelIn{from{opacity:0;transform:translateY(2px)}to{opacity:1;transform:none}}
 @keyframes ldMapPulse{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.05;transform:scale(1.65)}}
 .ld-map-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:9px;font:650 .51rem var(--font-body);color:#E5C7CC}
-#lMapStatus{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#594A4D}
+#lMapStatus{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#FFF8F4}
 #lMapStatus::before{content:"";width:6px;height:6px;border-radius:50%;flex:none;background:#42A46E;box-shadow:0 0 0 3px rgba(66,164,110,.12);animation:ldMapLive 2.8s ease-in-out infinite}
 #lMapStatus.is-idle::before{background:#AAA0A2;box-shadow:none;animation:none}
 @keyframes ldMapLive{0%,100%{box-shadow:0 0 0 3px rgba(66,164,110,.12)}50%{box-shadow:0 0 0 6px rgba(66,164,110,0)}}
 #lMapScale{flex:none;opacity:.7}
 @media (max-width:600px){
-  .ld-map{padding:15px 14px 12px;border-radius:20px}
+  .ld-map{padding:14px 12px 11px;border-radius:20px}
   .ld-map-head{align-items:flex-start}
   .ld-map-linecode{width:31px;height:31px;font-size:.7rem}
   .ld-map-title{font-size:.8rem}
   .ld-map-sub{font-size:.54rem}
   .ld-map-legend{display:none}
-  .ld-map-plot{padding:4px 5px 2px}
+  .ld-map-plot{margin-top:10px;padding:3px 4px 1px;border-radius:14px}
   .ld-map-svg{width:100%;max-width:none}
-  .ld-map-label{font-size:7.1px}
-  .ld-map-foot{margin-top:5px}
+  .ld-map-label{font-size:7.4px;stroke-width:2.5px}
+  .ld-map-train-no{font-size:6.5px}
+  .ld-map-foot{margin-top:7px;font-size:.58rem;color:#FFF8F4}
   #lMapScale{display:none}
 }
 @media (prefers-reduced-motion:reduce){
@@ -1553,6 +1658,90 @@ html[data-theme="light"]{color-scheme:light}
     });
   </script>
 
+  <section class="travel-mode-bar" aria-label="เลือกโหมดการเดินทาง">
+    <div class="travel-mode-copy">
+      <span class="travel-mode-kicker">TRAVEL MODE</span>
+      <span class="travel-mode-title">ใช้จุดหมายเดิม แล้วเลือกวิธีเดินทาง</span>
+    </div>
+    <div class="travel-mode-switch" role="group" aria-label="สลับโหมดการเดินทาง">
+      <button class="travel-mode-btn" id="travelModeRail" type="button" data-travel-mode="rail" aria-pressed="true">รถไฟ</button>
+      <button class="travel-mode-btn" id="travelModeDrive" type="button" data-travel-mode="drive" aria-pressed="false">ขับรถ</button>
+    </div>
+  </section>
+
+  <section class="drive-dashboard travel-mode-panel" id="driveModePanel" aria-label="แดชบอร์ดสำหรับการเดินทางด้วยรถยนต์" hidden>
+    <div class="drive-topbar">
+      <div class="drive-route-head">
+        <div class="drive-kicker">PAI.DUY.NA · DRIVE ASSIST</div>
+        <div class="drive-route-title"><span id="driveFrom">กรุงเทพ</span><span class="drive-route-arrow">&rarr;</span><span id="driveTo">หัวหมาก</span></div>
+      </div>
+      <div class="drive-session"><span class="drive-live-dot" aria-hidden="true"></span><span id="driveSessionState">พร้อมเริ่มเดินทาง</span><time id="driveClock">--:--</time></div>
+    </div>
+
+    <div class="drive-grid">
+      <article class="drive-tile drive-eta">
+        <div>
+          <div class="drive-tile-cap">Estimated arrival</div>
+          <div class="drive-eta-time" id="driveEta">--:--</div>
+        </div>
+        <div class="drive-eta-sub"><strong id="driveDuration">-- นาที</strong> · <span id="driveDistance">-- กม.</span><br>เวลาถึงโดยประมาณ</div>
+      </article>
+
+      <article class="drive-tile drive-speed" aria-live="polite">
+        <div class="drive-tile-cap">Current speed</div>
+        <div>
+          <div class="drive-speed-value" id="driveSpeed">0</div>
+          <div class="drive-speed-unit">KM/H</div>
+        </div>
+        <div class="drive-speed-source" id="driveSpeedSource">ยังไม่เริ่มวัดความเร็ว</div>
+      </article>
+
+      <article class="drive-tile drive-road">
+        <div class="drive-tile-cap">Road status</div>
+        <div class="drive-road-stat"><span class="drive-road-label">SPEED LIMIT</span><strong class="drive-road-value">80</strong></div>
+        <div class="drive-road-stat"><span class="drive-road-label">TRAFFIC</span><strong class="drive-road-value safe" id="driveTraffic">ปกติ</strong></div>
+        <div class="drive-road-stat"><span class="drive-road-label">AIR QUALITY</span><strong class="drive-road-value safe" id="driveAqi">--</strong></div>
+        <div class="drive-road-stat"><span class="drive-road-label">WEATHER</span><strong class="drive-road-value" id="driveWeather">--°</strong></div>
+      </article>
+
+      <article class="drive-tile drive-next">
+        <div class="drive-turn-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 39V24c0-7 4-11 11-11h11"/><path d="m30 6 7 7-7 7"/></svg>
+        </div>
+        <div class="drive-next-copy">
+          <div class="drive-next-kicker">NEXT MANEUVER</div>
+          <div class="drive-next-road" id="driveNextRoad">มุ่งหน้าไปยังจุดหมาย</div>
+          <div class="drive-next-hint" id="driveNextHint">รักษาเส้นทางปัจจุบัน</div>
+        </div>
+        <div class="drive-next-distance" id="driveNextDistance">1.8 กม.</div>
+      </article>
+
+      <article class="drive-tile drive-summary" aria-label="สรุปการเดินทาง">
+        <div class="drive-mini"><span class="drive-mini-label">AVG SPEED</span><strong class="drive-mini-value" id="driveAvg">0</strong></div>
+        <div class="drive-mini"><span class="drive-mini-label">ETA DELTA</span><strong class="drive-mini-value positive" id="driveDelta">ตรงเวลา</strong></div>
+        <div class="drive-mini"><span class="drive-mini-label">TRIP TIME</span><strong class="drive-mini-value" id="driveElapsed">00:00</strong></div>
+        <div class="drive-mini"><span class="drive-mini-label">PROGRESS</span><strong class="drive-mini-value" id="driveProgressValue">0%</strong></div>
+      </article>
+
+      <article class="drive-tile drive-progress">
+        <div class="drive-progress-head"><span class="drive-progress-name" id="driveProgressName">กรุงเทพ ถึง หัวหมาก</span><span class="drive-progress-pct" id="driveProgressPct">0%</span></div>
+        <div class="drive-route-line" aria-hidden="true"><span class="drive-route-fill" id="driveRouteFill"></span><i></i><i></i><i></i><i></i></div>
+        <div class="drive-progress-labels"><span id="driveProgressFrom">ต้นทาง</span><span>ช่วงที่ 1</span><span>ช่วงที่ 2</span><span id="driveProgressTo">ปลายทาง</span></div>
+      </article>
+    </div>
+
+    <div class="drive-actions">
+      <div class="drive-actions-main">
+        <button class="drive-btn primary" id="btnDriveDemo" type="button">เริ่มโหมดสาธิต</button>
+        <button class="drive-btn" id="btnDriveGps" type="button">ใช้ GPS จริง</button>
+        <button class="drive-btn stop" id="btnDriveStop" type="button" hidden>หยุดการเดินทาง</button>
+      </div>
+      <p class="drive-note">ข้อมูลเส้นทางและการจราจรในหน้าทดลองเป็นค่าประมาณ · GPS เริ่มเมื่อผู้ใช้อนุญาตเท่านั้น</p>
+    </div>
+  </section>
+
+  <div class="travel-mode-panel" id="railModePanel">
+
   <nav class="quicknav" aria-label="ลัดไปยังหัวข้อ">
     <div class="quicknav-track">
       <a href="#cardPlanner">วางแผนการเดินทาง</a>
@@ -1785,8 +1974,9 @@ html[data-theme="light"]{color-scheme:light}
     ข้อมูลตารางเดินรถ: เพจ ป้ายหยุดรถพระจอมเกล้า<br>
     ข้อมูลเวลา Airport Rail Link: ถอดจากตารางภาพที่ผู้ใช้จัดเตรียม<br>
     ตารางปกติปรับปรุงข้อมูลล่าสุดเมื่อวันที่ 1 กรกฎาคม 2569<br>
-    <span style="opacity:.75">PAI.DUY.NA Full build 2026-07-31 v47 Geo Anchored Map</span>
+    <span style="opacity:.75">PAI.DUY.NA Full build 2026-08-02 v52 Drive Dashboard + Mobile Map</span>
   </p>
+  </div>
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -1799,10 +1989,11 @@ html[data-theme="light"]{color-scheme:light}
    ============================================================ */
 const STATUS_URL = "data/status.json";
 const STRAVA_LATEST_URL = "/api/strava/latest";
-const APP_VERSION = "2026-08-02-v51-burgundy-map";
+const APP_VERSION = "2026-08-02-v52-drive-dashboard-prototype";
 const STORE = {
   favorites:"pdn-favorites",
-  recents:"pdn-recents"
+  recents:"pdn-recents",
+  travelMode:"pdn-travel-mode"
 };
 
 /* ============================================================
@@ -2362,6 +2553,7 @@ async function loadWeather(){
     $("wxMeta").textContent = "ความชื้น " + humid + "% | สูงสุด "
       + Math.round(dl.temperature_2m_max[0]) + "\u00B0 ต่ำสุด " + Math.round(dl.temperature_2m_min[0])
       + "\u00B0 | โอกาสฝน " + rainChance + "%";
+    if($("driveWeather")) $("driveWeather").textContent = tempNow + "°C";
     const mainWeatherCard = $("mainWxCard");
     if(mainWeatherCard){
       mainWeatherCard.style.setProperty("--wx-start", theme.start);
@@ -2386,6 +2578,7 @@ async function loadWeather(){
     $("wxTemp").textContent = "--\u00B0";
     $("wxDesc").textContent = "เรียกข้อมูลอากาศไม่สำเร็จ";
     $("wxMeta").textContent = "ตรวจสอบการเชื่อมต่ออินเทอร์เน็ต แล้วกดรีเฟรชข้อมูล";
+    if($("driveWeather")) $("driveWeather").textContent = "--°";
     if($("lWxTemp")){
       $("lWxTemp").textContent = "--\u00B0";
       $("lWxDesc").textContent = "อากาศไม่พร้อม";
@@ -2452,6 +2645,10 @@ async function loadAirQuality(){
     $("aqiStatus").textContent = band.label;
     $("aqiStatus").className = "aqi-status " + band.level;
     $("aqiPm").textContent = "PM2.5 " + pm25 + " | PM10 " + pm10 + " µg/m³ · " + band.advice;
+    if($("driveAqi")){
+      $("driveAqi").textContent = aqi + " · " + band.label;
+      $("driveAqi").className = "drive-road-value " + (aqi <= 50 ? "safe" : "warn");
+    }
 
     const mainAqiCard = $("mainAqiCard");
     if(mainAqiCard){
@@ -2481,6 +2678,7 @@ async function loadAirQuality(){
     $("aqiStatus").textContent = "เรียกข้อมูลไม่สำเร็จ";
     $("aqiStatus").className = "aqi-status";
     $("aqiPm").textContent = "กดรีเฟรชข้อมูลเพื่อลองใหม่";
+    if($("driveAqi")){ $("driveAqi").textContent = "--"; $("driveAqi").className = "drive-road-value"; }
     if($("lAqiCard")){
       $("lAqiVal").textContent = "--";
       $("lAqiStatus").textContent = "ข้อมูลอากาศไม่พร้อม";
@@ -3831,7 +4029,9 @@ async function loadStravaRun(){
    ============================================================ */
 const MAP_BOX = { width:320, height:104, padX:16, top:24, bottom:80 };
 const MAP_DESKTOP_SPINE = [[16,64],[62,64],[86,40],[142,40],[164,62],[216,62],[244,34],[304,34]];
-const MAP_MOBILE_SPINE = [[44,18],[44,206]];
+/* Mobile พับเส้นทางเป็นสองแถวแบบ serpentine เพื่อใช้พื้นที่แนวนอนให้เต็ม
+   ลดความสูงของการ์ด และยังคงลำดับสถานีจากต้นทางถึงปลายทางไว้อย่างชัดเจน */
+const MAP_MOBILE_SPINE = [[16,34],[105,34],[119,48],[242,48],[242,92],[153,92],[139,106],[16,106]];
 const MAP_DEFAULT_MAJORS = ["krungthep","phayathai","asok","huamak","latkrabang","chachoengsao"];
 const MAP_MAX_TRAINS = 4;
 let stationsGeo = null;
@@ -4009,7 +4209,7 @@ function renderMapStatic(){
   const svg = $("lMapSvg");
   if(!svg || !mapLayout) return;
   const { samples, cum, stationLengths, meta } = mapLayout;
-  svg.setAttribute("viewBox", mapLayout.compact ? "0 0 320 224" : "0 0 320 104");
+  svg.setAttribute("viewBox", mapLayout.compact ? "0 0 260 138" : "0 0 320 104");
   const routePath = pathFromSamples(samples);
   const trackShadow = $("lMapTrackShadow"), track = $("lMapTrack");
   trackShadow.setAttribute("d", routePath);
@@ -4047,13 +4247,26 @@ function renderMapStatic(){
       const tick = document.createElementNS(ns, "line");
       const text = document.createElementNS(ns, "text");
       if(mapLayout.compact){
-        tick.setAttribute("x1", (pt.x+3.6).toFixed(2));
-        tick.setAttribute("y1", pt.y.toFixed(2));
-        tick.setAttribute("x2", (pt.x+9).toFixed(2));
-        tick.setAttribute("y2", pt.y.toFixed(2));
-        text.setAttribute("x", (pt.x+12).toFixed(2));
-        text.setAttribute("y", (pt.y+2.4).toFixed(2));
-        text.setAttribute("text-anchor", "start");
+        const majorRank = Math.max(0,MAP_DEFAULT_MAJORS.indexOf(item.id));
+        const onRightTurn = pt.x > 226 && pt.y > 58;
+        if(onRightTurn){
+          tick.setAttribute("x1", (pt.x-3.6).toFixed(2));
+          tick.setAttribute("y1", pt.y.toFixed(2));
+          tick.setAttribute("x2", (pt.x-8).toFixed(2));
+          tick.setAttribute("y2", pt.y.toFixed(2));
+          text.setAttribute("x", (pt.x-11).toFixed(2));
+          text.setAttribute("y", (pt.y+2.4).toFixed(2));
+          text.setAttribute("text-anchor", "end");
+        }else{
+          const above = majorRank % 2 === 0;
+          tick.setAttribute("x1", pt.x.toFixed(2));
+          tick.setAttribute("y1", (pt.y + (above ? -3.6 : 3.6)).toFixed(2));
+          tick.setAttribute("x2", pt.x.toFixed(2));
+          tick.setAttribute("y2", (pt.y + (above ? -7 : 7)).toFixed(2));
+          text.setAttribute("x", pt.x.toFixed(2));
+          text.setAttribute("y", (pt.y + (above ? -9 : 13)).toFixed(2));
+          text.setAttribute("text-anchor", index === 0 || index === meta.length-1 ? "start" : "middle");
+        }
       }else{
         const below = index % 2 === 1;
         tick.setAttribute("x1", pt.x.toFixed(2));
@@ -4399,6 +4612,164 @@ function enterApp(immediate=false){
   }
 }
 
+/* ============================================================
+   18.5 Drive Dashboard prototype
+   แยกข้อมูลสาธิตออกจาก GPS จริงอย่างชัดเจน และไม่อ้างว่าอ่านข้อมูลจากตัวรถ
+   ============================================================ */
+let DRIVE_TIMER = null;
+let DRIVE_WATCH = null;
+let DRIVE_SESSION_START = 0;
+let DRIVE_SESSION_KIND = "idle";
+let DRIVE_LAST_SPEED = 0;
+let DRIVE_SPEED_TOTAL = 0;
+let DRIVE_SPEED_SAMPLES = 0;
+let DRIVE_EST_DURATION = 28;
+let DRIVE_EST_DISTANCE = 18.6;
+
+function compactStationName(id){
+  const name = st(id).name || id || "ไม่ระบุ";
+  return name.replace(/\s*\([^)]*\)\s*/g," ").trim();
+}
+
+function driveClockText(date=new Date()){
+  return new Intl.DateTimeFormat("th-TH",{hour:"2-digit",minute:"2-digit",hour12:false,timeZone:"Asia/Bangkok"}).format(date);
+}
+
+function syncDriveRoute(){
+  const fromId = $("selFrom") && $("selFrom").value ? $("selFrom").value : "krungthep";
+  const toId = $("selTo") && $("selTo").value ? $("selTo").value : "huamak";
+  const fromName = compactStationName(fromId);
+  const toName = compactStationName(toId);
+  const allIds = [...LINE,...ARL_LINE].map(item => item.id);
+  const fromIndex = Math.max(0,allIds.indexOf(fromId));
+  const toIndex = Math.max(0,allIds.indexOf(toId));
+  const stationSpan = Math.max(1,Math.abs(toIndex-fromIndex));
+  DRIVE_EST_DISTANCE = Math.max(4.8,Math.round((stationSpan*4.15+2.8)*10)/10);
+  DRIVE_EST_DURATION = Math.max(12,Math.round(DRIVE_EST_DISTANCE/31*60));
+  const eta = new Date(Date.now()+DRIVE_EST_DURATION*60000);
+  $("driveFrom").textContent = fromName;
+  $("driveTo").textContent = toName;
+  $("driveProgressFrom").textContent = fromName;
+  $("driveProgressTo").textContent = toName;
+  $("driveProgressName").textContent = fromName + " ถึง " + toName;
+  $("driveEta").textContent = driveClockText(eta);
+  $("driveDuration").textContent = DRIVE_EST_DURATION + " นาที";
+  $("driveDistance").textContent = DRIVE_EST_DISTANCE.toFixed(1) + " กม.";
+  $("driveNextRoad").textContent = "มุ่งหน้าไปยัง " + toName;
+  $("driveNextHint").textContent = "ใช้เส้นทางที่แนะนำจาก " + fromName;
+}
+
+function updateDriveClock(){
+  if($("driveClock")) $("driveClock").textContent = driveClockText();
+}
+
+function setDriveProgress(percent){
+  const pct = Math.max(0,Math.min(100,percent));
+  $("driveRouteFill").style.setProperty("--drive-progress",pct.toFixed(1)+"%");
+  $("driveProgressPct").textContent = Math.round(pct)+"%";
+  $("driveProgressValue").textContent = Math.round(pct)+"%";
+  document.querySelectorAll(".drive-route-line i").forEach((point,index) => {
+    point.classList.toggle("is-passed",pct >= index*33);
+  });
+  const nextKm = Math.max(.1,1.8*(1-pct/100));
+  $("driveNextDistance").textContent = nextKm < 1 ? Math.round(nextKm*1000)+" ม." : nextKm.toFixed(1)+" กม.";
+}
+
+function updateDriveMetrics(speed,source){
+  const safeSpeed = Math.max(0,Math.min(199,Number.isFinite(speed)?speed:0));
+  DRIVE_LAST_SPEED = safeSpeed;
+  DRIVE_SPEED_TOTAL += safeSpeed;
+  DRIVE_SPEED_SAMPLES += 1;
+  $("driveSpeed").textContent = Math.round(safeSpeed);
+  $("driveAvg").textContent = Math.round(DRIVE_SPEED_TOTAL/Math.max(1,DRIVE_SPEED_SAMPLES));
+  $("driveSpeedSource").textContent = source;
+}
+
+function driveSessionTick(){
+  if(!DRIVE_SESSION_START) return;
+  const elapsedSeconds = Math.max(0,(Date.now()-DRIVE_SESSION_START)/1000);
+  const mins = Math.floor(elapsedSeconds/60), secs = Math.floor(elapsedSeconds%60);
+  $("driveElapsed").textContent = String(mins).padStart(2,"0")+":"+String(secs).padStart(2,"0");
+  const progress = DRIVE_SESSION_KIND === "demo"
+    ? Math.min(96,elapsedSeconds*1.15)
+    : Math.min(96,elapsedSeconds/Math.max(1,DRIVE_EST_DURATION*60)*100);
+  setDriveProgress(progress);
+  if(DRIVE_SESSION_KIND === "demo"){
+    const speed = 54 + Math.sin(elapsedSeconds/3.2)*13 + Math.sin(elapsedSeconds/1.35)*5;
+    updateDriveMetrics(speed,"ข้อมูลสาธิต · ไม่ใช่ความเร็วจริง");
+    const delta = Math.sin(elapsedSeconds/10) > .45 ? "+2 นาที" : "ตรงเวลา";
+    $("driveDelta").textContent = delta;
+    $("driveDelta").className = "drive-mini-value " + (delta === "ตรงเวลา" ? "positive" : "delay");
+  }else{
+    updateDriveMetrics(DRIVE_LAST_SPEED,"วัดจากตำแหน่ง GPS ของอุปกรณ์");
+  }
+}
+
+function prepareDriveSession(kind){
+  stopDriveSession(false);
+  DRIVE_SESSION_KIND = kind;
+  DRIVE_SESSION_START = Date.now();
+  DRIVE_SPEED_TOTAL = 0; DRIVE_SPEED_SAMPLES = 0; DRIVE_LAST_SPEED = 0;
+  $("driveModePanel").classList.add("is-running");
+  $("driveSessionState").textContent = kind === "demo" ? "กำลังสาธิตการเดินทาง" : "กำลังรับตำแหน่ง GPS";
+  $("btnDriveDemo").hidden = true;
+  $("btnDriveGps").hidden = true;
+  $("btnDriveStop").hidden = false;
+  DRIVE_TIMER = setInterval(driveSessionTick,1000);
+  driveSessionTick();
+}
+
+function startDriveDemo(){
+  prepareDriveSession("demo");
+  showToast("เริ่ม Drive Dashboard แบบสาธิตแล้ว");
+}
+
+function startDriveGps(){
+  if(!navigator.geolocation){ showToast("อุปกรณ์นี้ไม่รองรับ GPS"); return; }
+  prepareDriveSession("gps");
+  DRIVE_WATCH = navigator.geolocation.watchPosition(position => {
+    const raw = position.coords.speed;
+    const kmh = Number.isFinite(raw) ? Math.max(0,raw*3.6) : 0;
+    DRIVE_LAST_SPEED = kmh;
+    $("driveSessionState").textContent = "GPS ทำงาน";
+    updateDriveMetrics(kmh,"วัดจากตำแหน่ง GPS ของอุปกรณ์");
+  }, error => {
+    const message = error && error.code === 1 ? "ไม่ได้รับอนุญาตให้ใช้ตำแหน่ง" : "รับสัญญาณ GPS ไม่สำเร็จ";
+    showToast(message);
+    stopDriveSession(false);
+  },{enableHighAccuracy:true,maximumAge:1000,timeout:20000});
+}
+
+function stopDriveSession(notify=true){
+  if(DRIVE_TIMER){ clearInterval(DRIVE_TIMER); DRIVE_TIMER = null; }
+  if(DRIVE_WATCH !== null){ try{ navigator.geolocation.clearWatch(DRIVE_WATCH); }catch(e){} DRIVE_WATCH = null; }
+  DRIVE_SESSION_START = 0; DRIVE_SESSION_KIND = "idle"; DRIVE_LAST_SPEED = 0;
+  if($("driveModePanel")) $("driveModePanel").classList.remove("is-running");
+  if($("driveSessionState")) $("driveSessionState").textContent = "พร้อมเริ่มเดินทาง";
+  if($("driveSpeed")) $("driveSpeed").textContent = "0";
+  if($("driveSpeedSource")) $("driveSpeedSource").textContent = "ยังไม่เริ่มวัดความเร็ว";
+  if($("driveElapsed")) $("driveElapsed").textContent = "00:00";
+  if($("driveAvg")) $("driveAvg").textContent = "0";
+  if($("driveDelta")){ $("driveDelta").textContent = "ตรงเวลา"; $("driveDelta").className = "drive-mini-value positive"; }
+  if($("btnDriveDemo")) $("btnDriveDemo").hidden = false;
+  if($("btnDriveGps")) $("btnDriveGps").hidden = false;
+  if($("btnDriveStop")) $("btnDriveStop").hidden = true;
+  if($("driveRouteFill")) setDriveProgress(0);
+  if(notify) showToast("หยุด Drive Dashboard แล้ว");
+}
+
+function setTravelMode(mode,persist=true){
+  const next = mode === "drive" ? "drive" : "rail";
+  $("railModePanel").hidden = next !== "rail";
+  $("driveModePanel").hidden = next !== "drive";
+  $("travelModeRail").setAttribute("aria-pressed",String(next === "rail"));
+  $("travelModeDrive").setAttribute("aria-pressed",String(next === "drive"));
+  document.body.classList.toggle("is-drive-mode",next === "drive");
+  if(next === "drive") syncDriveRoute();
+  else if(DRIVE_SESSION_KIND !== "idle") stopDriveSession(false);
+  if(persist){ try{ localStorage.setItem(STORE.travelMode,next); }catch(e){} }
+}
+
 function init(){
   initTheme();
   validateSchedules();
@@ -4422,6 +4793,12 @@ function init(){
   syncTabs();
   refreshAll();
   applyURLState();
+  syncDriveRoute();
+  updateDriveClock();
+  setInterval(updateDriveClock,1000);
+  let savedTravelMode = "rail";
+  try{ savedTravelMode = localStorage.getItem(STORE.travelMode) || "rail"; }catch(e){}
+  setTravelMode(savedTravelMode,false);
   // ลิงก์ที่แชร์กันมาหรือ Shortcut บนหน้าจอโฮมจะระบุเส้นทางมาแล้ว จึงข้ามหน้า Landing ไปที่ผลลัพธ์เลย
   const deepLinkKeys = ["from","to","time","date","schedule"];
   const query = new URLSearchParams(location.search);
@@ -4451,7 +4828,7 @@ function init(){
       const other = sc.stations.find(stationId => stationId !== $(id).value);
       $(id === "selFrom" ? "selTo" : "selFrom").value = other;
     }
-    state.showMore = false; renderTrips(); renderParkingStation(); saveRecent(); $("btnFavorite").textContent = "บันทึกเส้นทางนี้";
+    state.showMore = false; renderTrips(); renderParkingStation(); saveRecent(); syncDriveRoute(); $("btnFavorite").textContent = "บันทึกเส้นทางนี้";
   }));
   $("chkAll").addEventListener("change", () => { state.showMore = false; renderTrips(); });
   $("chkNow").addEventListener("change", () => {
@@ -4467,8 +4844,13 @@ function init(){
     const a = $("selFrom").value;
     $("selFrom").value = $("selTo").value;
     $("selTo").value = a;
-    state.showMore = false; renderTrips(); renderParkingStation(); saveRecent();
+    state.showMore = false; renderTrips(); renderParkingStation(); saveRecent(); syncDriveRoute();
   });
+  $("travelModeRail").addEventListener("click",() => setTravelMode("rail"));
+  $("travelModeDrive").addEventListener("click",() => setTravelMode("drive"));
+  $("btnDriveDemo").addEventListener("click",startDriveDemo);
+  $("btnDriveGps").addEventListener("click",startDriveGps);
+  $("btnDriveStop").addEventListener("click",() => stopDriveSession(true));
   $("btnRefresh").addEventListener("click", () => { loadStatus(); loadWeather(); loadAirQuality(); });
   $("btnModeSrt").addEventListener("click", () => selectMode("srt"));
   $("btnModeArl").addEventListener("click", () => selectMode("arl"));
