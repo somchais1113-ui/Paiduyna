@@ -1,7 +1,7 @@
 // สมัครรับแจ้งเตือนขบวนล่วงหน้า 10 นาที ผ่าน Push (ทำงานได้แม้ปิดแอป)
 // - เก็บ Subscription + ข้อมูลขบวนลง Upstash Redis พร้อม TTL
 // - GitHub Actions จะเรียก api/push/cron.js ทุกประมาณ 5 นาทีเพื่อส่ง Push เมื่อถึงเวลา
-import { ensureConfigured, hashEndpoint, secondsUntil } from "../../lib/push.js";
+import { ensureConfigured, hashEndpoint, secondsUntil, REMINDER_INDEX_KEY } from "../../lib/push.js";
 import { getRedis, isRedisConfigured } from "../../lib/redis.js";
 
 const REMIND_BEFORE_MS = 10 * 60 * 1000;
@@ -88,6 +88,10 @@ export default async function handler(req, res) {
 
     // หมดอายุอัตโนมัติ 1 ชั่วโมงหลังขบวนออก เผื่อ scheduler ล่าช้าชั่วคราว
     await redis.set(key, JSON.stringify(value), { ex: secondsUntil(dep, 3600) });
+
+    // บันทึกลงดัชนีเรียงตามเวลาที่ต้องแจ้ง เพื่อให้ cron ดึงเฉพาะรายการที่ถึงกำหนด
+    // แทนการกวาดทุก Key ซึ่งมีต้นทุนโตตามจำนวนผู้ใช้
+    await redis.zadd(REMINDER_INDEX_KEY, { score: remindAt, member: key });
 
     return res.status(200).json({
       status: "ok",

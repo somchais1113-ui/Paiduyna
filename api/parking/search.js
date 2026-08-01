@@ -12,6 +12,19 @@ const FIELD_MASK = [
   "places.businessStatus"
 ].join(",");
 
+// เวลาสูงสุดที่ยอมรอ Google ก่อนตัดจบ ป้องกัน Function ค้างจนหมดเวลาของแพลตฟอร์ม
+const UPSTREAM_TIMEOUT_MS = 8000;
+
+// สร้าง signal สำหรับ timeout โดยรองรับ Node รุ่นที่ยังไม่มี AbortSignal.timeout
+function timeoutSignal(ms) {
+  if (typeof AbortSignal !== "undefined" && typeof AbortSignal.timeout === "function") {
+    return AbortSignal.timeout(ms);
+  }
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(), ms);
+  return controller.signal;
+}
+
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const finiteNumber = value => {
   const parsed = Number(value);
@@ -90,13 +103,15 @@ async function callGoogle(endpoint, body, apiKey) {
       "X-Goog-Api-Key": apiKey,
       "X-Goog-FieldMask": FIELD_MASK
     },
-    body: JSON.stringify(body)
+    body: JSON.stringify(body),
+    signal: timeoutSignal(UPSTREAM_TIMEOUT_MS)
   });
 
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) {
-    const message = payload?.error?.message || `Google Places returned ${response.status}`;
-    const error = new Error(message);
+    // รายละเอียดจาก Google เก็บไว้ใน log เท่านั้น ไม่ส่งกลับไปที่หน้าเว็บ
+    console.error("places_upstream", response.status, payload?.error?.message || "");
+    const error = new Error("upstream_status_" + response.status);
     error.status = response.status;
     throw error;
   }
@@ -176,12 +191,16 @@ export default async function handler(req, res) {
       places
     });
   } catch (error) {
+    console.error("google_places_error", error?.message || error);
     res.setHeader("Cache-Control", "no-store");
-    const status = Number(error?.status) === 429 ? 429 : 502;
+    const aborted = error?.name === "TimeoutError" || error?.name === "AbortError";
+    const status = aborted ? 504 : (Number(error?.status) === 429 ? 429 : 502);
     return res.status(status).json({
       status: "error",
-      code: "google_places_error",
-      message: String(error?.message || error)
+      code: aborted ? "google_places_timeout" : "google_places_error",
+      message: aborted
+        ? "เครือข่ายตอบช้าเกินไป กรุณาลองใหม่อีกครั้ง"
+        : "ค้นหาลานจอดไม่สำเร็จในขณะนี้ กรุณาลองใหม่อีกครั้ง"
     });
   }
 }

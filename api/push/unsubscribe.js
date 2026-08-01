@@ -1,5 +1,5 @@
 // ยกเลิกการแจ้งเตือน Push ทั้งหมดที่ผูกกับอุปกรณ์นี้ (ตาม Subscription endpoint)
-import { hashEndpoint } from "../../lib/push.js";
+import { hashEndpoint, REMINDER_INDEX_KEY } from "../../lib/push.js";
 import { getRedis, isRedisConfigured } from "../../lib/redis.js";
 
 export default async function handler(req, res) {
@@ -26,12 +26,17 @@ export default async function handler(req, res) {
     const redis = getRedis();
     const hash = hashEndpoint(endpoint);
     const keys = await redis.keys(`reminder:${hash}:*`);
-    if (keys.length) await Promise.all(keys.map(key => redis.del(key)));
+    if (keys.length) {
+      await Promise.all(keys.map(key => redis.del(key)));
+      // ลบออกจากดัชนีด้วย ไม่เช่นนั้นดัชนีจะสะสมรายการที่ไม่มีข้อมูลจริงแล้ว
+      await redis.zrem(REMINDER_INDEX_KEY, ...keys).catch(() => {});
+    }
     return res.status(200).json({ status: "ok", removed: keys.length });
   } catch (error) {
+    console.error("push_unsubscribe_error", error?.message || error);
     return res.status(502).json({
       status: "error",
-      message: "ยกเลิกไม่สำเร็จ: " + String(error?.message || error)
+      message: "ยกเลิกไม่สำเร็จ กรุณาลองใหม่อีกครั้ง"
     });
   }
 }

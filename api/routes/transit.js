@@ -5,6 +5,19 @@
 // - API Key อยู่ฝั่ง Server เท่านั้น ไม่ส่งกลับหน้าเว็บ
 const DIRECTIONS_URL = "https://maps.googleapis.com/maps/api/directions/json";
 
+// เวลาสูงสุดที่ยอมรอ Google ก่อนตัดจบ ป้องกัน Function ค้างจนหมดเวลาของแพลตฟอร์ม
+const UPSTREAM_TIMEOUT_MS = 8000;
+
+// สร้าง signal สำหรับ timeout โดยรองรับ Node รุ่นที่ยังไม่มี AbortSignal.timeout
+function timeoutSignal(ms) {
+  if (typeof AbortSignal !== "undefined" && typeof AbortSignal.timeout === "function") {
+    return AbortSignal.timeout(ms);
+  }
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(), ms);
+  return controller.signal;
+}
+
 // ค่าจำกัดข้อความ ป้องกัน query ยาวผิดปกติ
 const MAX_QUERY_LEN = 200;
 
@@ -125,7 +138,7 @@ export default async function handler(req, res) {
     const depart = finiteNumber(req.query?.departAt);
     url.searchParams.set("departure_time", depart !== null ? String(Math.floor(depart)) : "now");
 
-    const response = await fetch(url);
+    const response = await fetch(url, { signal: timeoutSignal(UPSTREAM_TIMEOUT_MS) });
     const payload = await response.json().catch(() => ({}));
 
     // Google คืน 200 พร้อม status ภายในเสมอ ต้องเช็ค payload.status
@@ -134,8 +147,9 @@ export default async function handler(req, res) {
       return res.status(200).json({ status: "ok", count: 0, routes: [], message: "ไม่พบเส้นทางขนส่งสาธารณะระหว่างสองจุดนี้" });
     }
     if (payload.status !== "OK") {
-      const message = payload?.error_message || `Directions API: ${payload.status || response.status}`;
-      const error = new Error(message);
+      // เก็บรายละเอียดไว้ใน log ฝั่ง Server เท่านั้น ไม่ส่งข้อความดิบของ Google กลับไปให้ผู้ใช้
+      console.error("directions_upstream", payload.status, payload?.error_message || "");
+      const error = new Error("upstream_status_" + (payload.status || response.status));
       error.status = payload.status === "OVER_QUERY_LIMIT" ? 429 : 502;
       throw error;
     }
@@ -153,12 +167,16 @@ export default async function handler(req, res) {
       routes
     });
   } catch (error) {
+    console.error("directions_error", error?.message || error);
     res.setHeader("Cache-Control", "no-store");
-    const status = Number(error?.status) === 429 ? 429 : 502;
+    const aborted = error?.name === "TimeoutError" || error?.name === "AbortError";
+    const status = aborted ? 504 : (Number(error?.status) === 429 ? 429 : 502);
     return res.status(status).json({
       status: "error",
-      code: "directions_error",
-      message: String(error?.message || error)
+      code: aborted ? "directions_timeout" : "directions_error",
+      message: aborted
+        ? "เครือข่ายตอบช้าเกินไป กรุณาลองใหม่อีกครั้ง"
+        : "ยังหาเส้นทางไม่ได้ในขณะนี้ กรุณาลองใหม่อีกครั้ง"
     });
   }
 }

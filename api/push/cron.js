@@ -1,12 +1,53 @@
 // Endpoint สำหรับ scheduler ภายนอก (GitHub Actions) เรียกทุกประมาณ 5 นาที
 // เหตุผลที่ไม่ใช้ Vercel Cron: แผน Hobby อนุญาตให้รันได้เพียงวันละครั้ง
 import crypto from "node:crypto";
-import { webpush, ensureConfigured, secondsUntil } from "../../lib/push.js";
+import { webpush, ensureConfigured, secondsUntil, REMINDER_INDEX_KEY } from "../../lib/push.js";
 import { getRedis, isRedisConfigured } from "../../lib/redis.js";
 
 const REMIND_BEFORE_MS = 10 * 60 * 1000;
 const MAX_LATE_AFTER_DEPART_MS = 5 * 60 * 1000;
 const MAX_ATTEMPTS = 3;
+// จำนวนรายการสูงสุดต่อรอบ กันไม่ให้ Function ทำงานนานเกินเวลาที่แพลตฟอร์มกำหนด
+const MAX_BATCH = 200;
+// รายการในดัชนีที่เลยกำหนดนานกว่านี้ถือว่าไม่มีข้อมูลจริงแล้ว ลบทิ้งได้
+const INDEX_STALE_MS = 24 * 60 * 60 * 1000;
+
+/* ดึงเฉพาะรายการที่ถึงกำหนดแจ้งจากดัชนี Sorted Set
+   เดิมใช้ redis.keys("reminder:*") ซึ่งอ่านทุก Key ทุกรอบ ต้นทุนโตตามจำนวนผู้ใช้
+   ถ้าดัชนีว่าง (ข้อมูลเดิมจากเวอร์ชันก่อน) จะกวาดแบบเดิมหนึ่งครั้งแล้วเติมเข้าดัชนีให้ */
+async function collectDueKeys(redis, now) {
+  let due = [];
+  try {
+    due = await redis.zrange(REMINDER_INDEX_KEY, 0, now, { byScore: true });
+  } catch (error) {
+    console.error("reminder_index_read_failed", error?.message || error);
+    due = [];
+  }
+
+  let indexed = 0;
+  try {
+    indexed = await redis.zcard(REMINDER_INDEX_KEY);
+  } catch {
+    indexed = due.length;
+  }
+
+  if (indexed === 0) {
+    // เส้นทางสำรองสำหรับข้อมูลที่บันทึกไว้ก่อนมีดัชนี
+    const legacy = await redis.keys("reminder:*");
+    for (const key of legacy) {
+      const parts = String(key).split(":");
+      const departAt = Number(parts[parts.length - 1]);
+      if (!Number.isFinite(departAt)) continue;
+      await redis.zadd(REMINDER_INDEX_KEY, { score: departAt - REMIND_BEFORE_MS, member: key }).catch(() => {});
+    }
+    due = legacy.filter(key => {
+      const departAt = Number(String(key).split(":").pop());
+      return Number.isFinite(departAt) && now >= departAt - REMIND_BEFORE_MS;
+    });
+  }
+
+  return (Array.isArray(due) ? due : []).map(String).slice(0, MAX_BATCH);
+}
 
 function safeEqual(left, right) {
   const a = Buffer.from(String(left));
@@ -23,6 +64,12 @@ function isAuthorized(req) {
   if (!auth.startsWith(prefix)) return false;
 
   return safeEqual(auth.slice(prefix.length), secret);
+}
+
+// ลบทั้งข้อมูลและรายการในดัชนีพร้อมกันเสมอ เพื่อไม่ให้ทั้งสองฝั่งไม่ตรงกัน
+async function dropReminder(redis, key) {
+  await redis.del(key);
+  await redis.zrem(REMINDER_INDEX_KEY, key).catch(() => {});
 }
 
 function parseReminder(raw) {
@@ -98,7 +145,10 @@ export default async function handler(req, res) {
     }
 
     try {
-      const keys = await redis.keys("reminder:*");
+      // ลบรายการค้างในดัชนีที่เก่ามากก่อน เพื่อไม่ให้ดัชนีบวมสะสม
+      await redis.zremrangebyscore(REMINDER_INDEX_KEY, 0, now - INDEX_STALE_MS).catch(() => {});
+
+      const keys = await collectDueKeys(redis, now);
       summary.checked = keys.length;
 
       for (const key of keys) {
@@ -110,7 +160,7 @@ export default async function handler(req, res) {
         }
 
         if (!item) {
-          await redis.del(key);
+          await dropReminder(redis, key);
           summary.cleaned++;
           continue;
         }
@@ -119,7 +169,7 @@ export default async function handler(req, res) {
         if (now < remindAt) continue;
 
         if (now > item.departAt + MAX_LATE_AFTER_DEPART_MS) {
-          await redis.del(key);
+          await dropReminder(redis, key);
           summary.cleaned++;
           continue;
         }
@@ -135,11 +185,11 @@ export default async function handler(req, res) {
 
         try {
           await webpush.sendNotification(item.subscription, payload);
-          await redis.del(key);
+          await dropReminder(redis, key);
           summary.sent++;
         } catch (error) {
           if (error?.statusCode === 404 || error?.statusCode === 410) {
-            await redis.del(key);
+            await dropReminder(redis, key);
             summary.expired++;
             continue;
           }
@@ -148,7 +198,7 @@ export default async function handler(req, res) {
           summary.errors++;
 
           if (attempts >= MAX_ATTEMPTS || now >= item.departAt) {
-            await redis.del(key);
+            await dropReminder(redis, key);
             summary.cleaned++;
             continue;
           }
@@ -177,9 +227,10 @@ export default async function handler(req, res) {
       }
     }
   } catch (error) {
+    console.error("push_cron_error", error?.message || error);
     return res.status(502).json({
       status: "error",
-      message: String(error?.message || error),
+      message: "ประมวลผลคิวแจ้งเตือนไม่สำเร็จ",
       ...summary
     });
   }

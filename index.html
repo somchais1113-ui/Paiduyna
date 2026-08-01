@@ -18,6 +18,27 @@
 </script>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="icon" href="icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<!-- iOS: บันทึกลงหน้าจอโฮมแล้วเปิดเต็มจอเหมือนแอป -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PAI.DUY.NA">
+<meta name="format-detection" content="telephone=no">
+
+<!-- การ์ดพรีวิวเวลาแชร์ลิงก์ (ใช้กับปุ่มแชร์เส้นทางในแอป) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PAI.DUY.NA">
+<meta property="og:locale" content="th_TH">
+<meta property="og:title" content="PAI.DUY.NA | ตารางเดินรถและวางแผนการเดินทาง สายตะวันออก">
+<meta property="og:description" content="ตารางรถไฟชานเมืองสายตะวันออกและ Airport Rail Link พร้อมวางแผนการเดินทาง ลานจอดรถ และการเชื่อมต่อรถไฟฟ้า">
+<meta property="og:image" content="og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PAI.DUY.NA | follow time together">
+<meta name="twitter:description" content="ตารางเดินรถสายตะวันออก Airport Rail Link และผู้ช่วยวางแผนการเดินทาง">
+<meta name="twitter:image" content="og-image.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -100,7 +121,7 @@ body{
 }
 .live-main{flex:1;min-width:0}
 .livecard .lbl{font-size:.68rem;letter-spacing:1.2px;color:var(--blue-200);font-weight:600;display:block;margin-bottom:2px}
-.clock-time{font-family:var(--font-display);font-weight:700;font-size:clamp(2.45rem,6vw,3.5rem);line-height:.98;width:4.86em;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;letter-spacing:0;display:inline-flex;align-items:flex-end;justify-content:center;gap:0;white-space:nowrap}
+.clock-time{font-family:var(--font-display);font-weight:700;font-size:clamp(2.35rem,5.8vw,3.35rem);line-height:.98;width:5.16em;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;font-stretch:expanded;font-variation-settings:"wdth" 108;letter-spacing:0;white-space:nowrap}
 .clock-date{font-size:.92rem;color:#F0D6DB;margin-top:8px;font-weight:500}
 .clock-zone{font-size:.74rem;color:var(--blue-200);margin-top:2px;font-weight:700;letter-spacing:.7px}
 .clock-card{justify-content:space-between}
@@ -119,6 +140,26 @@ body{
 .wx-desc{font-size:.8rem;color:var(--blue-200);margin-top:3px}
 .wx-meta{font-size:.72rem;color:var(--blue-200);opacity:.85}
 .wx-icon{font-size:1.9rem;line-height:1}
+
+/* ---------- สภาพอากาศหน้าหลัก: ภาษาภาพเดียวกับ Landing แต่คงสัดส่วน Main ---------- */
+.climate-card{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(190px,.88fr);gap:9px;padding:8px;background:rgba(255,255,255,.045);align-items:stretch}
+.main-wx-panel,.main-aqi-panel{position:relative;overflow:hidden;min-width:0;border-radius:14px;padding:14px 15px;color:#fff;border:1px solid rgba(255,255,255,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.13)}
+.main-wx-panel{--wx-start:#2E9ED0;--wx-end:#1B7FB2;--wx-text:#F7FCFF;color:var(--wx-text);background:linear-gradient(145deg,var(--wx-start),var(--wx-end))}
+.main-aqi-panel{--aqi-start:#249668;--aqi-end:#147450;--aqi-text:#F7FFFB;color:var(--aqi-text);background:linear-gradient(145deg,var(--aqi-start),var(--aqi-end))}
+.main-wx-panel::after,.main-aqi-panel::after{content:"";position:absolute;width:118px;height:118px;border-radius:50%;right:-38px;top:-57px;background:rgba(255,255,255,.10);pointer-events:none}
+.main-climate-top,.main-wx-main,.main-aqi-main,.main-climate-meta{position:relative;z-index:1}
+.main-climate-top{display:flex;align-items:center;justify-content:space-between;gap:9px}
+.main-climate-cap{font:800 .66rem var(--font-body);letter-spacing:.055em;line-height:1.2;text-transform:uppercase;opacity:.92}
+.main-wx-panel .wx-icon{width:34px;height:34px;display:grid;place-items:center;flex:none;border-radius:50%;font-size:1.25rem;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);filter:drop-shadow(0 4px 8px rgba(0,0,0,.12))}
+.main-wx-main{display:flex;align-items:flex-end;gap:12px;margin-top:9px;min-width:0}
+.main-wx-panel .wx-temp{font:850 clamp(2.15rem,4vw,3rem) var(--font-display);line-height:.9;letter-spacing:-.045em;color:#fff;flex:none}
+.main-wx-copy{min-width:0;padding-bottom:2px}
+.main-wx-panel .wx-desc{font:750 .78rem var(--font-body);line-height:1.3;color:inherit;margin:0}
+.main-climate-meta{font:600 .64rem var(--font-body);line-height:1.45;opacity:.86;margin-top:10px}
+.main-aqi-main{display:flex;align-items:flex-end;gap:10px;margin-top:12px;min-width:0}
+.main-aqi-panel .aqi-val{font:850 clamp(2.25rem,4.3vw,3.2rem) var(--font-display);line-height:.86;letter-spacing:-.04em;color:inherit;flex:none}
+.main-aqi-panel .aqi-status{align-self:flex-end;margin:0 0 1px;padding:5px 10px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.18);font-size:.7rem;color:#fff;max-width:145px;overflow:hidden;text-overflow:ellipsis}
+.main-aqi-panel .aqi-pm{position:relative;z-index:1;font-size:.62rem;line-height:1.45;color:inherit;opacity:.86;margin-top:10px}
 
 /* ---------- ดัชนีคุณภาพอากาศ ---------- */
 .aqi-block{
@@ -296,8 +337,8 @@ td.nostop{color:#D6C3C6;font-weight:400}
 /* ---------- จุดเชื่อมต่อการเดินทาง ---------- */
 .connection-card .card-head{background:linear-gradient(110deg,var(--navy-700),var(--navy-900))}
 .connection-intro{font-size:.84rem;color:var(--ink-mute);margin-bottom:16px}
-.connection-track{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;padding-top:5px}
-.connection-track::before{content:"";position:absolute;top:30px;left:9%;right:9%;height:3px;background:linear-gradient(90deg,var(--navy-700),var(--blue-500));border-radius:999px}
+.connection-track{position:relative;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;padding-top:5px}
+.connection-track::before{content:"";position:absolute;top:30px;left:7%;right:7%;height:3px;background:linear-gradient(90deg,var(--navy-700),var(--blue-500));border-radius:999px}
 .connection-stop{position:relative;text-align:center;padding:0 6px;z-index:1}
 .connection-dot{width:52px;height:52px;margin:0 auto 10px;border:5px solid #fff;border-radius:50%;background:var(--navy-700);box-shadow:0 0 0 3px #E8B4BE;display:flex;align-items:center;justify-content:center;color:#fff;font:700 .68rem var(--font-display)}
 .connection-stop:nth-child(even) .connection-dot{background:var(--blue-500);box-shadow:0 0 0 3px #EFD4D9}
@@ -499,19 +540,20 @@ html{scroll-behavior:smooth}
   font:800 clamp(3.5rem,16.5vw,5.25rem) var(--font-display);
   line-height:.9;margin-top:8px;width:100%;max-width:100%;
   font-variant-numeric:tabular-nums;color:#FFF8F4;white-space:nowrap;
-  font-feature-settings:"tnum" 1;text-shadow:0 5px 24px rgba(45,4,12,.16);
+  font-feature-settings:"tnum" 1;font-stretch:expanded;font-variation-settings:"wdth" 108;text-shadow:0 5px 24px rgba(45,4,12,.16);
 }
 .landing-clock,.clock-time{
-  display:grid;grid-template-columns:1.1em .18em 1.1em .18em 1.1em .12em .56em;
-  column-gap:.02em;align-items:end;justify-content:center;
+  display:grid;grid-template-columns:1.12em .22em 1.12em .22em 1.12em .14em .58em;
+  column-gap:.028em;align-items:end;justify-content:center;
 }
 .landing-clock .clock-unit,.clock-time .clock-unit{
-  display:block;min-width:0;text-align:center;font-weight:800;letter-spacing:-.045em;
-  font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;
+  display:block;min-width:0;text-align:center;font-weight:800;letter-spacing:-.018em;
+  font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;font-stretch:expanded;
+  transform:scaleX(1.045);transform-origin:center bottom;
 }
 .landing-clock .clock-sep,.clock-time .clock-sep{
   display:block;min-width:0;text-align:center;font-weight:400;opacity:.9;
-  letter-spacing:0;line-height:.92;padding-bottom:.015em;
+  letter-spacing:0;line-height:.92;padding-bottom:.015em;transform:translateY(-.012em);
 }
 .landing-clock .clock-ms,.clock-time .clock-ms{
   display:block;min-width:0;text-align:left;font-weight:400;font-size:.26em;
@@ -662,6 +704,82 @@ html{scroll-behavior:smooth}
 .ld-run-link:focus-visible{outline:2px solid rgba(255,255,255,.32);outline-offset:3px;border-radius:4px}
 
 /* กราฟความหนาแน่น + ความเร็ว วางเป็นกลุ่มเดียวเพื่อลดความรก */
+/* ============================================================
+   แผนผังเส้นทางท้ายหน้า Landing
+   ใช้โทนเดียวกับการ์ดความหนาแน่น เพื่อให้ต่อเนื่องกันเป็นชุดเดียว
+   ============================================================ */
+.ld-map{
+  position:relative;isolation:isolate;overflow:hidden;color:#FFF8F4;
+  width:100%;margin-top:14px;padding:18px 20px 14px;border-radius:22px;
+  background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.035));
+  border:1px solid rgba(255,255,255,.15);
+  box-shadow:0 16px 36px rgba(18,0,5,.18),inset 0 1px 0 rgba(255,255,255,.04);
+  grid-area:map;grid-column:1/-1;
+}
+.ld-map::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,rgba(255,255,255,.032) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.032) 1px,transparent 1px);background-size:28px 28px;mask-image:linear-gradient(to bottom,transparent,rgba(0,0,0,.8) 24%,rgba(0,0,0,.55) 76%,transparent)}
+.ld-map-head{display:flex;align-items:center;justify-content:space-between;gap:14px;min-width:0}
+.ld-map-heading{display:flex;align-items:center;gap:10px;min-width:0}
+.ld-map-linecode{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex:none;color:#fff;background:#D43E56;border:3px solid #F6C9D0;box-shadow:0 0 0 1px #D43E56;font:850 .78rem var(--font-display)}
+.ld-map-kicker{font:800 .49rem var(--font-body);letter-spacing:.12em;color:#E7BEC5;line-height:1.1}
+.ld-map-title{font:850 .88rem var(--font-display);color:#FFF8F4;line-height:1.2;letter-spacing:-.015em;margin-top:2px}
+.ld-map-sub{font:650 .57rem var(--font-body);color:#E8CDD2;margin-top:3px;line-height:1.3}
+.ld-map-legend{display:flex;align-items:center;gap:6px;flex:none}
+.ld-map-legend-item{display:inline-flex;align-items:center;gap:6px;font:700 .5rem var(--font-body);color:#FFF8F4;white-space:nowrap;padding:5px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.065)}
+.ld-map-legend-item i{width:7px;height:7px;border-radius:50%;flex:none}
+.ld-map-legend-item i.dot-train{background:#fff;border:1.5px solid #D43E56;box-shadow:0 0 0 2px #F7D8DD}
+.ld-map-legend-item i.dot-route{background:#D43E56}
+.ld-map-plot{position:relative;width:100%;min-width:0;margin-top:12px;padding:4px 8px 2px;overflow:hidden;border-radius:16px;background:rgba(45,3,12,.16);border:1px solid rgba(255,255,255,.09)}
+.ld-map-svg{width:100%;max-width:none;height:auto;margin:0 auto;display:block;overflow:visible}
+.ld-map-track-shadow,.ld-map-track,.ld-map-segment-glow,.ld-map-segment{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.ld-map-track-shadow{stroke:rgba(46,3,12,.58);stroke-width:8}
+.ld-map-track{stroke:#B99198;stroke-width:4}
+.ld-map-track.is-drawing{stroke-dasharray:100;animation:ldMapTrackIn 1.15s cubic-bezier(.22,.8,.22,1) both}
+.ld-map-segment-glow{stroke:#F4B7C0;stroke-width:9;opacity:.42}
+.ld-map-segment{stroke:#D43E56;stroke-width:4.4;stroke-dasharray:100;stroke-dashoffset:0}
+.ld-map-segment.is-drawing{animation:ldMapRouteIn 1.25s .2s cubic-bezier(.22,.8,.22,1) both}
+.ld-map-stop{fill:#5A1422;stroke:#D9BBC0;stroke-width:1.35;opacity:0;animation:ldMapStopIn .36s calc(.24s + var(--i)*28ms) cubic-bezier(.2,.8,.2,1) forwards}
+.ld-map-stop.is-major{fill:#6B1E2B;stroke:#F29AAA;stroke-width:1.8}
+.ld-map-stop.is-endpoint{fill:#D43E56;stroke:#fff;stroke-width:1.9}
+.ld-map-stop-ring{fill:none;stroke:#F2BCC5;stroke-width:1;opacity:0;animation:ldMapStopIn .36s calc(.24s + var(--i)*28ms) both}
+.ld-map-label-tick{stroke:#E7C8CD;stroke-width:.85;opacity:0;animation:ldMapLabelIn .42s calc(.34s + var(--i)*28ms) both}
+.ld-map-label{font:750 6.2px var(--font-body);letter-spacing:-.08px;fill:#FFF8F4;paint-order:stroke;stroke:#4A0B17;stroke-width:3.2px;stroke-linejoin:round;opacity:0;animation:ldMapLabelIn .42s calc(.34s + var(--i)*28ms) both}
+.ld-map-label.is-endpoint{font-weight:850;fill:#FFFFFF}
+.ld-map-flow-dot{fill:#fff;stroke:#D43E56;stroke-width:1.1;filter:drop-shadow(0 1px 1px rgba(66,20,29,.18))}
+.ld-map-train-halo{fill:rgba(212,62,86,.12);transform-box:fill-box;transform-origin:center}
+.ld-map-train-card{fill:#6B1E2B;stroke:#F29AAA;stroke-width:.85;filter:drop-shadow(0 3px 4px rgba(28,0,6,.3))}
+.ld-map-train-dot{fill:#42A46E}
+.ld-map-train-no{font:850 4.8px var(--font-display);fill:#FFFFFF;text-anchor:middle;dominant-baseline:central}
+.ld-map-train{transition:transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.ld-map-train .ld-map-train-halo{animation:ldMapPulse 2.6s ease-in-out infinite}
+@keyframes ldMapTrackIn{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+@keyframes ldMapRouteIn{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+@keyframes ldMapStopIn{from{opacity:0;transform:scale(.4);transform-origin:center}to{opacity:1;transform:scale(1)}}
+@keyframes ldMapLabelIn{from{opacity:0;transform:translateY(2px)}to{opacity:1;transform:none}}
+@keyframes ldMapPulse{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.05;transform:scale(1.65)}}
+.ld-map-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:9px;font:650 .51rem var(--font-body);color:#E5C7CC}
+#lMapStatus{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#594A4D}
+#lMapStatus::before{content:"";width:6px;height:6px;border-radius:50%;flex:none;background:#42A46E;box-shadow:0 0 0 3px rgba(66,164,110,.12);animation:ldMapLive 2.8s ease-in-out infinite}
+#lMapStatus.is-idle::before{background:#AAA0A2;box-shadow:none;animation:none}
+@keyframes ldMapLive{0%,100%{box-shadow:0 0 0 3px rgba(66,164,110,.12)}50%{box-shadow:0 0 0 6px rgba(66,164,110,0)}}
+#lMapScale{flex:none;opacity:.7}
+@media (max-width:600px){
+  .ld-map{padding:15px 14px 12px;border-radius:20px}
+  .ld-map-head{align-items:flex-start}
+  .ld-map-linecode{width:31px;height:31px;font-size:.7rem}
+  .ld-map-title{font-size:.8rem}
+  .ld-map-sub{font-size:.54rem}
+  .ld-map-legend{display:none}
+  .ld-map-plot{padding:4px 5px 2px}
+  .ld-map-svg{width:100%;max-width:none}
+  .ld-map-label{font-size:7.1px}
+  .ld-map-foot{margin-top:5px}
+  #lMapScale{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .ld-map-train{transition:none}
+  .ld-map-train .ld-map-train-halo,.ld-map-track,.ld-map-segment,.ld-map-stop,.ld-map-stop-ring,.ld-map-label,.ld-map-label-tick,#lMapStatus::before{animation:none!important;opacity:1}
+  .ld-map-flow{display:none}
+}
 .ld-transit-summary{
   width:100%;display:grid;grid-template-columns:minmax(0,1.72fr) minmax(112px,.72fr);
   align-items:stretch;gap:10px;margin-top:16px;
@@ -791,6 +909,14 @@ html{scroll-behavior:smooth}
   .card-body{padding:13px}
   .aqi-block{min-width:108px;max-width:126px;padding-left:10px}
   .aqi-status{font-size:.66rem;padding:3px 8px}
+  .climate-card{grid-template-columns:minmax(0,1.06fr) minmax(138px,.94fr);gap:7px;padding:7px}
+  .main-wx-panel,.main-aqi-panel{padding:12px 11px;border-radius:12px}
+  .main-wx-panel .wx-temp{font-size:2rem}
+  .main-wx-main{gap:8px}
+  .main-wx-panel .wx-desc{font-size:.68rem}
+  .main-climate-meta,.main-aqi-panel .aqi-pm{font-size:.56rem}
+  .main-aqi-panel .aqi-val{font-size:2.15rem}
+  .main-aqi-panel .aqi-status{font-size:.61rem;padding:4px 7px}
   .brand-live{display:none}
   .brand-logo{width:155px}
   .top-btn{padding:6px 8px}
@@ -880,13 +1006,13 @@ html[data-theme="light"]{color-scheme:light}
   }
   .landing-clock{
     display:grid;
-    grid-template-columns:1.06em .16em 1.06em .16em 1.06em .12em .44em;
-    column-gap:.022em;justify-content:center;align-items:end;
+    grid-template-columns:1.1em .21em 1.1em .21em 1.1em .14em .48em;
+    column-gap:.028em;justify-content:center;align-items:end;
     width:auto;max-width:100%;font-size:clamp(4rem,12.6cqw,6.6rem);
     margin:auto 0;align-self:center;overflow:visible;
   }
   .landing-clock .clock-unit{
-    min-width:0;letter-spacing:-.05em;text-align:center;
+    min-width:0;letter-spacing:-.018em;text-align:center;
   }
   .landing-clock .clock-sep{
     min-width:0;font-weight:400;opacity:.88;text-align:center;line-height:.9;
@@ -930,7 +1056,8 @@ html[data-theme="light"]{color-scheme:light}
     grid-template-areas:
       "hero cards"
       "hero wellness"
-      "transit transit";
+      "transit transit"
+      "map map";
     gap:18px 22px;
     align-items:stretch;
   }
@@ -948,13 +1075,13 @@ html[data-theme="light"]{color-scheme:light}
   }
   .landing-clock{
     display:grid;
-    grid-template-columns:1.08em .16em 1.08em .16em 1.08em .13em .46em;
-    column-gap:.024em;justify-content:center;align-items:end;
+    grid-template-columns:1.11em .22em 1.11em .22em 1.11em .14em .5em;
+    column-gap:.03em;justify-content:center;align-items:end;
     width:auto;max-width:100%;font-size:clamp(4.15rem,11.8cqw,7rem);
     margin:auto 0;align-self:center;overflow:visible;
   }
   .landing-clock .clock-unit{
-    min-width:0;letter-spacing:-.052em;text-align:center;
+    min-width:0;letter-spacing:-.018em;text-align:center;
   }
   .landing-clock .clock-sep{
     min-width:0;font-weight:400;opacity:.88;text-align:center;line-height:.9;
@@ -1269,6 +1396,43 @@ html[data-theme="light"]{color-scheme:light}
         </div>
       </div>
     </div>
+
+    <section class="ld-map" id="lMapCard" aria-labelledby="lMapTitle">
+      <div class="ld-map-head">
+        <div class="ld-map-heading">
+          <span class="ld-map-linecode" aria-hidden="true">E</span>
+          <div>
+            <div class="ld-map-kicker">SRT · EASTERN LINE</div>
+            <div class="ld-map-title" id="lMapTitle">แผนผังการเดินทาง</div>
+            <div class="ld-map-sub" id="lMapSub">กรุงเทพ ถึง ฉะเชิงเทรา</div>
+          </div>
+        </div>
+        <div class="ld-map-legend" aria-hidden="true">
+          <span class="ld-map-legend-item"><i class="dot-train"></i>ขบวนที่กำลังวิ่ง</span>
+          <span class="ld-map-legend-item"><i class="dot-route"></i>ช่วงเดินทางช่วงเวลานี้</span>
+        </div>
+      </div>
+      <div class="ld-map-plot">
+        <svg class="ld-map-svg" id="lMapSvg" viewBox="0 0 320 104" role="img" aria-labelledby="lMapTitle" aria-describedby="lMapDesc">
+          <desc id="lMapDesc">แผนผังลำดับสถานีบนเส้นทางรถไฟชานเมืองสายตะวันออก</desc>
+          <path class="ld-map-track-shadow" id="lMapTrackShadow" pathLength="100" d=""/>
+          <path class="ld-map-track" id="lMapTrack" pathLength="100" d=""/>
+          <path class="ld-map-segment-glow" id="lMapSegmentGlow" pathLength="100" d=""/>
+          <path class="ld-map-segment" id="lMapSegment" pathLength="100" d=""/>
+          <g class="ld-map-flow" aria-hidden="true">
+            <circle class="ld-map-flow-dot" r="2.05"><animateMotion dur="4.4s" repeatCount="indefinite"><mpath href="#lMapSegment"/></animateMotion></circle>
+            <circle class="ld-map-flow-dot" r="2.05"><animateMotion dur="4.4s" begin="-2.2s" repeatCount="indefinite"><mpath href="#lMapSegment"/></animateMotion></circle>
+          </g>
+          <g id="lMapStations"></g>
+          <g id="lMapLabels"></g>
+          <g id="lMapTrains"></g>
+        </svg>
+      </div>
+      <div class="ld-map-foot">
+        <span id="lMapStatus" aria-live="polite">กำลังเตรียมแผนผัง</span>
+        <span id="lMapScale">แผนผังเชิงสัญลักษณ์</span>
+      </div>
+    </section>
   </div>
 </div>
 <script>
@@ -1341,20 +1505,29 @@ html[data-theme="light"]{color-scheme:light}
           </svg>
         </div>
       </div>
-      <div class="livecard">
-        <div class="wx-icon" id="wxIcon">&#9925;</div>
-        <div class="live-main">
-          <span class="lbl">สภาพอากาศ กรุงเทพมหานคร</span>
-          <div class="wx-temp" id="wxTemp">--&deg;</div>
-          <div class="wx-desc" id="wxDesc">กำลังเรียกข้อมูล</div>
-          <div class="wx-meta" id="wxMeta"></div>
-        </div>
-        <div class="aqi-block">
-          <span class="lbl">คุณภาพอากาศ (US AQI)</span>
-          <div class="aqi-val" id="aqiVal">--</div>
-          <div class="aqi-status" id="aqiStatus">กำลังเรียกข้อมูล</div>
-          <div class="aqi-pm" id="aqiPm"></div>
-        </div>
+      <div class="livecard climate-card" aria-label="สภาพอากาศและคุณภาพอากาศกรุงเทพมหานคร">
+        <section class="main-wx-panel" id="mainWxCard" role="status" aria-live="polite">
+          <div class="main-climate-top">
+            <span class="main-climate-cap">สภาพอากาศ · กรุงเทพฯ</span>
+            <span class="wx-icon" id="wxIcon" aria-hidden="true">&#9925;</span>
+          </div>
+          <div class="main-wx-main">
+            <div class="wx-temp" id="wxTemp">--&deg;</div>
+            <div class="main-wx-copy"><div class="wx-desc" id="wxDesc">กำลังเรียกข้อมูล</div></div>
+          </div>
+          <div class="main-climate-meta" id="wxMeta">กรุงเทพมหานคร · กำลังอัปเดต</div>
+        </section>
+        <section class="main-aqi-panel" id="mainAqiCard" role="status" aria-live="polite">
+          <div class="main-climate-top">
+            <span class="main-climate-cap">คุณภาพอากาศ · US AQI</span>
+            <span class="ld-aqi-icon" id="mainAqiIcon" aria-hidden="true">AQI</span>
+          </div>
+          <div class="main-aqi-main">
+            <div class="aqi-val" id="aqiVal">--</div>
+            <div class="aqi-status" id="aqiStatus">กำลังเรียกข้อมูล</div>
+          </div>
+          <div class="aqi-pm" id="aqiPm">กำลังอัปเดตข้อมูลฝุ่น</div>
+        </section>
       </div>
     </div>
   </div>
@@ -1612,7 +1785,7 @@ html[data-theme="light"]{color-scheme:light}
     ข้อมูลตารางเดินรถ: เพจ ป้ายหยุดรถพระจอมเกล้า<br>
     ข้อมูลเวลา Airport Rail Link: ถอดจากตารางภาพที่ผู้ใช้จัดเตรียม<br>
     ตารางปกติปรับปรุงข้อมูลล่าสุดเมื่อวันที่ 1 กรกฎาคม 2569<br>
-    <span style="opacity:.75">PAI.DUY.NA Full build 2026-07-31 v44 Hobby Cron Fix</span>
+    <span style="opacity:.75">PAI.DUY.NA Full build 2026-07-31 v47 Geo Anchored Map</span>
   </p>
 </div>
 
@@ -1626,7 +1799,7 @@ html[data-theme="light"]{color-scheme:light}
    ============================================================ */
 const STATUS_URL = "data/status.json";
 const STRAVA_LATEST_URL = "/api/strava/latest";
-const APP_VERSION = "2026-07-31-v44-hobby-cron-fix";
+const APP_VERSION = "2026-08-02-v51-burgundy-map";
 const STORE = {
   favorites:"pdn-favorites",
   recents:"pdn-recents"
@@ -1836,6 +2009,24 @@ const clockMarkup = (hour,minute,second,millisecond=0) => {
     + "<span class=\"clock-sep\">:</span><span class=\"clock-unit\">" + p2(second) + "</span>"
     + "<span class=\"clock-sep\">:</span><span class=\"clock-ms\">" + ms2 + "</span>";
 };
+/* วาดนาฬิกาโดยไม่สร้าง DOM ใหม่ทุกเฟรม
+   สร้างโครงสร้าง span ครั้งเดียว จากนั้นเขียนเฉพาะช่องที่ค่าเปลี่ยนจริง
+   ลดงาน parse HTML และ reflow ซึ่งเดิมเกิดขึ้น 10 ครั้งต่อวินาทีต่อหนึ่งนาฬิกา */
+function paintClock(el, hour, minute, second, millisecond=0){
+  if(!el) return;
+  if(!el._clockParts){
+    el.innerHTML = clockMarkup(hour, minute, second, millisecond);
+    const units = el.querySelectorAll(".clock-unit");
+    el._clockParts = { h:units[0], m:units[1], s:units[2], ms:el.querySelector(".clock-ms"), last:{} };
+    return;
+  }
+  const parts = el._clockParts, last = parts.last;
+  const h = p2(hour), m = p2(minute), s = p2(second), ms = p2(Math.floor((millisecond || 0)/10));
+  if(last.h !== h){ parts.h.textContent = h; last.h = h; }
+  if(last.m !== m){ parts.m.textContent = m; last.m = m; }
+  if(last.s !== s){ parts.s.textContent = s; last.s = s; }
+  if(last.ms !== ms){ parts.ms.textContent = ms; last.ms = ms; }
+}
 const toMin = t => t ? (+t.slice(0,2))*60 + (+t.slice(3,5)) : null;
 const isoDate = d => d.getFullYear()+"-"+p2(d.getMonth()+1)+"-"+p2(d.getDate());
 const fromStore = (key, fallback=[]) => {
@@ -1885,12 +2076,16 @@ function initTheme(){
   setTheme(theme, false);
 }
 
+/* สร้าง Intl.DateTimeFormat ครั้งเดียวแล้วใช้ซ้ำ
+   เดิมสร้างใหม่ทุกครั้งที่เรียก ซึ่งถูกเรียกหลายสิบครั้งต่อวินาทีจากนาฬิกา
+   การสร้างอ็อบเจกต์ Intl ใหม่มีต้นทุนสูงกว่าการ format มาก */
+const BKK_FMT = new Intl.DateTimeFormat("en-CA",{
+  timeZone:"Asia/Bangkok",year:"numeric",month:"2-digit",day:"2-digit",
+  hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"
+});
 function bangkokParts(date=new Date()){
-
-  const parts = new Intl.DateTimeFormat("en-CA",{
-    timeZone:"Asia/Bangkok",year:"numeric",month:"2-digit",day:"2-digit",
-    hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"
-  }).formatToParts(date).reduce((o,p) => { if(p.type !== "literal") o[p.type] = p.value; return o; },{});
+  const parts = BKK_FMT.formatToParts(date)
+    .reduce((o,p) => { if(p.type !== "literal") o[p.type] = p.value; return o; },{});
   return {year:+parts.year,month:+parts.month,day:+parts.day,hour:+parts.hour,minute:+parts.minute,second:+parts.second};
 }
 function bangkokISO(date=new Date()){
@@ -2066,21 +2261,40 @@ function updateDensityPoint(hour,minute){
     if(block) block.setAttribute("aria-label",description);
   }
 }
+/* นาฬิกาแบ่งงานเป็น 3 ระดับตามความถี่ที่จำเป็นจริง
+   ทุกเฟรม   : ตัวเลขเสี้ยววินาที (งานเบามาก)
+   ทุกวินาที : วันที่ กราฟความหนาแน่น ข้อความ Sync
+   ทุกนาที   : คำนวณรอบถัดไปและ render รายการขบวนใหม่
+   เดิมทำงานทั้งหมดทุก 100 มิลลิวินาที ซึ่งกินแบตเตอรี่บนมือถือโดยไม่จำเป็น */
 function tickClock(){
   const d = new Date(), p = bangkokParts(d), today = bangkokISO(d);
   const ms = d.getMilliseconds();
-  $("clockTime").innerHTML = clockMarkup(p.hour,p.minute,p.second,ms);
-  $("clockDate").textContent = thaiDate(today);
-  $("clockZone").textContent = "เวลาไทย";
+  paintClock($("clockTime"), p.hour, p.minute, p.second, ms);
   updateLanding(d, p, today, ms);
 
   const secondKey = today + " " + p2(p.hour) + ":" + p2(p.minute) + ":" + p2(p.second);
   if(tickClock._lastSecondKey === secondKey) return;
   tickClock._lastSecondKey = secondKey;
 
+  // วันที่เปลี่ยนไม่บ่อย จึงเขียนเฉพาะตอนข้ามวันหรือรอบแรก
+  if(tickClock._lastDay !== today){
+    tickClock._lastDay = today;
+    $("clockDate").textContent = thaiDate(today);
+    $("clockZone").textContent = "เวลาไทย";
+  }
+
   updateDensityPoint(p.hour,p.minute);
   $("nowTimeHint").textContent = $("chkNow").checked ? "กำลัง Sync | ตอนนี้ " + p2(p.hour)+":"+p2(p.minute) : "เลือกเวลาเอง";
-  if(p.second === 0){
+
+  // ใช้การเปลี่ยนนาทีเป็นเงื่อนไข แทนการรอ second === 0
+  // เพราะเมื่อกลับมาจากพื้นหลัง วินาทีที่ 0 อาจถูกข้ามไปจนรายการค้างเก่า
+  const minuteKey = today + " " + p2(p.hour) + ":" + p2(p.minute);
+  if(tickClock._lastMinuteKey !== minuteKey){
+    // รอบแรกสุดยังไม่ต้อง render เพราะ init จะเรียก refreshAll ให้อยู่แล้ว
+    const firstRun = !tickClock._started;
+    tickClock._started = true;
+    tickClock._lastMinuteKey = minuteKey;
+    if(firstRun) return;
     if($("chkNow").checked && state.date !== today){
       state.date = today;
       if(state.mode === "arl") state.schedId = defaultScheduleForMode("arl",state.date);
@@ -2088,6 +2302,31 @@ function tickClock(){
     }
     renderTrips();
   }
+}
+
+/* ตัวคุมลูปนาฬิกา
+   ใช้ requestAnimationFrame แทน setInterval เพื่อให้เบราว์เซอร์หยุดลูปเองเมื่อสลับแท็บ
+   และมี guard กันเริ่มลูปซ้อนกรณี init() ผิดพลาดแล้ว boot() เรียกซ้ำ */
+let CLOCK_RAF = null;
+function clockFrame(){
+  CLOCK_RAF = requestAnimationFrame(clockFrame);
+  try{ tickClock(); }catch(e){ /* นาฬิกาต้องไม่ทำให้ทั้งหน้าหยุด */ }
+}
+function startClock(){
+  if(CLOCK_RAF !== null) return;
+  try{ tickClock(); }catch(e){}
+  if(typeof requestAnimationFrame === "function") CLOCK_RAF = requestAnimationFrame(clockFrame);
+  else CLOCK_RAF = setInterval(tickClock, 250);
+}
+
+/* เรียกข้อมูลภายนอกพร้อมกำหนดเวลาสูงสุด
+   บนเน็ตมือถือที่ช้ามาก fetch อาจค้างเป็นนาทีจนการ์ดขึ้นสถานะกำลังโหลดค้างไว้
+   ตัดจบด้วย AbortController แล้วให้ตัวเรียกจัดการ error ตามปกติ */
+function fetchWithTimeout(url, options={}, timeoutMs=8000){
+  if(typeof AbortController !== "function") return fetch(url, options);
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  return fetch(url, {...options, signal:controller.signal}).finally(() => clearTimeout(timer));
 }
 
 /* ============================================================
@@ -2108,7 +2347,7 @@ async function loadWeather(){
     + "&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max"
     + "&timezone=Asia%2FBangkok&forecast_days=1";
   try{
-    const r = await fetch(url);
+    const r = await fetchWithTimeout(url);
     if(!r.ok) throw new Error(r.status);
     const j = await r.json(), c = j.current, dl = j.daily;
     const [desc,icon] = WX[c.weather_code] || ["ไม่ทราบสภาพอากาศ","\uD83C\uDF21\uFE0F"];
@@ -2123,6 +2362,13 @@ async function loadWeather(){
     $("wxMeta").textContent = "ความชื้น " + humid + "% | สูงสุด "
       + Math.round(dl.temperature_2m_max[0]) + "\u00B0 ต่ำสุด " + Math.round(dl.temperature_2m_min[0])
       + "\u00B0 | โอกาสฝน " + rainChance + "%";
+    const mainWeatherCard = $("mainWxCard");
+    if(mainWeatherCard){
+      mainWeatherCard.style.setProperty("--wx-start", theme.start);
+      mainWeatherCard.style.setProperty("--wx-end", theme.end);
+      mainWeatherCard.style.setProperty("--wx-text", theme.text);
+      mainWeatherCard.setAttribute("aria-label","สภาพอากาศกรุงเทพมหานคร " + desc + " อุณหภูมิ " + tempNow + " องศาเซลเซียส");
+    }
     if($("lWxTemp")){
       $("lWxTemp").textContent = tempNow + "\u00B0C";
       $("lWxIcon").textContent = icon;
@@ -2192,7 +2438,7 @@ async function loadAirQuality(){
   const url = "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=13.7563&longitude=100.5018"
     + "&current=us_aqi,pm2_5,pm10&timezone=Asia%2FBangkok";
   try{
-    const r = await fetch(url);
+    const r = await fetchWithTimeout(url);
     if(!r.ok) throw new Error(r.status);
     const c = (await r.json()).current;
     const aqi = Math.round(c.us_aqi);
@@ -2206,6 +2452,15 @@ async function loadAirQuality(){
     $("aqiStatus").textContent = band.label;
     $("aqiStatus").className = "aqi-status " + band.level;
     $("aqiPm").textContent = "PM2.5 " + pm25 + " | PM10 " + pm10 + " µg/m³ · " + band.advice;
+
+    const mainAqiCard = $("mainAqiCard");
+    if(mainAqiCard){
+      mainAqiCard.style.setProperty("--aqi-start",band.start);
+      mainAqiCard.style.setProperty("--aqi-end",band.end);
+      mainAqiCard.style.setProperty("--aqi-text",band.text);
+      mainAqiCard.setAttribute("aria-label","คุณภาพอากาศกรุงเทพมหานคร AQI " + aqi + " ระดับ" + band.label);
+      if($("mainAqiIcon")) $("mainAqiIcon").textContent = band.icon;
+    }
 
     const card = $("lAqiCard");
     if(card){
@@ -2268,7 +2523,7 @@ async function loadStatus(){
   btn.disabled = true; btn.textContent = "กำลังรีเฟรช";
   try{
     const sep = STATUS_URL.includes("?") ? "&" : "?";
-    const r = await fetch(STATUS_URL + sep + "t=" + Date.now(), {cache:"no-store"});
+    const r = await fetchWithTimeout(STATUS_URL + sep + "t=" + Date.now(), {cache:"no-store"});
     if(!r.ok) throw new Error("no file");
     renderStatus(await r.json());
   }catch(e){
@@ -2525,7 +2780,7 @@ function renderArlResults(sc, fromId, toId){
   const list = $("chkAll").checked ? all : all.filter(t => t.depMin >= refServiceMin);
   state.currentTrips = list;
   if(!list.length){
-    nextOut.innerHTML = "<div class='empty'>ไม่มีเที่ยวออกจาก " + escapeHTML(stLabel(sc,fromId)) + " หลังเวลา " + ($("inpTime").value || "ที่กำหนด")
+    nextOut.innerHTML = "<div class='empty'>ไม่มีเที่ยวออกจาก " + escapeHTML(stLabel(sc,fromId)) + " หลังเวลา " + escapeHTML($("inpTime").value || "ที่กำหนด")
       + "<br>ลองเลือกเวลาให้เร็วขึ้น หรือเปิดแสดงทุกเที่ยว</div>";
     out.innerHTML = ""; return;
   }
@@ -2584,7 +2839,7 @@ function renderTrips(){
   state.currentTrips = list;
 
   if(!list.length){
-    nextOut.innerHTML = "<div class='empty'>ไม่มีขบวนที่ออกเดินทางหลังเวลา " + ($("inpTime").value || "ที่กำหนด")
+    nextOut.innerHTML = "<div class='empty'>ไม่มีขบวนที่ออกเดินทางหลังเวลา " + escapeHTML($("inpTime").value || "ที่กำหนด")
       + " ในเส้นทางนี้<br>ลองเลือกเวลาให้เร็วขึ้น หรือเปิดแสดงทุกขบวน</div>";
     out.innerHTML = "";
     return;
@@ -2833,7 +3088,7 @@ async function setPushReminder(){
   if(permission !== "granted") return showToast("ยังไม่ได้รับอนุญาตให้แจ้งเตือน");
 
   try{
-    const keyRes = await fetch("/api/push/vapid-public-key", {cache:"no-store"});
+    const keyRes = await fetchWithTimeout("/api/push/vapid-public-key", {cache:"no-store"});
     const keyData = await keyRes.json().catch(() => ({}));
     if(!keyRes.ok || !keyData.publicKey){
       return showToast(location.protocol === "https:"
@@ -2855,7 +3110,7 @@ async function setPushReminder(){
     const from = stLabel(SCHEDULES[state.schedId], $("selFrom").value);
     const to = stLabel(SCHEDULES[state.schedId], $("selTo").value);
 
-    const res = await fetch("/api/push/subscribe", {
+    const res = await fetchWithTimeout("/api/push/subscribe", {
       method: "POST",
       headers: {"Content-Type":"application/json"},
       body: JSON.stringify({ subscription: sub.toJSON(), trainNo: trip.no, departAt, from, to, arl: Boolean(trip.arl) })
@@ -2927,7 +3182,7 @@ function showParkMap(embedSrc, openUrl, caption){
 
 async function loadParking(){
   try{
-    const r = await fetch("data/parking.json", {cache:"no-store"});
+    const r = await fetchWithTimeout("data/parking.json", {cache:"no-store"});
     if(r.ok) PARKING = await r.json();
   }catch(e){ /* ระบบค้นหา Google Places ยังใช้งานได้ */ }
   renderParkingStation();
@@ -3042,7 +3297,7 @@ async function fetchParkingPlaces(params){
   Object.entries(params).forEach(([key,value]) => {
     if(value !== undefined && value !== null && value !== "") url.searchParams.set(key, String(value));
   });
-  const response = await fetch(url, {cache:"no-store"});
+  const response = await fetchWithTimeout(url, {cache:"no-store"}, 12000);
   const data = await response.json().catch(() => ({}));
   if(!response.ok || data.status !== "ok") throw new Error(data.message || "ค้นหาลานจอดไม่สำเร็จ");
   return Array.isArray(data.places) ? data.places : [];
@@ -3149,7 +3404,7 @@ let crossOriginMode = "dest";
 
 async function loadNetwork(){
   try{
-    const r = await fetch("data/network.json", {cache:"no-store"});
+    const r = await fetchWithTimeout("data/network.json", {cache:"no-store"});
     if(r.ok) NETWORK = await r.json();
   }catch(e){ /* ยังคงใช้จุดเชื่อมต่อ fallback ใน HTML ได้ */ }
   renderConnections();
@@ -3387,7 +3642,7 @@ async function runCrossRoute(params){
   try{
     const url = new URL(TRANSIT_URL, location.origin);
     Object.entries(params).forEach(([k,v]) => { if(v) url.searchParams.set(k, String(v)); });
-    const r = await fetch(url, {cache:"no-store"});
+    const r = await fetchWithTimeout(url, {cache:"no-store"}, 15000);
     const data = await r.json().catch(() => ({}));
     if(!r.ok || data.status !== "ok"){
       throw new Error(data.message || "หาเส้นทางไม่สำเร็จ");
@@ -3553,7 +3808,7 @@ async function loadStravaRun(){
   if(button) button.disabled=true;
   const localPreview=location.protocol==="file:" || ["localhost","127.0.0.1"].includes(location.hostname);
   try{
-    const response=await fetch(STRAVA_LATEST_URL,{cache:"no-store"});
+    const response=await fetchWithTimeout(STRAVA_LATEST_URL,{cache:"no-store"});
     const data=await response.json().catch(()=>({}));
     if(!response.ok) throw new Error(data.message||"โหลด Strava ไม่สำเร็จ");
     if(data.status==="ok" && data.activity){renderRun(data.activity,data.updated_at);return;}
@@ -3567,13 +3822,384 @@ async function loadStravaRun(){
 }
 
 // อัปเดตหน้า Landing ทุกวินาที (เรียกจาก tickClock) ทำงานเฉพาะตอนที่ยังแสดงอยู่
+/* ============================================================
+   18.1 แผนผังเส้นทางท้ายหน้า Landing
+   วางตำแหน่งสถานีได้สองโหมด
+   - runtime : เว้นระยะตามเวลาเดินรถจริงจากตารางในแอป ใช้ได้ทันทีโดยไม่ต้องมีพิกัด
+   - geo     : ฉายพิกัดจริงแบบ Web Mercator จะเปิดใช้อัตโนมัติเมื่อ data/stations-geo.json
+               มีค่า lat และ lng ครบทุกสถานี จึงไม่ต้องแก้โค้ดตอนอัปเกรดข้อมูล
+   ============================================================ */
+const MAP_BOX = { width:320, height:104, padX:16, top:24, bottom:80 };
+const MAP_DESKTOP_SPINE = [[16,64],[62,64],[86,40],[142,40],[164,62],[216,62],[244,34],[304,34]];
+const MAP_MOBILE_SPINE = [[44,18],[44,206]];
+const MAP_DEFAULT_MAJORS = ["krungthep","phayathai","asok","huamak","latkrabang","chachoengsao"];
+const MAP_MAX_TRAINS = 4;
+let stationsGeo = null;
+let mapLayout = null;
+const mapIsCompact = () => window.matchMedia("(max-width:600px)").matches;
+let mapCompactState = mapIsCompact();
+let mapResizeTimer = null;
+
+/* ปรับเส้นหักให้ลื่นด้วย Catmull-Rom แล้วคืนเป็นชุดจุดถี่ ใช้ทั้งวาดเส้นและหาตำแหน่งจุด
+   คำนวณในจาวาสคริปต์ทั้งหมด ไม่พึ่ง getPointAtLength ของ SVG จึงทดสอบได้และไม่พังบนเบราว์เซอร์เก่า */
+function smoothPolyline(points, perSegment=18){
+  if(points.length < 3) return points.slice();
+  const out = [];
+  for(let i=0;i<points.length-1;i++){
+    const p0 = points[Math.max(0,i-1)], p1 = points[i], p2 = points[i+1], p3 = points[Math.min(points.length-1,i+2)];
+    for(let step=0; step<perSegment; step++){
+      const t = step/perSegment, t2 = t*t, t3 = t2*t;
+      out.push([
+        0.5*((2*p1[0]) + (-p0[0]+p2[0])*t + (2*p0[0]-5*p1[0]+4*p2[0]-p3[0])*t2 + (-p0[0]+3*p1[0]-3*p2[0]+p3[0])*t3),
+        0.5*((2*p1[1]) + (-p0[1]+p2[1])*t + (2*p0[1]-5*p1[1]+4*p2[1]-p3[1])*t2 + (-p0[1]+3*p1[1]-3*p2[1]+p3[1])*t3)
+      ]);
+    }
+  }
+  out.push(points[points.length-1].slice());
+  return out;
+}
+/* ตารางความยาวสะสม ใช้แปลงระยะทางบนเส้นเป็นพิกัดจุด */
+function arcTable(samples){
+  const cum = [0];
+  for(let i=1;i<samples.length;i++){
+    const dx = samples[i][0]-samples[i-1][0], dy = samples[i][1]-samples[i-1][1];
+    cum.push(cum[i-1] + Math.hypot(dx,dy));
+  }
+  return cum;
+}
+function pointAtLength(samples, cum, target){
+  const total = cum[cum.length-1];
+  const value = Math.max(0, Math.min(total, target));
+  let low = 0, high = cum.length-1;
+  while(low < high-1){
+    const mid = (low+high) >> 1;
+    if(cum[mid] <= value) low = mid; else high = mid;
+  }
+  const span = cum[high]-cum[low] || 1, ratio = (value-cum[low])/span;
+  return {
+    x: samples[low][0] + (samples[high][0]-samples[low][0])*ratio,
+    y: samples[low][1] + (samples[high][1]-samples[low][1])*ratio
+  };
+}
+function pathFromSamples(samples){
+  return samples.map((pt,i) => (i ? "L" : "M") + pt[0].toFixed(2) + " " + pt[1].toFixed(2)).join(" ");
+}
+function subPathD(samples, cum, fromLen, toLen){
+  const a = Math.min(fromLen,toLen), b = Math.max(fromLen,toLen);
+  const pts = [pointAtLength(samples,cum,a)];
+  for(let i=0;i<samples.length;i++){ if(cum[i] > a && cum[i] < b) pts.push({x:samples[i][0], y:samples[i][1]}); }
+  pts.push(pointAtLength(samples,cum,b));
+  return pts.map((pt,i) => (i ? "L" : "M") + pt.x.toFixed(2) + " " + pt.y.toFixed(2)).join(" ");
+}
+
+/* น้ำหนักระยะห่างระหว่างสถานีที่ติดกัน คิดจากเวลาวิ่งจริงในตาราง (ค่ามัธยฐานของทุกขบวนที่จอดทั้งคู่)
+   ใช้ข้อมูลที่ยืนยันแล้วในแอป จึงได้สัดส่วนที่มีความหมายโดยไม่ต้องพึ่งพิกัดภายนอก */
+function runtimeGapWeights(order){
+  const sc = SCHEDULES.daily, count = order.length;
+  const weights = [];
+  for(let i=0;i<count-1;i++){
+    const gaps = [];
+    sc.up.forEach(t => {
+      const a = t.times[i], b = t.times[i+1];
+      if(a && b) gaps.push(toMin(b)-toMin(a));
+    });
+    sc.down.forEach(t => {
+      const a = t.times[count-1-i], b = t.times[count-2-i];
+      if(a && b) gaps.push(toMin(a)-toMin(b));
+    });
+    const usable = gaps.filter(value => value > 0).sort((x,y) => x-y);
+    weights.push(usable.length ? usable[Math.floor(usable.length/2)] : 3);
+  }
+  return weights;
+}
+/* แปลงพิกัดภูมิศาสตร์เป็นระนาบแบบ Web Mercator */
+function mercator(lat, lng){
+  const rad = lat * Math.PI / 180;
+  return [lng, Math.log(Math.tan(Math.PI/4 + rad/2)) * 180 / Math.PI];
+}
+
+/* วางตำแหน่งสถานีทั้งเส้นทางบนระนาบ โดยใช้สถานีที่มีพิกัดยืนยันแล้วเป็นจุดยึด
+   สถานีที่ยังไม่มีพิกัดจะถูกวางระหว่างจุดยึดสองข้างตามสัดส่วนเวลาเดินรถจริง
+   ทำให้เติมพิกัดทีละสถานีได้ และรูปทรงจะค่อยๆ ตรงกับของจริงมากขึ้นเรื่อยๆ */
+function geoPlanePoints(meta, order){
+  const weights = runtimeGapWeights(order);
+  const cumW = [0];
+  weights.forEach((value,i) => cumW.push(cumW[i]+value));
+
+  const known = meta.map(item => hasRealCoords(item) ? mercator(coordOrNull(item.lat,90), coordOrNull(item.lng,180)) : null);
+  const anchors = known.map((pt,i) => pt ? i : -1).filter(i => i >= 0);
+  if(anchors.length < 2) return null;
+
+  const raw = known.slice();
+  const lerpFrom = (ia, ib, k) => {
+    const span = cumW[ib]-cumW[ia] || 1, t = (cumW[k]-cumW[ia])/span;
+    return [ known[ia][0] + (known[ib][0]-known[ia][0])*t,
+             known[ia][1] + (known[ib][1]-known[ia][1])*t ];
+  };
+  for(let a=0;a<anchors.length-1;a++){
+    for(let k=anchors[a]+1;k<anchors[a+1];k++) raw[k] = lerpFrom(anchors[a], anchors[a+1], k);
+  }
+  // สถานีก่อนจุดยึดแรกและหลังจุดยึดสุดท้าย ต่อแนวออกไปตามทิศของคู่จุดยึดที่ใกล้ที่สุด
+  for(let k=0;k<anchors[0];k++) raw[k] = lerpFrom(anchors[0], anchors[1], k);
+  for(let k=anchors[anchors.length-1]+1;k<meta.length;k++){
+    raw[k] = lerpFrom(anchors[anchors.length-2], anchors[anchors.length-1], k);
+  }
+  return { raw, anchorCount: anchors.length };
+}
+
+/* ย่อชุดจุดบนระนาบให้พอดีกรอบภาพโดยคงสัดส่วนเดิม ไม่บิดรูปทรง */
+function fitToBox(points){
+  const xs = points.map(pt => pt[0]), ys = points.map(pt => pt[1]);
+  const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
+  const boxW = MAP_BOX.width - MAP_BOX.padX*2, boxH = MAP_BOX.bottom - MAP_BOX.top;
+  const scale = Math.min(boxW / ((maxX-minX) || 1), boxH / ((maxY-minY) || 1));
+  const offsetX = MAP_BOX.padX + (boxW - (maxX-minX)*scale)/2;
+  const offsetY = MAP_BOX.top + (boxH - (maxY-minY)*scale)/2;
+  // แกน y ของภาพชี้ลง จึงกลับด้านค่าละติจูดที่ฉายแล้ว
+  return points.map(pt => [offsetX + (pt[0]-minX)*scale, offsetY + (maxY-pt[1])*scale]);
+}
+
+/* หาความยาวสะสมบนเส้นที่ใกล้จุดที่กำหนดที่สุด */
+function lengthNearest(samples, cum, point){
+  let best = 0, bestDist = Infinity;
+  for(let i=0;i<samples.length;i++){
+    const d = Math.hypot(samples[i][0]-point[0], samples[i][1]-point[1]);
+    if(d < bestDist){ bestDist = d; best = i; }
+  }
+  return cum[best];
+}
+
+/* ค่า null หรือช่องว่างต้องไม่ถูกตีความเป็นเลขศูนย์
+   เพราะ Number(null) ได้ 0 ซึ่งเป็นพิกัดที่ใช้ได้ในทางเทคนิค และจะทำให้สถานีไปกองรวมกันผิดที่ */
+function coordOrNull(value, limit){
+  if(value === null || value === undefined || value === "") return null;
+  const parsed = Number(value);
+  if(!Number.isFinite(parsed) || Math.abs(parsed) > limit) return null;
+  return parsed;
+}
+const hasRealCoords = item => coordOrNull(item.lat,90) !== null && coordOrNull(item.lng,180) !== null;
+
+function mapStationMeta(id){
+  const fromFile = stationsGeo && (stationsGeo.stations || []).find(item => item.id === id);
+  if(fromFile) return fromFile;
+  return { id, short: st(id).name.replace(/\s*\(.*\)\s*/,""), major: MAP_DEFAULT_MAJORS.includes(id), lat:null, lng:null };
+}
+
+function buildMapLayout(){
+  const order = SCHEDULES.daily.stations;
+  const meta = order.map(mapStationMeta);
+  const compact = mapIsCompact();
+  const samples = (compact ? MAP_MOBILE_SPINE : MAP_DESKTOP_SPINE).map(point => point.slice());
+  const cum = arcTable(samples);
+  const weights = runtimeGapWeights(order);
+  const total = weights.reduce((sum,value) => sum+value, 0) || 1;
+  const length = cum[cum.length-1];
+  let running = 0;
+  const stationLengths = [0];
+  weights.forEach(value => { running += value; stationLengths.push(running/total*length); });
+
+  mapLayout = {
+    order, meta, samples, cum, stationLengths, compact, mode:"schematic",
+    lengthOf: id => { const index = order.indexOf(id); return index < 0 ? null : stationLengths[index]; }
+  };
+  return mapLayout;
+}
+
+function renderMapStatic(){
+  const svg = $("lMapSvg");
+  if(!svg || !mapLayout) return;
+  const { samples, cum, stationLengths, meta } = mapLayout;
+  svg.setAttribute("viewBox", mapLayout.compact ? "0 0 320 224" : "0 0 320 104");
+  const routePath = pathFromSamples(samples);
+  const trackShadow = $("lMapTrackShadow"), track = $("lMapTrack");
+  trackShadow.setAttribute("d", routePath);
+  track.setAttribute("d", routePath);
+  track.classList.remove("is-drawing");
+  requestAnimationFrame(() => track.classList.add("is-drawing"));
+
+  const stops = $("lMapStations"), labels = $("lMapLabels");
+  stops.textContent = ""; labels.textContent = "";
+  const ns = "http://www.w3.org/2000/svg";
+  meta.forEach((item, index) => {
+    const pt = pointAtLength(samples, cum, stationLengths[index]);
+    const isEnd = index === 0 || index === meta.length-1;
+    if(item.major){
+      const ring = document.createElementNS(ns, "circle");
+      ring.setAttribute("cx", pt.x.toFixed(2));
+      ring.setAttribute("cy", pt.y.toFixed(2));
+      ring.setAttribute("r", isEnd ? "5.5" : "4.7");
+      ring.setAttribute("class", "ld-map-stop-ring");
+      ring.style.setProperty("--i", index);
+      stops.append(ring);
+    }
+    const dot = document.createElementNS(ns, "circle");
+    dot.setAttribute("cx", pt.x.toFixed(2));
+    dot.setAttribute("cy", pt.y.toFixed(2));
+    dot.setAttribute("r", isEnd ? "3.8" : (item.major ? "3.1" : "1.95"));
+    dot.setAttribute("class", "ld-map-stop" + (item.major ? " is-major" : "") + (isEnd ? " is-endpoint" : ""));
+    dot.style.setProperty("--i", index);
+    const title = document.createElementNS(ns, "title");
+    title.textContent = st(item.id).name;
+    dot.append(title);
+    stops.append(dot);
+
+    if(item.major){
+      const tick = document.createElementNS(ns, "line");
+      const text = document.createElementNS(ns, "text");
+      if(mapLayout.compact){
+        tick.setAttribute("x1", (pt.x+3.6).toFixed(2));
+        tick.setAttribute("y1", pt.y.toFixed(2));
+        tick.setAttribute("x2", (pt.x+9).toFixed(2));
+        tick.setAttribute("y2", pt.y.toFixed(2));
+        text.setAttribute("x", (pt.x+12).toFixed(2));
+        text.setAttribute("y", (pt.y+2.4).toFixed(2));
+        text.setAttribute("text-anchor", "start");
+      }else{
+        const below = index % 2 === 1;
+        tick.setAttribute("x1", pt.x.toFixed(2));
+        tick.setAttribute("y1", (pt.y + (below ? 3.6 : -3.6)).toFixed(2));
+        tick.setAttribute("x2", pt.x.toFixed(2));
+        tick.setAttribute("y2", (pt.y + (below ? 7.2 : -7.2)).toFixed(2));
+        text.setAttribute("x", pt.x.toFixed(2));
+        text.setAttribute("y", (pt.y + (below ? 14 : -10)).toFixed(2));
+        text.setAttribute("text-anchor", index === 0 ? "start" : (index === meta.length-1 ? "end" : "middle"));
+      }
+      tick.setAttribute("class", "ld-map-label-tick");
+      tick.style.setProperty("--i", index);
+      text.setAttribute("class", "ld-map-label" + (isEnd ? " is-endpoint" : ""));
+      text.style.setProperty("--i", index);
+      text.textContent = item.short;
+      labels.append(tick, text);
+    }
+  });
+  $("lMapScale").textContent = "แผนผังเชิงสัญลักษณ์ · ระยะห่างอิงเวลาเดินรถ";
+}
+
+/* หาขบวนที่กำลังวิ่งอยู่บนเส้นทางในขณะนี้ พร้อมสัดส่วนตำแหน่งระหว่างสองสถานีที่ติดกัน
+   คำนวณจากตารางเวลาที่มีอยู่ จึงทำงานได้แม้ออฟไลน์ */
+function activeTrainPositions(nowMin){
+  if(!mapLayout) return [];
+  const sc = SCHEDULES.daily, count = sc.stations.length, found = [];
+  const scan = (train, toStationIndex) => {
+    let prev = null;
+    for(let i=0;i<train.times.length;i++){
+      const value = train.times[i];
+      if(!value) continue;
+      const minute = toMin(value), index = toStationIndex(i);
+      if(prev && nowMin >= prev.minute && nowMin <= minute){
+        const span = minute - prev.minute || 1;
+        found.push({ no:train.no, fromIndex:prev.index, toIndex:index, ratio:(nowMin-prev.minute)/span });
+        return;
+      }
+      prev = { minute, index };
+    }
+  };
+  sc.up.forEach(train => scan(train, i => i));
+  sc.down.forEach(train => scan(train, i => count-1-i));
+  return found.slice(0, MAP_MAX_TRAINS);
+}
+
+function renderMapDynamic(nowMin, profile){
+  if(!mapLayout) return;
+  const { samples, cum, stationLengths } = mapLayout;
+
+  // ไฮไลต์ช่วงเส้นทางที่ผู้ใช้กำลังจะเดินทางตามทิศทางของช่วงเวลา
+  const fromLen = mapLayout.lengthOf(profile && profile.srtFrom), toLen = mapLayout.lengthOf(profile && profile.srtTo);
+  const segment = $("lMapSegment");
+  const segmentGlow = $("lMapSegmentGlow");
+  if(segment){
+    const segmentPath = fromLen != null && toLen != null ? subPathD(samples, cum, fromLen, toLen) : "";
+    segment.setAttribute("d", segmentPath);
+    if(segmentGlow) segmentGlow.setAttribute("d", segmentPath);
+    segment.classList.remove("is-drawing");
+    requestAnimationFrame(() => {
+      segment.classList.add("is-drawing");
+      document.querySelectorAll(".ld-map-flow animateMotion").forEach(motion => {
+        try{ motion.beginElement(); }catch(e){ /* เส้นทางหลักยังแสดงได้แม้ motion ไม่รองรับ */ }
+      });
+    });
+  }
+
+  const group = $("lMapTrains");
+  if(!group) return;
+  group.textContent = "";
+  const ns = "http://www.w3.org/2000/svg";
+  const trains = activeTrainPositions(nowMin);
+  trains.forEach(train => {
+    const a = stationLengths[train.fromIndex], b = stationLengths[train.toIndex];
+    if(a == null || b == null) return;
+    const pt = pointAtLength(samples, cum, a + (b-a)*train.ratio);
+    const wrap = document.createElementNS(ns, "g");
+    wrap.setAttribute("class", "ld-map-train");
+    wrap.setAttribute("transform", "translate(" + pt.x.toFixed(2) + "," + pt.y.toFixed(2) + ")");
+    const halo = document.createElementNS(ns, "circle");
+    halo.setAttribute("r", "8"); halo.setAttribute("class", "ld-map-train-halo");
+    const card = document.createElementNS(ns, "rect");
+    card.setAttribute("x", "-10"); card.setAttribute("y", "-6"); card.setAttribute("width", "20"); card.setAttribute("height", "12"); card.setAttribute("rx", "6"); card.setAttribute("class", "ld-map-train-card");
+    const dot = document.createElementNS(ns, "circle");
+    dot.setAttribute("cx", "-5.8"); dot.setAttribute("r", "1.5"); dot.setAttribute("class", "ld-map-train-dot");
+    const number = document.createElementNS(ns, "text");
+    number.setAttribute("x", "1.8"); number.setAttribute("y", ".2"); number.setAttribute("class", "ld-map-train-no");
+    number.textContent = train.no;
+    const title = document.createElementNS(ns, "title");
+    title.textContent = "ขบวน " + train.no + " กำลังวิ่งช่วง " + st(mapLayout.order[train.fromIndex]).name + " ถึง " + st(mapLayout.order[train.toIndex]).name;
+    wrap.append(halo, card, dot, number, title);
+    group.append(wrap);
+  });
+
+  const status = $("lMapStatus");
+  if(status){
+    status.classList.toggle("is-idle", !trains.length);
+    status.textContent = trains.length
+      ? "กำลังวิ่งอยู่ " + trains.length + " ขบวน ณ เวลานี้"
+      : "ช่วงนี้ยังไม่มีขบวนอยู่บนเส้นทาง";
+  }
+  const sub = $("lMapSub");
+  if(sub && profile) sub.textContent = profile.srtLabel;
+}
+
+async function loadStationsGeo(){
+  try{
+    const r = await fetchWithTimeout("data/stations-geo.json", {cache:"no-store"});
+    if(r.ok) stationsGeo = await r.json();
+  }catch(e){ /* ไม่มีไฟล์ก็ยังวาดได้ด้วยค่าเริ่มต้นในโค้ด */ }
+  try{
+    buildMapLayout();
+    renderMapStatic();
+    const p = bangkokParts();
+    renderMapDynamic(p.hour*60+p.minute, landingCommuteProfile(p.hour*60+p.minute));
+  }catch(e){
+    const status = $("lMapStatus");
+    if(status) status.textContent = "แสดงแผนผังไม่สำเร็จ";
+  }
+}
+
+window.addEventListener("resize", () => {
+  clearTimeout(mapResizeTimer);
+  mapResizeTimer = setTimeout(() => {
+    const nextCompactState = mapIsCompact();
+    if(nextCompactState === mapCompactState || !mapLayout) return;
+    mapCompactState = nextCompactState;
+    buildMapLayout();
+    renderMapStatic();
+    const p = bangkokParts();
+    renderMapDynamic(p.hour*60+p.minute, landingCommuteProfile(p.hour*60+p.minute));
+  }, 160);
+});
+
 function updateLanding(dateObj, partsObj, todayIso, millis){
   const land = $("landing");
   if(!land || land.hidden || land.style.display === "none") return;
   const p = partsObj || bangkokParts(dateObj || new Date()), nowMin = p.hour*60 + p.minute;
   const today = todayIso || bangkokISO(dateObj || new Date());
   const ms = Number.isFinite(millis) ? millis : (dateObj instanceof Date ? dateObj.getMilliseconds() : new Date().getMilliseconds());
-  $("lClock").innerHTML = clockMarkup(p.hour, p.minute, p.second, ms);
+  paintClock($("lClock"), p.hour, p.minute, p.second, ms);
+
+  // ส่วนที่เหลือของการ์ดเปลี่ยนค่าแค่ระดับนาที จึงคำนวณใหม่เมื่อข้ามนาทีเท่านั้น
+  const minuteKey = today + " " + p2(p.hour) + ":" + p2(p.minute);
+  if(updateLanding._lastMinuteKey === minuteKey) return;
+  updateLanding._lastMinuteKey = minuteKey;
+
   $("lDate").textContent = thaiLandingDate(today);
   try{
     const profile = landingCommuteProfile(nowMin);
@@ -3601,6 +4227,7 @@ function updateLanding(dateObj, partsObj, todayIso, millis){
       const live = $("lSrtLive");
       if(live) live.hidden = true;
     }
+    renderMapDynamic(nowMin, profile);
     const arl = nextArlDeparture(nowMin, profile, today);
     if(arl){
       $("lArlDepTime").textContent = arl.dep;
@@ -3755,11 +4382,17 @@ function startLandingSpeed(){
   }, {enableHighAccuracy:true, maximumAge:0, timeout:30000});
 }
 // ปิดหน้า Landing เข้าสู่แอปจริง
-function enterApp(){
+function enterApp(immediate=false){
   const land = $("landing");
   if(!land) return;
-  land.classList.add("closing");
-  setTimeout(() => { land.hidden = true; document.body.style.overflow = ""; }, 720);
+  if(immediate){
+    // เปิดจากลิงก์ที่ระบุเส้นทางมาแล้ว ผู้ใช้ตั้งใจดูผลลัพธ์ ไม่ต้องผ่านหน้า Landing
+    land.hidden = true;
+    document.body.style.overflow = "";
+  }else{
+    land.classList.add("closing");
+    setTimeout(() => { land.hidden = true; document.body.style.overflow = ""; }, 720);
+  }
   if(LANDING_SPEED_WATCH != null){
     try{ navigator.geolocation.clearWatch(LANDING_SPEED_WATCH); }catch(e){}
     LANDING_SPEED_WATCH = null;
@@ -3780,10 +4413,8 @@ function init(){
   const runRefresh = $("btnRunRefresh");
   if(runRefresh) runRefresh.addEventListener("click", loadStravaRun);
   document.querySelectorAll("[data-theme-toggle]").forEach(btn => btn.addEventListener("click", toggleTheme));
-  loadStravaRun();
   // นาฬิกาเริ่มก่อนเสมอ เพื่อให้ยังเดินได้แม้ส่วนอื่นมีปัญหา
-  tickClock();
-  setInterval(tickClock, 100);
+  startClock();
 
   state.date = bangkokISO();
   $("inpTime").value = bangkokTime();
@@ -3791,6 +4422,10 @@ function init(){
   syncTabs();
   refreshAll();
   applyURLState();
+  // ลิงก์ที่แชร์กันมาหรือ Shortcut บนหน้าจอโฮมจะระบุเส้นทางมาแล้ว จึงข้ามหน้า Landing ไปที่ผลลัพธ์เลย
+  const deepLinkKeys = ["from","to","time","date","schedule"];
+  const query = new URLSearchParams(location.search);
+  if(deepLinkKeys.some(key => query.has(key))) enterApp(true);
   renderQuickRoutes();
   updateNetwork();
   // ป้องกันกรณีเบราว์เซอร์เก่าไม่รองรับ matchMedia แล้วทำให้ init หยุดกลางทาง
@@ -3874,8 +4509,44 @@ function init(){
     if(navigator.serviceWorker) navigator.serviceWorker.register("sw.js").catch(() => {});
   }catch(e){ /* บางเบราว์เซอร์บล็อก Service Worker เมื่อเปิดจากไฟล์ในเครื่อง */ }
 
-  loadWeather(); loadAirQuality(); loadStatus(); loadParking(); loadNetwork();
-  setInterval(() => { loadWeather(); loadAirQuality(); loadStatus(); loadStravaRun(); }, 600000);
+  loadParking(); loadNetwork(); loadStationsGeo();
+  refreshLiveData(true);
+  setInterval(() => { if(!document.hidden) refreshLiveData(); }, LIVE_REFRESH_MS);
+
+  /* กลับมาจากพื้นหลัง
+     บนมือถือ ระบบจะหยุด timer ของแท็บที่ไม่ได้ใช้งาน ทำให้เวลาและรายการขบวนค้างของเก่า
+     เมื่อผู้ใช้กลับมา จึงบังคับให้คำนวณรอบถัดไปใหม่ทันที และดึงข้อมูลสดถ้าเก่าเกินครึ่งรอบ */
+  document.addEventListener("visibilitychange", handleResume);
+  window.addEventListener("pageshow", event => { if(event.persisted) handleResume(); });
+}
+
+/* ============================================================
+   19.1 การรีเฟรชข้อมูลสด
+   ============================================================ */
+const LIVE_REFRESH_MS = 10 * 60 * 1000;
+let lastLiveRefresh = 0;
+function refreshLiveData(force=false){
+  const now = Date.now();
+  if(!force && now - lastLiveRefresh < 60000) return; // กันการเรียกซ้ำถี่เกินจำเป็น
+  lastLiveRefresh = now;
+  loadWeather(); loadAirQuality(); loadStatus(); loadStravaRun();
+}
+function handleResume(){
+  if(document.hidden) return;
+  startClock();
+  // ล้างคีย์กันซ้ำ เพื่อบังคับให้รอบถัดไปและรายการขบวนถูกคำนวณใหม่ทันที
+  tickClock._lastSecondKey = null;
+  tickClock._lastMinuteKey = null;
+  updateLanding._lastMinuteKey = null;
+  try{
+    if($("chkNow") && $("chkNow").checked){
+      state.date = bangkokISO();
+      $("inpDate").value = state.date;
+      $("inpTime").value = bangkokTime();
+    }
+    tickClock();
+  }catch(e){ /* ถ้าคำนวณพลาด ยังปล่อยให้ดึงข้อมูลสดต่อได้ */ }
+  if(Date.now() - lastLiveRefresh > LIVE_REFRESH_MS / 2) refreshLiveData(true);
 }
 
 /** เริ่มระบบอย่างปลอดภัย: หากส่วนใดผิดพลาด จะแจ้งบนหน้าจอแทนที่จะเงียบ */
@@ -3889,7 +4560,8 @@ function boot(){
       b.textContent = "หน้าเว็บทำงานไม่สมบูรณ์ | " + (err && err.message ? err.message : String(err))
                     + " | โปรดแจ้งข้อความนี้แก่ผู้ดูแลระบบ";
     }
-    try{ tickClock(); setInterval(tickClock, 100); }catch(e){}
+    // startClock มี guard ในตัว จึงไม่เกิดลูปนาฬิกาซ้อนแม้ init จะเริ่มไปแล้วบางส่วน
+    try{ startClock(); }catch(e){}
     try{ loadWeather(); loadAirQuality(); loadStatus(); }catch(e){}
   }
 }

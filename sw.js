@@ -1,90 +1,179 @@
-const CACHE = "paiduyna-full-2026-07-31-v47-deepblack-ui";
+/* Service Worker ของ PAI.DUY.NA
+   หลักการแคช แยกตามชนิดคำขอ เพื่อให้ได้ทั้งความสด ความเร็ว และใช้งานออฟไลน์ได้
+   - หน้าเว็บ (navigate)        : Network first แล้ว fallback แคช  ผู้ใช้ได้เวอร์ชันใหม่ทันทีที่ Deploy
+   - ไฟล์ข้อมูล data/*.json     : Network first แล้ว fallback แคช  ข้อมูลสถานะต้องสดที่สุด
+   - ไฟล์แอปอื่นในโดเมนเดียวกัน : Stale while revalidate            เปิดไว และไม่ค้างของเก่าถาวร
+   - ฟอนต์ Google              : Cache first แล้วอัปเดตเบื้องหลัง   ออฟไลน์ยังได้ฟอนต์เดิม
+   - /api/ และ /admin/         : Network only                      ห้ามแคชข้อมูลสดและหน้าผู้ดูแล
+*/
+const VERSION = "2026-07-31-v47";
+const SHELL_CACHE = "paiduyna-shell-" + VERSION;
+const RUNTIME_CACHE = "paiduyna-runtime-" + VERSION;
+const FONT_CACHE = "paiduyna-fonts-" + VERSION;
+const KEEP = [SHELL_CACHE, RUNTIME_CACHE, FONT_CACHE];
+
 const APP_SHELL = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
   "./icon.svg",
+  "./icon-192.png",
+  "./icon-512.png",
+  "./apple-touch-icon.png",
   "./brand-logo-v4.svg",
   "./strava-logo.png",
   "./data/status.json",
   "./data/parking.json",
-  "./data/network.json"
+  "./data/network.json",
+  "./data/stations-geo.json"
 ];
 
+const FONT_HOSTS = ["fonts.googleapis.com", "fonts.gstatic.com"];
+
 self.addEventListener("install", event => {
-  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(APP_SHELL)));
-  self.skipWaiting();
+  event.waitUntil((async () => {
+    const cache = await caches.open(SHELL_CACHE);
+    // ใส่ทีละไฟล์ เพราะ addAll จะล้มทั้งชุดหากมีไฟล์ใดหายไป ทำให้ติดตั้ง SW ไม่สำเร็จเลย
+    await Promise.all(APP_SHELL.map(url =>
+      cache.add(new Request(url, {cache: "reload"})).catch(() => {})
+    ));
+    await self.skipWaiting();
+  })());
 });
 
 self.addEventListener("activate", event => {
-  event.waitUntil(
-    caches.keys()
-      .then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key))))
-      .then(() => self.clients.claim())
-  );
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter(key => !KEEP.includes(key)).map(key => caches.delete(key)));
+    if (self.registration.navigationPreload) {
+      await self.registration.navigationPreload.enable().catch(() => {});
+    }
+    await self.clients.claim();
+  })());
 });
 
+const isCacheable = response =>
+  response && response.status === 200 && response.type !== "opaqueredirect";
+
+async function networkFirst(request, cacheName, preloadPromise) {
+  const cache = await caches.open(cacheName);
+  try {
+    const preloaded = preloadPromise ? await preloadPromise : null;
+    const response = preloaded || await fetch(request);
+    if (isCacheable(response)) cache.put(request, response.clone());
+    return response;
+  } catch (error) {
+    const cached = await cache.match(request, {ignoreSearch: true});
+    if (cached) return cached;
+    throw error;
+  }
+}
+
+async function staleWhileRevalidate(request, cacheName) {
+  const cache = await caches.open(cacheName);
+  const cached = await cache.match(request, {ignoreSearch: true});
+  const network = fetch(request)
+    .then(response => {
+      if (isCacheable(response)) cache.put(request, response.clone());
+      return response;
+    })
+    .catch(() => null);
+  return cached || (await network) || Response.error();
+}
+
+async function cacheFirst(request, cacheName) {
+  const cache = await caches.open(cacheName);
+  const cached = await cache.match(request);
+  const acceptable = response => response && (response.status === 200 || response.type === "opaque");
+  if (cached) {
+    // อัปเดตเบื้องหลัง ไม่หน่วงการแสดงผล
+    fetch(request).then(response => {
+      if (acceptable(response)) cache.put(request, response.clone());
+    }).catch(() => {});
+    return cached;
+  }
+  const response = await fetch(request);
+  if (acceptable(response)) cache.put(request, response.clone());
+  return response;
+}
+
 self.addEventListener("fetch", event => {
-  if(event.request.method !== "GET") return;
-  const url = new URL(event.request.url);
+  const request = event.request;
+  if (request.method !== "GET") return;
 
-  if(url.origin === self.location.origin && url.pathname.includes("/admin/")) {
-    event.respondWith(fetch(event.request, {cache:"no-store"}));
+  let url;
+  try { url = new URL(request.url); } catch (e) { return; }
+
+  const sameOrigin = url.origin === self.location.origin;
+
+  // หน้าผู้ดูแลและ API ต้องอ่านสดเสมอ ห้ามค้างในแคช
+  if (sameOrigin && (url.pathname.includes("/admin/") || url.pathname.includes("/api/"))) {
+    event.respondWith(fetch(request, {cache: "no-store"}));
     return;
   }
 
-  // API ต้องอ่านข้อมูลสดและห้ามถูกเก็บใน App Shell โดยเฉพาะข้อมูลล่าสุดจาก Strava
-  if(url.origin === self.location.origin && url.pathname.includes("/api/")) {
-    event.respondWith(fetch(event.request, {cache:"no-store"}));
-    return;
-  }
-
-  if(url.pathname.endsWith("/data/status.json") || url.pathname.endsWith("/data/parking.json") || url.pathname.endsWith("/data/network.json")) {
+  // การเปิดหน้าเว็บ ใช้ของใหม่ก่อนเสมอ ถ้าออฟไลน์จึงย้อนไปใช้แคช
+  if (request.mode === "navigate") {
     event.respondWith(
-      fetch(event.request)
-        .then(response => {
-          const copy = response.clone();
-          caches.open(CACHE).then(cache => cache.put(event.request, copy));
-          return response;
-        })
-        .catch(() => caches.match(event.request, {ignoreSearch:true}))
+      networkFirst(request, SHELL_CACHE, event.preloadResponse)
+        .catch(async () => (await caches.match("./index.html", {ignoreSearch: true}))
+          || new Response("ออฟไลน์อยู่ และยังไม่มีสำเนาหน้าเว็บในเครื่อง", {
+            status: 503,
+            headers: {"Content-Type": "text/plain; charset=utf-8"}
+          }))
     );
     return;
   }
 
-  event.respondWith(
-    caches.match(event.request, {ignoreSearch:true}).then(cached => {
-      if(cached) return cached;
-      return fetch(event.request).then(response => {
-        if(url.origin === self.location.origin) {
-          const copy = response.clone();
-          caches.open(CACHE).then(cache => cache.put(event.request, copy));
-        }
-        return response;
-      });
-    })
-  );
+  if (FONT_HOSTS.includes(url.hostname)) {
+    event.respondWith(cacheFirst(request, FONT_CACHE).catch(() => Response.error()));
+    return;
+  }
+
+  if (sameOrigin && url.pathname.includes("/data/") && url.pathname.endsWith(".json")) {
+    event.respondWith(networkFirst(request, RUNTIME_CACHE).catch(() => Response.error()));
+    return;
+  }
+
+  if (sameOrigin) {
+    event.respondWith(staleWhileRevalidate(request, RUNTIME_CACHE));
+  }
+});
+
+// ให้หน้าเว็บสั่งข้ามคิวรออัปเดตได้ เผื่อเพิ่มปุ่มโหลดเวอร์ชันใหม่ในอนาคต
+self.addEventListener("message", event => {
+  if (event.data === "SKIP_WAITING") self.skipWaiting();
 });
 
 self.addEventListener("notificationclick", event => {
   event.notification.close();
-  event.waitUntil(clients.matchAll({type:"window", includeUncontrolled:true}).then(list => {
-    if(list.length) return list[0].focus();
-    return clients.openWindow("./");
-  }));
+  const target = (event.notification.data && event.notification.data.url) || "./";
+  event.waitUntil((async () => {
+    const list = await clients.matchAll({type: "window", includeUncontrolled: true});
+    for (const client of list) {
+      if ("focus" in client) {
+        if ("navigate" in client && target !== "./") {
+          try { await client.navigate(target); } catch (e) {}
+        }
+        return client.focus();
+      }
+    }
+    return clients.openWindow(target);
+  })());
 });
 
 // รับ Push จาก Server (ระบบแจ้งเตือนขบวนล่วงหน้าที่ทำงานได้แม้ปิดแอป)
 self.addEventListener("push", event => {
   let data = {};
-  try{ data = event.data ? event.data.json() : {}; }catch(e){ data = {}; }
+  try { data = event.data ? event.data.json() : {}; } catch (e) { data = {}; }
   const title = data.title || "รถไฟใกล้ออกแล้ว";
   const options = {
     body: data.body || "",
-    icon: "icon.svg",
-    badge: "icon.svg",
+    icon: "icon-192.png",
+    badge: "icon-192.png",
     tag: data.tag || "train-push",
-    renotify: true
+    renotify: true,
+    data: {url: data.url || "./"}
   };
   event.waitUntil(self.registration.showNotification(title, options));
 });

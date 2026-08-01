@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "31/07/2569",
+  "disclaimer": "ไฟล์นี้ใช้กำหนดการวางตำแหน่งสถานีบนแผนผังเส้นทางหน้า Landing ไม่ใช่ข้อมูลตารางเดินรถ",
+  "spacingModes": {
+    "geo": "ทุกสถานีมีพิกัดครบ วางตามพิกัดจริงทั้งหมด",
+    "geo-partial": "มีพิกัดตั้งแต่สองสถานีขึ้นไป ใช้สถานีที่มีพิกัดเป็นจุดยึด ที่เหลือวางระหว่างจุดยึดตามสัดส่วนเวลาเดินรถจริง (สถานะปัจจุบัน)",
+    "runtime": "มีพิกัดน้อยกว่าสองสถานี ใช้แนวเส้นเชิงสัญลักษณ์และเว้นระยะตามเวลาเดินรถ"
+  },
+  "howToUpgrade": "เติม lat และ lng ของสถานีที่เหลือพร้อมระบุ source ระบบจะยึดพิกัดจริงมากขึ้นเองอัตโนมัติ เมื่อครบทุกสถานีจะเปลี่ยนเป็นโหมด geo เต็มรูปแบบโดยไม่ต้องแก้โค้ด",
+  "coordSource": "English Wikipedia station infoboxes (CC BY-SA 4.0) ตรวจสอบรายสถานีในฟิลด์ source",
+  "stationSchema": {
+    "id": "ต้องตรงกับ id ใน LINE หรือ ARL_LINE ใน index.html",
+    "short": "ชื่อย่อสำหรับแสดงบนแผนผัง",
+    "major": "true = แสดงชื่อกำกับบนแผนผัง เพราะพื้นที่จำกัดจึงติดป้ายเฉพาะสถานีหลัก",
+    "lat": "ละติจูด ใส่เมื่อยืนยันแล้วเท่านั้น ปล่อย null ได้",
+    "lng": "ลองจิจูด ใส่เมื่อยืนยันแล้วเท่านั้น ปล่อย null ได้",
+    "source": "ที่มาของพิกัดรายสถานี ใส่ทุกครั้งที่เติมพิกัด",
+    "kmFromKrungthep": "ระยะทางจากสถานีกรุงเทพเป็นกิโลเมตรตามเอกสารอ้างอิง (ไม่บังคับ ยังไม่ถูกใช้ในการวาด)"
+  },
+  "stations": [
+    {
+      "id": "krungthep",
+      "short": "กรุงเทพ",
+      "major": true,
+      "lat": 13.73889,
+      "lng": 100.51667,
+      "source": "Wikipedia: Hua Lamphong railway station"
+    },
+    {
+      "id": "yommarat",
+      "short": "ยมราช",
+      "major": false,
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "urupong",
+      "short": "อุรุพงษ์",
+      "major": false,
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "phayathai",
+      "short": "พญาไท",
+      "major": true,
+      "lat": 13.7569417,
+      "lng": 100.5338444,
+      "source": "Wikipedia: Phaya Thai station"
+    },
+    {
+      "id": "makkasan",
+      "short": "มักกะสัน",
+      "major": false,
+      "lat": null,
+      "lng": null,
+      "kmFromKrungthep": 5.171
+    },
+    {
+      "id": "asok",
+      "short": "อโศก",
+      "major": true,
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "khlongtan",
+      "short": "คลองตัน",
+      "major": false,
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "sukhumvit71",
+      "short": "สุขุมวิท 71",
+      "major": false,
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "huamak",
+      "short": "หัวหมาก",
+      "major": true,
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "banthapchang",
+      "short": "บ้านทับช้าง",
+      "major": false,
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "soiwatlanbun",
+      "short": "ซอยวัดลานบุญ",
+      "major": false,
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "latkrabang",
+      "short": "ลาดกระบัง",
+      "major": true,
+      "lat": 13.7276194,
+      "lng": 100.74861,
+      "source": "Wikipedia: Lat Krabang station"
+    },
+    {
+      "id": "phrachomklao",
+      "short": "พระจอมเกล้า",
+      "major": false,
+      "lat": null,
+      "lng": null,
+      "kmFromKrungthep": 30.33
+    },
+    {
+      "id": "huatakhe",
+      "short": "หัวตะเข้",
+      "major": false,
+      "lat": 13.7281,
+      "lng": 100.7822,
+      "source": "Wikipedia: Hua Takhe railway station",
+      "kmFromKrungthep": 30.911
+    },
+    {
+      "id": "khlongluang",
+      "short": "คลองหลวงแพ่ง",
+      "major": false,
+      "lat": null,
+      "lng": null,
+      "kmFromKrungthep": 39.5
+    },
+    {
+      "id": "khlongudom",
+      "short": "คลองอุดมชลจร",
+      "major": false,
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "preng",
+      "short": "เปรง",
+      "major": false,
+      "lat": 13.7125,
+      "lng": 100.925,
+      "source": "Wikipedia: Preng railway station",
+      "kmFromKrungthep": 46.49
+    },
+    {
+      "id": "khwangklan",
+      "short": "คลองแขวงกลั่น",
+      "major": false,
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bangphra",
+      "short": "คลองบางพระ",
+      "major": false,
+      "lat": 13.7042,
+      "lng": 100.9914,
+      "source": "Wikipedia: Khlong Bang Phra railway station",
+      "kmFromKrungthep": 53.99
+    },
+    {
+      "id": "bangtoei",
+      "short": "บางเตย",
+      "major": false,
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "chachoengsao",
+      "short": "ฉะเชิงเทรา",
+      "major": true,
+      "lat": null,
+      "lng": null,
+      "kmFromKrungthep": 70.0
+    }
+  ],
+  "attributionNote": "หากนำพิกัดจาก OpenStreetMap มาใช้ ต้องให้เครดิต OpenStreetMap contributors ตามสัญญาอนุญาต ODbL",
+  "spacingDetectedBy": "โค้ดตรวจเองจากข้อมูลในไฟล์ ไม่ต้องตั้งค่าโหมดด้วยมือ"
+}

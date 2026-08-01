@@ -1,19 +1,62 @@
 {
-  "name": "PAI.DUY.NA",
+  "id": "/paiduyna/",
+  "name": "PAI.DUY.NA ตารางเดินรถสายตะวันออก",
   "short_name": "PAI.DUY.NA",
   "description": "ตารางเดินรถและผู้ช่วยวางแผนการเดินทางสายตะวันออก",
-  "start_url": "./",
+  "start_url": "./?source=pwa",
   "scope": "./",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "portrait",
   "background_color": "#F7F3EF",
   "theme_color": "#6B1E2B",
   "lang": "th",
+  "dir": "ltr",
+  "categories": ["travel", "navigation", "utilities"],
   "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
     {
       "src": "icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "เข้าเมือง ลาดกระบัง ไป อโศก",
+      "short_name": "เข้าเมือง",
+      "url": "./?mode=srt&from=latkrabang&to=asok",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "ขากลับ อโศก ไป ลาดกระบัง",
+      "short_name": "ขากลับ",
+      "url": "./?mode=srt&from=asok&to=latkrabang",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Airport Rail Link",
+      "short_name": "ARL",
+      "url": "./?mode=arl&from=arl_phayathai&to=arl_suvarnabhumi",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }]
     }
   ]
 }
